@@ -1,20 +1,20 @@
 #include <iostream>
 
 #include "../tests/doctest.h"
-#include "UIHandler.h"
 
 /*
 0 -> run unit tests
 1 -> normal mode
 */
-#define PROGRAM_MODE 1
+#define PROGRAM_MODE 0
 
 int main()
 {
 #if (PROGRAM_MODE==0)
 	doctest::Context().run();
+#elif (PROGRAM_MODE==1)
+
 #else
-	UIHandler uih;
-	uih.run();
+	std::cout << "Invalid mode" << '\n';
 #endif // (PROGRAM_MODE==1)
 }
