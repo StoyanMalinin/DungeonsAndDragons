@@ -1,0 +1,7 @@
+.vs/**
+bin/**
+obj/**
+DungeonsAndDragons.sln
+DungeonsAndDragons.vcxproj
+DungeonsAndDragons.vcxproj.user
+DungeonsAndDragons.vcxproj.filters
