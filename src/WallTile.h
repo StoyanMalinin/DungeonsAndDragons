@@ -1,10 +1,13 @@
-#ifndef __WALL_H
-#define __WALL_H
+#ifndef __WALLTILE_H
+#define __WALLTILE_H
 
 #include "TileEntity.h"
 
-class Wall : public TileEntity
+class WallTile : public TileEntity
 {
+public:
+	WallTile(int r, int c);
+
 public:
 	bool canEnter() const override;
 	Interactions getInteractionType() const override;

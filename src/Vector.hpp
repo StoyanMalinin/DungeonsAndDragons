@@ -16,6 +16,7 @@ private:
 
 public:
     Vector();
+    Vector(size_t len);
     Vector(const Vector& other);
     Vector& operator=(const Vector& other);
     ~Vector();
@@ -60,6 +61,14 @@ inline void Vector<T>::deepCopyFromOther(const Vector& other)
 template<class T>
 inline Vector<T>::Vector() : capacity(Vector::MIN_CAPACITY), len(0), data(new T[Vector::MIN_CAPACITY])
 {}
+
+template<class T>
+inline Vector<T>::Vector(size_t len)
+{
+    this->len = len;
+    this->capacity = getCapacityFromLen(this->len);
+    this->data = new T[this->capacity];
+}
 
 template<class T>
 inline Vector<T>::Vector(const Vector& other)

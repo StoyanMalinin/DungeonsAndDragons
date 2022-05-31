@@ -11,6 +11,7 @@ private:
 	T* objRef;
 
 public:
+	explicit SharedPtr();
 	explicit SharedPtr(T* objRef);
 	SharedPtr(const SharedPtr& other);
 	SharedPtr& operator =(const SharedPtr& other);
@@ -24,6 +25,10 @@ public:
 	bool isNull() const;
 };
 
+
+template<class T>
+inline SharedPtr<T>::SharedPtr() : cnt(new size_t(1)), objRef(nullptr)
+{}
 
 template<class T>
 inline SharedPtr<T>::SharedPtr(T* objRef) : cnt(new size_t(1)), objRef(objRef)

@@ -13,15 +13,17 @@
 #include "Vector.hpp"
 #include "OptimalItemManagerController.h"
 
+#include "GameMap.h"
+
 /*
 0 -> run unit tests
 1 -> normal mode
 */
-#define PROGRAM_MODE 0
+#define PROGRAM_MODE 1
 
 void sandbox()
 {
-	
+	GameMap mp(5, 6);
 }
 
 int main()
