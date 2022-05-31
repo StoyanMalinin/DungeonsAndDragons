@@ -28,3 +28,6 @@ float FightableEntity::getHealth() const
 {
 	return health;
 }
+
+FightableEntity::~FightableEntity()
+{}

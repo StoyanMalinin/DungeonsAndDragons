@@ -2,6 +2,7 @@
 #define __FIGHTABLEENTITY_H
 
 #include "FightController.h"
+#include "SharedPtr.hpp"
 
 class FightableEntity
 {
@@ -9,7 +10,7 @@ private:
 	float strength, mana, health;
 
 protected:
-	FightController* fc;
+	SharedPtr<FightController> fc;
 
 public:
 	FightableEntity(float strength, float mana, float health, const FightController& fc);
@@ -26,6 +27,9 @@ public:
 	float getStrength() const;
 	float getMana() const;
 	float getHealth() const;
+
+public:
+	virtual ~FightableEntity();
 };
 
 #endif // !__FIGHTABLEENTITY_H

@@ -5,7 +5,7 @@ project "DungeonsAndDragons"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++17"
-    files { "src/**.h", "src/**.cpp", "tests/**.cpp", "tests/**.h" }
+    files { "src/**.h", "src/**.cpp", "src/**.hpp", "tests/**.cpp", "tests/**.h", "tests/**.hpp" }
 
     filter { "configurations:Debug" }
         defines { "DEBUG", "_CRT_SECURE_NO_WARNINGS" }

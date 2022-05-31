@@ -12,6 +12,9 @@ class FightController
 public:
 	virtual AttackType getAttackType() = 0;
 	virtual FightController* clone() const = 0;
+
+public:
+	virtual ~FightController();
 };
 
 #endif // !__FIGHTCONTROLLER_H

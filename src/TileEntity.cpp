@@ -25,3 +25,6 @@ int TileEntity::getC() const noexcept
 {
 	return c;
 }
+
+TileEntity::~TileEntity()
+{}

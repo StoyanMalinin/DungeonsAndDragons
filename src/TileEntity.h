@@ -25,6 +25,9 @@ public:
 public:
 	int getR() const noexcept;
 	int getC() const noexcept;
+
+public:
+	virtual ~TileEntity();
 };
 
 #endif
