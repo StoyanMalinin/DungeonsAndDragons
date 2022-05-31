@@ -14,6 +14,8 @@ protected:
 
 public:
 	FightableEntity(float strength, float mana, float health, const FightController& fc);
+protected:
+	FightableEntity(const FightableEntity& other) = default;
 
 public:
 	virtual void attack(FightableEntity& other) const = 0;

@@ -10,6 +10,8 @@
 #include "Player.h"
 #include "Dragon.h"
 
+#include "OptimalItemManagerController.h"
+
 /*
 0 -> run unit tests
 1 -> normal mode
@@ -18,8 +20,10 @@
 
 void sandbox()
 {
-	Player p("ivan", 1, 1, 10, 20, 100, RandomFightController());
+	Player p("ivan", 1, 1, 10, 20, 100, RandomFightController(), OptimalItemManagerController());
 	Dragon d(1, 1, 50, 5, 200, RandomFightController());
+
+	p.acquireSpell(SharedPtr<Spell>(new Spell("abra kadabra", 1, 0.2)));
 
 	while (d.isAlive() == true)
 	{

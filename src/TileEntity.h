@@ -25,6 +25,9 @@ public:
 	TileEntity();
 	TileEntity(int r, int c);
 
+protected:
+	TileEntity(const TileEntity& other) = default;
+
 public:
 	void move(Directions dir) noexcept;
 	virtual bool canEnter() const = 0;
