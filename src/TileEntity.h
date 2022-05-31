@@ -9,6 +9,13 @@ enum class Directions
 	RIGHT
 };
 
+enum class Interactions
+{
+	INVALID,
+	BASIC,
+	FIGHT
+};
+
 class TileEntity
 {
 private:
@@ -21,6 +28,7 @@ public:
 public:
 	void move(Directions dir) noexcept;
 	virtual bool canEnter() const = 0;
+	virtual Interactions getInteractionType() const = 0;
 
 public:
 	int getR() const noexcept;

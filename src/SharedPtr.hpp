@@ -19,6 +19,9 @@ public:
 public:
 	T operator*();
 	T* operator->() const;
+
+public:
+	bool isNull() const;
 };
 
 
@@ -73,6 +76,12 @@ template<typename T>
 T* SharedPtr<T>::operator->() const
 {
 	return &*objRef;
+}
+
+template<class T>
+inline bool SharedPtr<T>::isNull() const
+{
+	return objRef==nullptr;
 }
 
 #endif // !__SHAREDPTR_HPP

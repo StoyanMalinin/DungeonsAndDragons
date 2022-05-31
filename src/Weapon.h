@@ -8,7 +8,11 @@ class Weapon : public GameItem
 private:
 	float c;
 
+public:
+	Weapon(const String& name, size_t level, float c);
 
+public:
+	float getC() const;
 };
 
 #endif

@@ -18,6 +18,7 @@ public:
 
 public:
 	bool canEnter() const override;
+	Interactions getInteractionType() const override;
 
 	void attack(FightableEntity& other) const override;
 	void receiveDamage(float damage) override;

@@ -7,6 +7,9 @@
 #include "RandomFightController.h"
 #include "Dragon.h"
 
+#include "Player.h"
+#include "Dragon.h"
+
 /*
 0 -> run unit tests
 1 -> normal mode
@@ -15,7 +18,14 @@
 
 void sandbox()
 {
+	Player p("ivan", 1, 1, 10, 20, 100, RandomFightController());
+	Dragon d(1, 1, 50, 5, 200, RandomFightController());
 
+	while (d.isAlive() == true)
+	{
+		std::cout << d.getHealth() << '\n';
+		p.attack(d);
+	}
 }
 
 int main()

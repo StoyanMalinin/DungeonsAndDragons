@@ -5,7 +5,7 @@ FightableEntity::FightableEntity(float strength, float mana, float health, const
 
 bool FightableEntity::isAlive() const
 {
-	return health>0.0f;
+	return health>0.0001f;
 }
 
 void FightableEntity::setHealth(float health)
