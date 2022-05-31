@@ -2,6 +2,8 @@
 #include "doctest.h"
 
 #include "../src/String.h"
+#include "../src/Pair.hpp"
+#include "../src/Vector.hpp"
 
 TEST_SUITE("string tests")
 {
@@ -87,5 +89,74 @@ TEST_SUITE("string tests")
 		CHECK(String("ab") > String("aa"));
 		CHECK(String("aac") < String("ab"));
 		CHECK(String("adc") >= String("ab"));
+	}
+}
+
+TEST_SUITE("pair tests")
+{
+	TEST_CASE("constructor")
+	{
+		Pair<int, int> p1(2, 3);
+		CHECK(p1.first == 2);
+		CHECK(p1.second == 3);
+
+		Pair<size_t, char> p2(22, 'y');
+		CHECK(p2.first == 22);
+		CHECK(p2.second == 'y');
+	}
+}
+
+TEST_SUITE("vector tests")
+{
+	TEST_CASE("default constructor")
+	{
+		Vector <int> v;
+		CHECK(v.getLen() == 0);
+	}
+
+	TEST_CASE("insert and erase")
+	{
+		Vector <int> v;
+
+		v.insert(0, 2);//2
+		v.insert(1, 3);//2 3
+		v.insert(1, 4);//2 4 3
+		v.insert(2, 5);//2 4 5 3
+
+		CHECK(v.getLen() == 4);
+		CHECK(v[0] == 2);
+		CHECK(v[1] == 4);
+		CHECK(v[2] == 5);
+		CHECK(v[3] == 3);
+	
+		v.erase(2);//2 4 3
+
+		CHECK(v.getLen() == 3);
+		CHECK(v[0] == 2);
+		CHECK(v[1] == 4);
+		CHECK(v[2] == 3);
+
+		v.erase(0);//4 3
+
+		CHECK(v.getLen() == 2);
+		CHECK(v[0] == 4);
+		CHECK(v[1] == 3);
+	}
+
+	TEST_CASE("pushBack, popFront and resizing")
+	{
+		const size_t n = 100;
+
+		Vector <int> v;
+		for (size_t i = 0; i < n; i++) v.pushBack(i);
+
+		for (size_t i = 0; i < n; i++)
+		{
+			CHECK(v.getLen() == n - i);
+			for (size_t j = 0; j < n - i; j++) CHECK(v[j] == i + j);
+			v.popFront();
+		}
+
+		CHECK(v.getLen() == 0);
 	}
 }

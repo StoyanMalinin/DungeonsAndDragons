@@ -10,26 +10,18 @@
 #include "Player.h"
 #include "Dragon.h"
 
+#include "Vector.hpp"
 #include "OptimalItemManagerController.h"
 
 /*
 0 -> run unit tests
 1 -> normal mode
 */
-#define PROGRAM_MODE 1
+#define PROGRAM_MODE 0
 
 void sandbox()
 {
-	Player p("ivan", 1, 1, 10, 20, 100, RandomFightController(), OptimalItemManagerController());
-	Dragon d(1, 1, 50, 5, 200, RandomFightController());
-
-	p.acquireSpell(SharedPtr<Spell>(new Spell("abra kadabra", 1, 0.2)));
-
-	while (d.isAlive() == true)
-	{
-		std::cout << d.getHealth() << '\n';
-		p.attack(d);
-	}
+	
 }
 
 int main()
