@@ -1,6 +1,8 @@
 #ifndef __VECTOR_HPP
 #define __VECTOR_HPP
 
+#include "RandomGenerator.h"
+
 template <class T>
 class Vector
 {
@@ -34,12 +36,16 @@ public:
     void insert(size_t ind, const T& x);
     void erase(size_t ind);
 
+private:
     static bool isArrayTooLarge(size_t capacity, size_t len);
     bool isArrayTooLarge() const;
     static bool isArrayTooSmall(size_t capacity, size_t len);
     bool isArrayTooSmall() const;
     void resizeIfNecessary();
     static size_t getCapacityFromLen(size_t len);
+
+public:
+    void randomShuffle(RandomGenerator& rnd);
 };
 
 template<class T>
@@ -219,6 +225,13 @@ inline size_t Vector<T>::getCapacityFromLen(size_t len)
 
     if (isArrayTooSmall(cap, len) == true) cap *= 2;
     return cap;
+}
+
+template<class T>
+inline void Vector<T>::randomShuffle(RandomGenerator& rnd)
+{
+    for (size_t i = 1; i < len; i++)
+        std::swap(data[i], data[rnd.randIntInRange(0, i)]);
 }
 
 #endif

@@ -12,3 +12,8 @@ Interactions WallTile::getInteractionType() const
 {
     return Interactions::INVALID;
 }
+
+char WallTile::getSymbol() const
+{
+    return '#';
+}

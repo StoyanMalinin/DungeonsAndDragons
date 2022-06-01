@@ -11,6 +11,7 @@ public:
 public:
 	bool canEnter() const override;
 	Interactions getInteractionType() const override;
+	char getSymbol() const override;
 };
 
 #endif // !__EMPTYTILE_H

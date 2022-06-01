@@ -1,8 +1,6 @@
 #ifndef __SHAREDPTR_HPP
 #define __SHAREDPTR_HPP
 
-#include <iostream>
-
 template <class T>
 class SharedPtr
 {
@@ -18,7 +16,7 @@ public:
 	~SharedPtr();
 
 public:
-	T operator*();
+	//T operator*();
 	T* operator->() const;
 
 public:
@@ -71,11 +69,13 @@ inline SharedPtr<T>::~SharedPtr<T>()
 	}
 }
 
+/*
 template<typename T>
 T SharedPtr<T>::operator*()
 {
 	return *objRef;
 }
+*/
 
 template<typename T>
 T* SharedPtr<T>::operator->() const

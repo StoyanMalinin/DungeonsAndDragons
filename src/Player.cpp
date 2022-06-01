@@ -14,6 +14,11 @@ Interactions Player::getInteractionType() const
 	return Interactions::INVALID;
 }
 
+char Player::getSymbol() const
+{
+	return 'P';
+}
+
 void Player::attack(FightableEntity& other) const
 {
 	AttackType at = fc->getAttackType();

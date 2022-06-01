@@ -12,3 +12,8 @@ Interactions EmptyTile::getInteractionType() const
 {
     return Interactions::BASIC;
 }
+
+char EmptyTile::getSymbol() const
+{
+    return '.';
+}

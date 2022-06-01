@@ -32,6 +32,7 @@ public:
 	void move(Directions dir) noexcept;
 	virtual bool canEnter() const = 0;
 	virtual Interactions getInteractionType() const = 0;
+	virtual char getSymbol() const = 0;
 
 public:
 	int getR() const noexcept;

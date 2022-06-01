@@ -13,6 +13,11 @@ Interactions Dragon::getInteractionType() const
 	return Interactions::FIGHT;
 }
 
+char Dragon::getSymbol() const
+{
+	return 'D';
+}
+
 void Dragon::attack(FightableEntity& other) const
 {
 	AttackType at = fc->getAttackType();
