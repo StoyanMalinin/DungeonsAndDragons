@@ -4,20 +4,14 @@
 #include "EmptyTile.h"
 #include "RandomGenerator.h"
 
-GameMap::GameMap(size_t n, size_t m)
-{
-	this->n = n;
-	this->m = m;
+#include "RandomFightController.h"
 
-	this->grid = Vector<Vector<SharedPtr<TileEntity>>>(n);
-	for (size_t i = 0; i < n; i++)
-	{
-		this->grid[i] = Vector<SharedPtr<TileEntity>>(m);
-		for (size_t j = 0; j < m; j++) grid[i][j] = SharedPtr<TileEntity>(new EmptyTile(i, j));
-	}
-}
+#include "Treasure.h"
+#include "ArmorTreasure.h"
+#include "WeaponTreasure.h"
+#include "SpellTreasure.h"
 
-GameMap::GameMap(size_t n, size_t m, size_t seed) : n(n), m(m)
+GameMap::GameMap(MapProperties& mp, size_t seed) : mp(mp), n(mp.n), m(mp.m), dragonsCount(mp.dragonsCount), treasuresCount(mp.treasuresCount)
 {
 	this->grid = Vector<Vector<SharedPtr<TileEntity>>>(n);
 	for (size_t i = 0; i < n; i++)
@@ -26,12 +20,13 @@ GameMap::GameMap(size_t n, size_t m, size_t seed) : n(n), m(m)
 		for (size_t j = 0; j < m; j++) grid[i][j] = SharedPtr<TileEntity>(new WallTile(i, j));
 	}
 
-	this->fillBySpacePartitioning(seed);
+	RandomGenerator rnd(seed);
+	this->fillBySpacePartitioning(rnd);
+	this->addDragonsAndTreasures(rnd);
 }
 
-void GameMap::fillBySpacePartitioning(size_t seed)
+void GameMap::fillBySpacePartitioning(RandomGenerator& rnd)
 {
-	RandomGenerator rnd(seed);
 	partitionSpaceRec(Rectangle(0, n - 1, 0, m - 1), rnd, false, false, 0);
 	connectCellToDungeon(0, 0, rnd);
 }
@@ -228,6 +223,29 @@ bool GameMap::randomDfsTo(Pair<int, int> x, Pair<int, int> destination, const Re
 
 	currPath.popBack();
 	return false;
+}
+
+void GameMap::addDragonsAndTreasures(RandomGenerator& rnd)
+{
+	Vector<Pair<int, int>> freeSpots;
+	for (size_t i = 0; i < n; i++)
+		for (size_t j = 0; j < m; j++)
+			if (grid[i][j]->canEnter() == true) freeSpots.pushBack({ (int)i, (int)j });
+
+	freeSpots.randomShuffle(rnd);
+	for (size_t i = 0; i < dragonsCount; i++)
+		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(new Dragon(freeSpots[i].first, freeSpots[i].second, mp.dragonStrength, mp.dragonMana, mp.dragonMana, RandomFightController()));
+	for (size_t i = dragonsCount; i < dragonsCount + treasuresCount; i++)
+	{
+		size_t type = rnd.randIntInRange(0, 2);
+		Treasure* t = nullptr;
+
+		if (type == 0) t = new ArmorTreasure(freeSpots[i].first, freeSpots[i].second, Armor("armor from treasure", 1, mp.treasureArmor));
+		else if (type == 1) t = new SpellTreasure(freeSpots[i].first, freeSpots[i].second, Spell("spell from treasure", 1, mp.treasureSpell));
+		else t = new WeaponTreasure(freeSpots[i].first, freeSpots[i].second, Weapon("weapon from treasure", 1, mp.treasureWeapon));
+
+		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(t);
+	}
 }
 
 void GameMap::debug(std::ostream& os)

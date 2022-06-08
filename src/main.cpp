@@ -1,24 +1,25 @@
 #include <iostream>
-//#include "../tests/doctest.h"
+#include "../tests/doctest.h"
 
 #include "GameMap.h"
+#include "Level.h"
 
 /*
 0 -> run unit tests
 1 -> normal mode
 */
-#define PROGRAM_MODE 1
+#define PROGRAM_MODE 0
 
 void sandbox()
 {
-	GameMap mp(50, 50, 19);
+	GameMap mp(Level::getMapPropertiesByNumber(2), 22);
 	mp.debug(std::cout);
 }
 
 int main()
 {
 #if (PROGRAM_MODE==0)
-	//doctest::Context().run();
+	doctest::Context().run();
 #elif (PROGRAM_MODE==1)
 	sandbox();
 #else

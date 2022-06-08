@@ -5,6 +5,16 @@
 #include "../src/Pair.hpp"
 #include "../src/Vector.hpp"
 
+#include "../src/Player.h"
+#include "../src/Treasure.h"
+#include "../src/ArmorTreasure.h"
+#include "../src/SpellTreasure.h"
+#include "../src/WeaponTreasure.h"
+
+#include "../src/FightController.h"
+#include "../src/RandomFightController.h"
+#include "../src/OptimalItemManagerController.h"
+
 TEST_SUITE("string tests")
 {
 	TEST_CASE("constructor and getLen")
@@ -158,5 +168,25 @@ TEST_SUITE("vector tests")
 		}
 
 		CHECK(v.getLen() == 0);
+	}
+}
+
+TEST_SUITE("treasure and player tests")
+{
+	TEST_CASE("give armor to player")
+	{
+		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController());
+
+		Treasure *t1 = new ArmorTreasure(1, 1, Armor("bronq1", 1, 20));
+		Treasure *t2 = new ArmorTreasure(1, 1, Armor("bronq2", 1, 10));
+		Treasure *t3 = new ArmorTreasure(1, 1, Armor("bronq3", 1, 30));
+		
+		CHECK(t1->giveToPlayer(p)==true);
+		CHECK(t2->giveToPlayer(p)==false);
+		CHECK(t3->giveToPlayer(p)==true);
+		
+		delete t1;
+		delete t2;
+		delete t3;
 	}
 }
