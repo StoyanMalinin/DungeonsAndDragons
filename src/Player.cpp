@@ -1,7 +1,10 @@
 #include "Player.h"
 
-Player::Player(const String& name, int r, int c, float strength, float mana, float health, const FightController& fc, const ItemManagerController& imc) 
-	: TileEntity(r, c), FightableEntity(strength, mana, health, fc), name(name), armor(nullptr), spell(nullptr), weapon(nullptr), imc(imc.clone())
+#include "FightMaster.h"
+#include "ItemExchangeMaster.h"
+
+Player::Player(const String& name, int r, int c, float strength, float mana, float health, const FightController& fc, const ItemManagerController& imc, ItemExchangeMaster& iem, FightMaster &fm)
+	: TileEntity(r, c), FightableEntity(strength, mana, health, fc, fm), name(name), armor(nullptr), spell(nullptr), weapon(nullptr), imc(imc.clone()), iem(iem)
 {}
 
 bool Player::canEnter() const
@@ -77,4 +80,41 @@ bool Player::acquireWeapon(SharedPtr<Weapon> w)
 	}
 
 	return false;
+}
+
+const Spell* Player::getSpell() const
+{
+	return spell.getRaw();
+}
+
+const Armor* Player::getArmor() const
+{
+	return armor.getRaw();
+}
+
+const Weapon* Player::getWeapon() const
+{
+	return weapon.getRaw();
+}
+
+void Player::interact(GameEntity* other)
+{
+	if (other == nullptr) throw std::logic_error("cannot interact with nullptr");
+	
+	iem.setReceiver(this);
+	fm.setFighter(this);
+	other->interactInternal(this);
+	iem.flush();
+	fm.flush();
+}
+
+void Player::interactInternal(GameEntity* other)
+{
+	//acquire items
+	iem.setReceiver(this);
+	iem.flush();
+
+	//fight
+	fm.setFighter(this);
+	fm.flush();
 }

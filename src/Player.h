@@ -11,6 +11,9 @@
 #include "Weapon.h"
 #include "ItemManagerController.h"
 
+class ItemExchangeMaster;
+class FightMaster;
+
 class Player : public TileEntity, public FightableEntity
 {
 private:
@@ -18,10 +21,12 @@ private:
 	SharedPtr <Spell> spell;
 	SharedPtr <Armor> armor;
 	SharedPtr <Weapon> weapon;
+
 	SharedPtr<ItemManagerController> imc;
+	ItemExchangeMaster &iem;
 
 public:
-	Player(const String& name, int r, int c, float strength, float mana, float health, const FightController& fc, const ItemManagerController& imc);
+	Player(const String& name, int r, int c, float strength, float mana, float health, const FightController& fc, const ItemManagerController& imc, ItemExchangeMaster &iem, FightMaster &fm);
 
 public:
 	bool canEnter() const override;
@@ -35,6 +40,15 @@ public:
 	bool acquireSpell(SharedPtr<Spell> s);
 	bool acquireArmor(SharedPtr<Armor> a);
 	bool acquireWeapon(SharedPtr<Weapon> w);
+
+public:
+	const Spell* getSpell() const;
+	const Armor* getArmor() const;
+	const Weapon* getWeapon() const;
+
+public:
+	void interact(GameEntity* other) override;
+	void interactInternal(GameEntity* other) override;
 };
 
 #endif

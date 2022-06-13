@@ -10,7 +10,7 @@ private:
 	Spell spell;
 
 public:
-	SpellTreasure(int r, int c, const Spell& spell);
+	SpellTreasure(int r, int c, ItemExchangeMaster& iem, const Spell& spell);
 	Treasure* clone() const override;
 
 public:

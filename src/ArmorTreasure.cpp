@@ -1,6 +1,6 @@
 #include "ArmorTreasure.h"
 
-ArmorTreasure::ArmorTreasure(int r, int c, const Armor& armor) : Treasure(r, c), armor(armor)
+ArmorTreasure::ArmorTreasure(int r, int c, ItemExchangeMaster& iem, const Armor& armor) : Treasure(r, c, iem), armor(armor)
 {}
 
 Treasure* ArmorTreasure::clone() const

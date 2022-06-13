@@ -3,17 +3,21 @@
 
 #include "FightController.h"
 #include "SharedPtr.hpp"
+#include "GameEntity.h"
 
-class FightableEntity
+class FightMaster;
+
+class FightableEntity : public virtual GameEntity
 {
 private:
 	float strength, mana, health;
 
 protected:
 	SharedPtr<FightController> fc;
+	FightMaster& fm;
 
 public:
-	FightableEntity(float strength, float mana, float health, const FightController& fc);
+	FightableEntity(float strength, float mana, float health, const FightController& fc, FightMaster &fm);
 protected:
 	FightableEntity(const FightableEntity& other) = default;
 
@@ -29,6 +33,10 @@ public:
 	float getStrength() const;
 	float getMana() const;
 	float getHealth() const;
+
+protected:
+	void interact(GameEntity* other) override;
+	virtual void interactInternal(FightableEntity* other);
 
 public:
 	virtual ~FightableEntity();

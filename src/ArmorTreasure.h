@@ -10,9 +10,9 @@ private:
 	Armor armor;
 
 public:
-	ArmorTreasure(int r, int c, const Armor& armor);
+	ArmorTreasure(int r, int c, ItemExchangeMaster& iem, const Armor& armor);
 	Treasure* clone() const override;
-
+	
 public:
 	bool giveToPlayer(Player& p) override;
 };

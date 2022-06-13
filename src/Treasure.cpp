@@ -1,6 +1,8 @@
 #include "Treasure.h"
 
-Treasure::Treasure(int r, int c) : TileEntity(r, c), isTaken(false)
+#include "ItemExchangeMaster.h"
+
+Treasure::Treasure(int r, int c, ItemExchangeMaster& iem) : TileEntity(r, c), isTaken(false), iem(iem)
 {}
 
 bool Treasure::canEnter() const
@@ -16,4 +18,24 @@ Interactions Treasure::getInteractionType() const
 char Treasure::getSymbol() const
 {
 	return 'T';
+}
+
+bool Treasure::getIsTaken() const
+{
+	return isTaken;
+}
+
+void Treasure::interact(GameEntity* other)
+{
+	if (other == nullptr) throw std::logic_error("cannot interact with nullptr");
+	
+	iem.setGiver(this);
+	other->interactInternal(this);
+	iem.flush();
+}
+
+void Treasure::interactInternal(GameEntity* other)
+{
+	iem.setGiver(this);
+	iem.flush();
 }

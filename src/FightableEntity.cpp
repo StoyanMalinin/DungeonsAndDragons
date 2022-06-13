@@ -1,6 +1,12 @@
 #include "FightableEntity.h"
 
-FightableEntity::FightableEntity(float strength, float mana, float health, const FightController& fc) : strength(strength), mana(mana), health(health), fc(fc.clone())
+#include <stdexcept>
+
+#include "FightMaster.h"
+#include "GlobalRandomGenerator.h"
+
+FightableEntity::FightableEntity(float strength, float mana, float health, const FightController& fc, FightMaster &fm) 
+	                            : strength(strength), mana(mana), health(health), fc(fc.clone()), fm(fm)
 {}
 
 bool FightableEntity::isAlive() const
@@ -27,6 +33,21 @@ float FightableEntity::getMana() const
 float FightableEntity::getHealth() const
 {
 	return health;
+}
+
+void FightableEntity::interact(GameEntity* other)
+{
+	if (other == nullptr) throw std::logic_error("cannot interact with nullptr");
+
+	fm.setFighter(this);
+	other->interactInternal(this);
+	fm.flush();
+}
+
+void FightableEntity::interactInternal(FightableEntity* other)
+{
+	fm.setFighter(this);
+	fm.flush();
 }
 
 FightableEntity::~FightableEntity()

@@ -1,5 +1,7 @@
 #include "TileEntity.h"
 
+#include <stdexcept>
+
 TileEntity::TileEntity() : r(0), c(0)
 {}
 
@@ -24,6 +26,12 @@ int TileEntity::getR() const noexcept
 int TileEntity::getC() const noexcept
 {
 	return c;
+}
+
+void TileEntity::interact(GameEntity* other)
+{
+	if (other == nullptr) throw std::logic_error("cannot interact with nullptr");
+	other->interactInternal(this);
 }
 
 TileEntity::~TileEntity()

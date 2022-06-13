@@ -1,12 +1,14 @@
 #ifndef __DRAGON_H
 #define __DRAGON_H
 
+#include "Armor.h"
+#include "GameEntity.h"
 #include "TileEntity.h"
 #include "FightableEntity.h"
 
 #include "FightController.h"
 
-#include "Armor.h"
+class FightMaster;
 
 class Dragon : public TileEntity, public FightableEntity
 {
@@ -14,7 +16,7 @@ private:
 	Armor armor;
 
 public:
-	Dragon(int r, int c, float strength, float mana, float health, const FightController& fc);
+	Dragon(int r, int c, float strength, float mana, float health, const FightController& fc, FightMaster &fm);
 
 public:
 	bool canEnter() const override;
@@ -23,6 +25,10 @@ public:
 
 	void attack(FightableEntity& other) const override;
 	void receiveDamage(float damage) override;
+
+public:
+	void interact(GameEntity* other) override;
+	void interactInternal(GameEntity* other) override;
 };
 
 #endif

@@ -11,6 +11,9 @@
 #include "WeaponTreasure.h"
 #include "SpellTreasure.h"
 
+#include "ItemExchangeMaster.h"
+#include "FightMaster.h"
+
 GameMap::GameMap(MapProperties& mp, size_t seed) : mp(mp), n(mp.n), m(mp.m), dragonsCount(mp.dragonsCount), treasuresCount(mp.treasuresCount)
 {
 	this->grid = Vector<Vector<SharedPtr<TileEntity>>>(n);
@@ -234,15 +237,15 @@ void GameMap::addDragonsAndTreasures(RandomGenerator& rnd)
 
 	freeSpots.randomShuffle(rnd);
 	for (size_t i = 0; i < dragonsCount; i++)
-		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(new Dragon(freeSpots[i].first, freeSpots[i].second, mp.dragonStrength, mp.dragonMana, mp.dragonMana, RandomFightController()));
+		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(new Dragon(freeSpots[i].first, freeSpots[i].second, mp.dragonStrength, mp.dragonMana, mp.dragonMana, RandomFightController(), FightMaster::getGlobalInstance()));
 	for (size_t i = dragonsCount; i < dragonsCount + treasuresCount; i++)
 	{
 		size_t type = rnd.randIntInRange(0, 2);
 		Treasure* t = nullptr;
 
-		if (type == 0) t = new ArmorTreasure(freeSpots[i].first, freeSpots[i].second, Armor("armor from treasure", 1, mp.treasureArmor));
-		else if (type == 1) t = new SpellTreasure(freeSpots[i].first, freeSpots[i].second, Spell("spell from treasure", 1, mp.treasureSpell));
-		else t = new WeaponTreasure(freeSpots[i].first, freeSpots[i].second, Weapon("weapon from treasure", 1, mp.treasureWeapon));
+		if (type == 0) t = new ArmorTreasure(freeSpots[i].first, freeSpots[i].second, ItemExchangeMaster::getGlobalInstance(), Armor("armor from treasure", 1, mp.treasureArmor));
+		else if (type == 1) t = new SpellTreasure(freeSpots[i].first, freeSpots[i].second, ItemExchangeMaster::getGlobalInstance(), Spell("spell from treasure", 1, mp.treasureSpell));
+		else t = new WeaponTreasure(freeSpots[i].first, freeSpots[i].second, ItemExchangeMaster::getGlobalInstance(), Weapon("weapon from treasure", 1, mp.treasureWeapon));
 
 		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(t);
 	}

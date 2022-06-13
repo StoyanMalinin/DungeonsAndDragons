@@ -5,6 +5,7 @@
 #include "../src/Pair.hpp"
 #include "../src/Vector.hpp"
 
+#include "../src/Dragon.h"
 #include "../src/Player.h"
 #include "../src/Treasure.h"
 #include "../src/ArmorTreasure.h"
@@ -14,6 +15,9 @@
 #include "../src/FightController.h"
 #include "../src/RandomFightController.h"
 #include "../src/OptimalItemManagerController.h"
+
+#include "../src/ItemExchangeMaster.h"
+#include "../src/FightMaster.h"
 
 TEST_SUITE("string tests")
 {
@@ -175,11 +179,11 @@ TEST_SUITE("treasure and player tests")
 {
 	TEST_CASE("give armor to player")
 	{
-		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController());
+		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
-		Treasure *t1 = new ArmorTreasure(1, 1, Armor("bronq1", 1, 20));
-		Treasure *t2 = new ArmorTreasure(1, 1, Armor("bronq2", 1, 10));
-		Treasure *t3 = new ArmorTreasure(1, 1, Armor("bronq3", 1, 30));
+		Treasure *t1 = new ArmorTreasure(1, 1, ItemExchangeMaster::getGlobalInstance(), Armor("bronq1", 1, 0.20f));
+		Treasure *t2 = new ArmorTreasure(1, 1, ItemExchangeMaster::getGlobalInstance(), Armor("bronq2", 1, 0.10f));
+		Treasure *t3 = new ArmorTreasure(1, 1, ItemExchangeMaster::getGlobalInstance(), Armor("bronq3", 1, 0.30f));
 		
 		CHECK(t1->giveToPlayer(p)==true);
 		CHECK(t2->giveToPlayer(p)==false);
@@ -188,5 +192,58 @@ TEST_SUITE("treasure and player tests")
 		delete t1;
 		delete t2;
 		delete t3;
+	}
+}
+
+TEST_SUITE("interaction tests")
+{
+	TEST_CASE("treasure vs treasure")
+	{
+		ArmorTreasure t1(1, 1, ItemExchangeMaster::getGlobalInstance(), Armor("strong armor", 1, 0.10f));
+		SpellTreasure t2(1, 1, ItemExchangeMaster::getGlobalInstance(), Spell("dark spell", 2, 0.22f));
+
+		t1.interact(&t2);
+		CHECK(true);
+	}
+
+	TEST_CASE("player vs treasure")
+	{
+		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		Armor armor("strong armor", 1, 0.10f);
+		ArmorTreasure at(1, 1, ItemExchangeMaster::getGlobalInstance(), armor);
+		
+		Spell spell("dark magic", 2, 0.20f);
+		SpellTreasure st(1, 1, ItemExchangeMaster::getGlobalInstance(), spell);
+
+		p.interact(&at);
+		st.interact(&p);
+
+		CHECK(p.getArmor() != nullptr);
+		CHECK(p.getArmor()->getName()==armor.getName());
+		CHECK(p.getArmor()->getLevel()==armor.getLevel());
+		CHECK(at.getIsTaken() == true);
+
+		CHECK(p.getSpell() != nullptr);
+		CHECK(p.getSpell()->getName() == spell.getName());
+		CHECK(p.getSpell()->getLevel() == spell.getLevel());
+		CHECK(at.getIsTaken() == true);
+	}
+
+	TEST_CASE("player vs dragon")
+	{
+		Player p("stoyan", 1, 1, 100, 100, 100, RandomFightController(), OptimalItemManagerController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		Dragon d(1, 1, 10, 10, 10, RandomFightController(), FightMaster::getGlobalInstance());
+	
+		p.interact(&d);
+		CHECK(d.isAlive() == false);
+	}
+
+	TEST_CASE("dragon vs dragon")
+	{
+		Dragon d1(1, 1, 10, 10, 10, RandomFightController(), FightMaster::getGlobalInstance());
+		Dragon d2(1, 1, 10, 10, 10, RandomFightController(), FightMaster::getGlobalInstance());
+
+		d1.interact(&d2);
+		CHECK(!(d1.isAlive()==true && d2.isAlive()==true));
 	}
 }

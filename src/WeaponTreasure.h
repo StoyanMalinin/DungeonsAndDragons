@@ -10,7 +10,7 @@ private:
 	Weapon weapon;
 
 public:
-	WeaponTreasure(int r, int c,const Weapon& weapon);
+	WeaponTreasure(int r, int c, ItemExchangeMaster& iem, const Weapon& weapon);
 	Treasure* clone() const override;
 
 public:

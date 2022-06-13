@@ -1,6 +1,8 @@
 #ifndef __HILEENTITY_H
 #define __HILEENTITY_H
 
+#include "GameEntity.h"
+
 enum class Directions
 {
 	UP,
@@ -16,7 +18,7 @@ enum class Interactions
 	FIGHT
 };
 
-class TileEntity
+class TileEntity : public virtual GameEntity
 {
 private:
 	int r, c;
@@ -37,6 +39,9 @@ public:
 public:
 	int getR() const noexcept;
 	int getC() const noexcept;
+
+public:
+	void interact(GameEntity* other) override;
 
 public:
 	virtual ~TileEntity();

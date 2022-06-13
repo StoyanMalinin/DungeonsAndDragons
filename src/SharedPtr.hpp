@@ -16,11 +16,12 @@ public:
 	~SharedPtr();
 
 public:
-	//T operator*();
 	T* operator->() const;
 
 public:
 	bool isNull() const;
+	T* getRaw();
+	const T* getRaw() const;
 };
 
 
@@ -69,14 +70,6 @@ inline SharedPtr<T>::~SharedPtr<T>()
 	}
 }
 
-/*
-template<typename T>
-T SharedPtr<T>::operator*()
-{
-	return *objRef;
-}
-*/
-
 template<typename T>
 T* SharedPtr<T>::operator->() const
 {
@@ -87,6 +80,18 @@ template<class T>
 inline bool SharedPtr<T>::isNull() const
 {
 	return objRef==nullptr;
+}
+
+template<class T>
+inline T* SharedPtr<T>::getRaw()
+{
+	return ojRef;
+}
+
+template<class T>
+inline const T* SharedPtr<T>::getRaw() const
+{
+	return objRef;
 }
 
 #endif // !__SHAREDPTR_HPP

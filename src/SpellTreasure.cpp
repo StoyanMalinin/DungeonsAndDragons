@@ -1,6 +1,6 @@
 #include "SpellTreasure.h"
 
-SpellTreasure::SpellTreasure(int r, int c, const Spell& spell) : Treasure(r, c), spell(spell)
+SpellTreasure::SpellTreasure(int r, int c, ItemExchangeMaster& iem, const Spell& spell) : Treasure(r, c, iem), spell(spell)
 {}
 
 Treasure* SpellTreasure::clone() const
