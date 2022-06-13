@@ -2,8 +2,8 @@
 
 #include <stdexcept>
 
-#include "FightMaster.h"
-#include "GlobalRandomGenerator.h"
+#include "../FightMaster.h"
+#include "../../Utils/GlobalRandomGenerator.h"
 
 FightableEntity::FightableEntity(float strength, float mana, float health, const FightController& fc, FightMaster &fm) 
 	                            : strength(strength), mana(mana), health(health), fc(fc.clone()), fm(fm)

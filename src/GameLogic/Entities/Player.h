@@ -1,15 +1,16 @@
 #ifndef __PLAYER_H
 #define __PLAYER_H
 
-#include "String.h"
+#include "../../Utils/SharedPtr.hpp"
+#include "../../Utils/String.h"
+
 #include "TileEntity.h"
-#include "SharedPtr.hpp"
 #include "FightableEntity.h"
 
-#include "Armor.h"
-#include "Spell.h"
-#include "Weapon.h"
-#include "ItemManagerController.h"
+#include "Items/Armor.h"
+#include "Items/Spell.h"
+#include "Items/Weapon.h"
+#include "Controllers/ItemManagerController.h"
 
 class ItemExchangeMaster;
 class FightMaster;

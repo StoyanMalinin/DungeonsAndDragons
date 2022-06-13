@@ -1,6 +1,6 @@
 #include "Dragon.h"
 
-#include "FightMaster.h"
+#include "../FightMaster.h"
 
 Dragon::Dragon(int r, int c, float strength, float mana, float health, const FightController &fc, FightMaster &fm) 
 	           : TileEntity(r, c), FightableEntity(strength, mana, health, fc, fm), armor("scales", 1, 0.15f)

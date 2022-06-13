@@ -1,7 +1,7 @@
 #ifndef __ARMOR_H
 #define __ARMOR_H
 
-#include "String.h"
+#include "../../../Utils/String.h"
 #include "GameItem.h"
 
 class Armor : public GameItem

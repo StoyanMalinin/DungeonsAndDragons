@@ -1,9 +1,8 @@
 #ifndef __SANDBOX_H
 
-#include "GameMap.h"
-#include "Level.h"
-
-#include "ItemExchangeMaster.h"
+#include "GameLogic/Level.h"
+#include "GameLogic/GameMap.h"
+#include "GameLogic/ItemExchangeMaster.h"
 
 void sandbox()
 {

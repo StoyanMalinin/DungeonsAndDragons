@@ -1,8 +1,8 @@
 #ifndef __FIGHTABLEENTITY_H
 #define __FIGHTABLEENTITY_H
 
-#include "FightController.h"
-#include "SharedPtr.hpp"
+#include "Controllers/FightController.h"
+#include "../../Utils/SharedPtr.hpp"
 #include "GameEntity.h"
 
 class FightMaster;

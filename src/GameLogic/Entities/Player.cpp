@@ -1,7 +1,7 @@
 #include "Player.h"
 
-#include "FightMaster.h"
-#include "ItemExchangeMaster.h"
+#include "../FightMaster.h"
+#include "../ItemExchangeMaster.h"
 
 Player::Player(const String& name, int r, int c, float strength, float mana, float health, const FightController& fc, const ItemManagerController& imc, ItemExchangeMaster& iem, FightMaster &fm)
 	: TileEntity(r, c), FightableEntity(strength, mana, health, fc, fm), name(name), armor(nullptr), spell(nullptr), weapon(nullptr), imc(imc.clone()), iem(iem)

@@ -1,11 +1,11 @@
 #ifndef __OPTIMALITEMMANAGERCONTROLLER_H
 #define __OPTIMALITEMMANAGERCONTROLLER_H
 
-#include "Spell.h"
-#include "Armor.h"
-#include "Weapon.h"
-#include "SharedPtr.hpp"
+#include "../Items/Spell.h"
+#include "../Items/Armor.h"
+#include "../Items/Weapon.h"
 #include "ItemManagerController.h"
+#include "../../../Utils/SharedPtr.hpp"
 
 class OptimalItemManagerController : public ItemManagerController
 {

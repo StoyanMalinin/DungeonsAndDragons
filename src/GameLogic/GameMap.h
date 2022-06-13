@@ -1,13 +1,13 @@
 #ifndef __GAMEMAP_H
 #define __GAMEMAP_H
 
-#include "Dragon.h"
-#include "Player.h"
-#include "Vector.hpp"
+#include "Entities/Dragon.h"
+#include "Entities/Player.h"
+#include "../Utils/Vector.hpp"
 
-#include "Pair.hpp"
-#include "Rectangle.h"
-#include "RandomGenerator.h"
+#include "../Utils/Pair.hpp"
+#include "../Utils/Rectangle.h"
+#include "../Utils/RandomGenerator.h"
 
 #include "MapProperties.h"
 

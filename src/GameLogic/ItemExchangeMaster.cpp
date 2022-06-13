@@ -1,12 +1,10 @@
 #include "ItemExchangeMaster.h"
 
-#include "Player.h"
-#include "Treasure.h"
+#include "Entities/Player.h"
+#include "Entities/Items/Treasure.h"
 
 ItemExchangeMaster::ItemExchangeMaster() : receiver(nullptr), giver(nullptr)
-{
-
-}
+{}
 
 void ItemExchangeMaster::setReceiver(Player * receiver)
 {

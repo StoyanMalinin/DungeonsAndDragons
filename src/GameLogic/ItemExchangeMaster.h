@@ -1,8 +1,6 @@
 #ifndef __ITEMEXCHANGEMASTER_H
 #define __ITEMEXCHANGEMASTER_H
 
-//#include "Player.h"
-//#include "Treasure.h"
 #include "InteractionMaster.h"
 
 class Player;
@@ -16,8 +14,6 @@ private:
 
 public:
 	ItemExchangeMaster();
-	//ItemExchangeMaster(const ItemExchangeMaster& other) = delete;
-	//ItemExchangeMaster& operator=(const ItemExchangeMaster& other) = delete;
 	
 public:
 	void setReceiver(Player *receiver);

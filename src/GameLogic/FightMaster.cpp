@@ -1,7 +1,7 @@
 #include "FightMaster.h"
 
-#include "FightableEntity.h"
-#include "GlobalRandomGenerator.h"
+#include "Entities/FightableEntity.h"
+#include "../Utils/GlobalRandomGenerator.h"
 
 FightMaster::FightMaster() : f1(nullptr), f2(nullptr)
 {}

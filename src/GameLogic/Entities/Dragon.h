@@ -1,12 +1,11 @@
 #ifndef __DRAGON_H
 #define __DRAGON_H
 
-#include "Armor.h"
-#include "GameEntity.h"
+#include "Items/Armor.h"
 #include "TileEntity.h"
 #include "FightableEntity.h"
 
-#include "FightController.h"
+#include "Controllers/FightController.h"
 
 class FightMaster;
 

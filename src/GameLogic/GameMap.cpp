@@ -1,15 +1,15 @@
 #include "GameMap.h"
 
-#include "WallTile.h"
-#include "EmptyTile.h"
-#include "RandomGenerator.h"
+#include "Entities/WallTile.h"
+#include "Entities/EmptyTile.h"
+#include "../Utils/RandomGenerator.h"
 
-#include "RandomFightController.h"
+#include "Entities/Controllers/RandomFightController.h"
 
-#include "Treasure.h"
-#include "ArmorTreasure.h"
-#include "WeaponTreasure.h"
-#include "SpellTreasure.h"
+#include "Entities/Items/Treasure.h"
+#include "Entities/Items/ArmorTreasure.h"
+#include "Entities/Items/WeaponTreasure.h"
+#include "Entities/Items/SpellTreasure.h"
 
 #include "ItemExchangeMaster.h"
 #include "FightMaster.h"

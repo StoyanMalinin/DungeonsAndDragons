@@ -1,7 +1,7 @@
 #ifndef __GAMEITEM_H
 #define __GAMEITEM_H
 
-#include "String.h"
+#include "../../../Utils/String.h"
 
 class GameItem
 {

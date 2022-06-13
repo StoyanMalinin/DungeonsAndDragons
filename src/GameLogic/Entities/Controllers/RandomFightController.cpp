@@ -1,5 +1,5 @@
 #include "RandomFightController.h"
-#include "GlobalRandomGenerator.h"
+#include "../../../Utils/GlobalRandomGenerator.h"
 
 AttackType RandomFightController::getAttackType()
 {

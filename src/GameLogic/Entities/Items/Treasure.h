@@ -1,11 +1,10 @@
 #ifndef __TREASURE_H
 #define __TREASURE_H
 
-#include "Player.h"
-#include "TileEntity.h"
+#include "../Player.h"
+#include "../TileEntity.h"
 
 class InteractionMaster;
-//#include "ItemExchangeMaster.h"
 
 class Treasure : public TileEntity
 {

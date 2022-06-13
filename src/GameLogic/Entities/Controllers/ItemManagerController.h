@@ -1,10 +1,10 @@
 #ifndef __ITEMMANAGERCONTROLLER_H
 #define __ITEMMANAGERCONTROLLER_H
 
-#include "Spell.h"
-#include "Armor.h"
-#include "Weapon.h"
-#include "SharedPtr.hpp"
+#include "../Items/Spell.h"
+#include "../Items/Armor.h"
+#include "../Items/Weapon.h"
+#include "../../../Utils/SharedPtr.hpp"
 
 class ItemManagerController
 {
