@@ -4,7 +4,7 @@
 #include "../../Utils/SharedPtr.hpp"
 #include "../../Utils/String.h"
 
-#include "TileEntity.h"
+#include "MovableTileEntity.h"
 #include "FightableEntity.h"
 
 #include "Items/Armor.h"
@@ -15,7 +15,7 @@
 class ItemExchangeMaster;
 class FightMaster;
 
-class Player : public TileEntity, public FightableEntity
+class Player : public MovableTileEntity, public FightableEntity
 {
 private:
 	String name;
@@ -27,7 +27,11 @@ private:
 	ItemExchangeMaster &iem;
 
 public:
-	Player(const String& name, int r, int c, float strength, float mana, float health, const FightController& fc, const ItemManagerController& imc, ItemExchangeMaster &iem, FightMaster &fm);
+	Player(const String& name, int r, int c, float strength, float mana, float health, 
+		   const FightController& fc, const ItemManagerController& imc, const MoveController& mc, 
+		   ItemExchangeMaster &iem, FightMaster &fm);
+protected:
+	Player(const Player& other) = default;
 
 public:
 	bool canEnter() const override;

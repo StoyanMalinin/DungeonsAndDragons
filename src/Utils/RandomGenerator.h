@@ -16,6 +16,8 @@ public:
 	int randIntInRange(int l, int r);
 	float randFloat(); //returns a float number in the interval [0, 1]
 	bool randBool();
+
+	int peekRandIntInRange(int l, int r);
 };
 
 #endif

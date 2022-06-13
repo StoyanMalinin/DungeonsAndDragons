@@ -14,6 +14,7 @@
 
 #include "../src/GameLogic/Entities/Controllers/FightController.h"
 #include "../src/GameLogic/Entities/Controllers/RandomFightController.h"
+#include "../src/GameLogic/Entities/Controllers/OnlyDownMoveController.h"
 #include "../src/GameLogic/Entities/Controllers/OptimalItemManagerController.h"
 
 #include "../src/GameLogic/ItemExchangeMaster.h"
@@ -179,7 +180,7 @@ TEST_SUITE("treasure and player tests")
 {
 	TEST_CASE("give armor to player")
 	{
-		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
 		Treasure *t1 = new ArmorTreasure(1, 1, ItemExchangeMaster::getGlobalInstance(), Armor("bronq1", 1, 0.20f));
 		Treasure *t2 = new ArmorTreasure(1, 1, ItemExchangeMaster::getGlobalInstance(), Armor("bronq2", 1, 0.10f));
@@ -217,7 +218,7 @@ TEST_SUITE("interaction tests")
 
 	TEST_CASE("player vs treasure 1")
 	{
-		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 		Armor armor("strong armor", 1, 0.10f);
 		ArmorTreasure at(1, 1, ItemExchangeMaster::getGlobalInstance(), armor);
 		
@@ -240,7 +241,7 @@ TEST_SUITE("interaction tests")
 
 	TEST_CASE("player vs treasure 2")
 	{
-		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 		
 		Weapon w1("w1", 1, 0.10f), w2("w2", 1, 0.20f);
 		WeaponTreasure wt1(1, 1, ItemExchangeMaster::getGlobalInstance(), w1);
@@ -261,7 +262,7 @@ TEST_SUITE("interaction tests")
 
 	TEST_CASE("player vs treasure 3")
 	{
-		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
 		Weapon w1("w1", 1, 0.10f), w2("w2", 1, 0.05f);
 		WeaponTreasure wt1(1, 1, ItemExchangeMaster::getGlobalInstance(), w1);
@@ -282,7 +283,7 @@ TEST_SUITE("interaction tests")
 
 	TEST_CASE("player vs dragon")
 	{
-		Player p("stoyan", 1, 1, 100, 100, 100, RandomFightController(), OptimalItemManagerController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		Player p("stoyan", 1, 1, 100, 100, 100, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 		Dragon d(1, 1, 10, 10, 10, RandomFightController(), FightMaster::getGlobalInstance());
 	
 		p.interact(&d);
@@ -296,5 +297,18 @@ TEST_SUITE("interaction tests")
 
 		d1.interact(&d2);
 		CHECK(!(d1.isAlive()==true && d2.isAlive()==true));
+	}
+}
+
+TEST_SUITE("controller tests")
+{
+	TEST_CASE("move player 1")
+	{
+		Player p("stoyan", 1, 1, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+		CHECK(p.peekNxtPosition() == Pair<int, int>(2, 1));
+		p.move();
+		CHECK(p.getR() == 2);
+		CHECK(p.getC() == 1);
 	}
 }

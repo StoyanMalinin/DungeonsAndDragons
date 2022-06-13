@@ -8,6 +8,7 @@ class Level
 private:
 	size_t number;
 	GameMap mp;
+	Player p;
 
 public:
 	Level(size_t number, size_t seed);

@@ -29,3 +29,12 @@ bool RandomGenerator::randBool()
 {
 	return rnd() % 2;
 }
+
+int RandomGenerator::peekRandIntInRange(int l, int r)
+{
+	std::mt19937 rndCpy(rnd);
+	int res = randIntInRange(l, r);
+	rnd = rndCpy;
+
+	return res;
+}

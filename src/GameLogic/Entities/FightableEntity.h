@@ -20,6 +20,8 @@ public:
 	FightableEntity(float strength, float mana, float health, const FightController& fc, FightMaster &fm);
 protected:
 	FightableEntity(const FightableEntity& other) = default;
+public:
+	FightableEntity& operator=(FightableEntity& other) = delete;
 
 public:
 	virtual void attack(FightableEntity& other) const = 0;

@@ -16,6 +16,8 @@ private:
 
 public:
 	Dragon(int r, int c, float strength, float mana, float health, const FightController& fc, FightMaster &fm);
+protected:
+	Dragon(const Dragon& other) = default;
 
 public:
 	bool canEnter() const override;

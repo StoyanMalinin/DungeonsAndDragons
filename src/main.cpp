@@ -3,12 +3,11 @@
 #include "Sandbox.h"
 #include "../tests/doctest.h"
 
-
 /*
 0 -> run unit tests
 1 -> normal mode
 */
-#define PROGRAM_MODE 0
+#define PROGRAM_MODE 1
 
 int main()
 {

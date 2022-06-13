@@ -3,14 +3,6 @@
 
 #include "GameEntity.h"
 
-enum class Directions
-{
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
-};
-
 enum class Interactions
 {
 	INVALID,
@@ -20,7 +12,7 @@ enum class Interactions
 
 class TileEntity : public virtual GameEntity
 {
-private:
+protected:
 	int r, c;
 
 public:
@@ -31,7 +23,6 @@ protected:
 	TileEntity(const TileEntity& other) = default;
 
 public:
-	void move(Directions dir) noexcept;
 	virtual bool canEnter() const = 0;
 	virtual Interactions getInteractionType() const = 0;
 	virtual char getSymbol() const = 0;
