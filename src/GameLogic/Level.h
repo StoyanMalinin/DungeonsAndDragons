@@ -3,15 +3,21 @@
 
 #include "GameMap.h"
 
+enum class LevelOutcome
+{
+	COMPLETED,
+	PLAYER_DIED,
+};
+
 class Level
 {
 private:
 	size_t number;
-	GameMap mp;
-	Player p;
+	GameMap &mp;
+	Player &p;
 
 public:
-	//Level(size_t number, size_t seed);
+	Level(size_t number, GameMap &mp, Player &p);
 
 public:
 	static size_t getMapRowCountByNumber(size_t number);
@@ -19,6 +25,9 @@ public:
 	static size_t getDragonCountByNumber(size_t number);
 	static size_t getTreasureCountByNumber(size_t number);
 	static MapProperties getMapPropertiesByNumber(size_t number);
+
+public:
+	LevelOutcome play();
 
 private:
 	static size_t getNthMemberOfFibonacciLikeSequence(size_t n, size_t f1, size_t f2);

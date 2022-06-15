@@ -34,6 +34,11 @@ char UIHandler::requestItemManagementDecision(const GameItem* oldItem, const Gam
 	return requestCharChoice(choices);
 }
 
+void UIHandler::writeMessage(const String& s)
+{
+	os << s << '\n';
+}
+
 char UIHandler::requestMoveType(const GameMap& mp, const MovableTileEntity& curr)
 {
 	for (size_t i = 0; i < mp.getN(); i++)

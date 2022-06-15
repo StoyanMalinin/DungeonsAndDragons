@@ -34,6 +34,9 @@ public:
 	char requestAttackType(const FightableEntity &you, const FightableEntity &opponent);
 	char requestItemManagementDecision(const GameItem* oldItem, const GameItem* newItem);
 
+public:
+	void writeMessage(const String& s);
+
 private:
 	char requestCharChoice(const Vector<char>& validChoices);
 };

@@ -5,13 +5,25 @@ UIMoveController::UIMoveController(UIHandler& uih, GameMap& mp) : uih(uih), mp(m
 
 Directions UIMoveController::getDirection(const MovableTileEntity& entity)
 {
-    if (isCached == true)
+    Directions dir;
+    while (true)
     {
-        isCached = false;
-        return cachedDirection;
+        dir = char2Direction(uih.requestMoveType(mp, entity));
+
+        int r = entity.getR();
+        int c = entity.getC();
+
+        if (dir == Directions::UP) r--;
+        else if (dir == Directions::DOWN) r++;
+        else if (dir == Directions::LEFT) c--;
+        else if (dir == Directions::RIGHT) c++;
+
+        if (mp.isInside(r, c) == false) uih.writeMessage("You are getting outside the map!");
+        else if (mp.canEnter(r, c) == false) uih.writeMessage("Cannot enter this cell!");
+        else break;
     }
 
-    return char2Direction(uih.requestMoveType(mp, entity));
+    return dir;
 }
 
 Directions UIMoveController::peekDirection(const MovableTileEntity& entity)

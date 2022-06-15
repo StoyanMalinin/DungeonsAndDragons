@@ -1,6 +1,7 @@
 #include "GameMap.h"
 
 #include "Entities/WallTile.h"
+#include "Entities/ExitTile.h"
 #include "Entities/EmptyTile.h"
 #include "../Utils/RandomGenerator.h"
 
@@ -25,7 +26,7 @@ GameMap::GameMap(MapProperties& mp, size_t seed) : mp(mp), n(mp.n), m(mp.m), dra
 
 	RandomGenerator rnd(seed);
 	this->fillBySpacePartitioning(rnd);
-	this->addDragonsAndTreasures(rnd);
+	this->addMapComponents(rnd);
 }
 
 void GameMap::fillBySpacePartitioning(RandomGenerator& rnd)
@@ -228,12 +229,15 @@ bool GameMap::randomDfsTo(Pair<int, int> x, Pair<int, int> destination, const Re
 	return false;
 }
 
-void GameMap::addDragonsAndTreasures(RandomGenerator& rnd)
+void GameMap::addMapComponents(RandomGenerator& rnd)
 {
 	Vector<Pair<int, int>> freeSpots;
 	for (size_t i = 0; i < n; i++)
 		for (size_t j = 0; j < m; j++)
 			if (grid[i][j]->canEnter() == true) freeSpots.pushBack({ (int)i, (int)j });
+	
+	if (freeSpots.getLen() < mp.dragonsCount + mp.treasuresCount + 1)
+		throw std::logic_error("Map could not be build!");
 
 	freeSpots.randomShuffle(rnd);
 	for (size_t i = 0; i < dragonsCount; i++)
@@ -249,6 +253,9 @@ void GameMap::addDragonsAndTreasures(RandomGenerator& rnd)
 
 		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(t);
 	}
+
+	grid[freeSpots[dragonsCount + treasuresCount].first][freeSpots[dragonsCount + treasuresCount].second] = 
+	SharedPtr<TileEntity>(new ExitTile(freeSpots[dragonsCount + treasuresCount].first, freeSpots[dragonsCount + treasuresCount].second));
 }
 
 size_t GameMap::getN() const
@@ -267,6 +274,28 @@ char GameMap::getCharAt(size_t i, size_t j) const
 	
 	if (grid[i][j].isNull() == true) return ' ';
 	return grid[i][j]->getSymbol();
+}
+
+int GameMap::isInside(int r, int c) const
+{
+	return (0<=r && r<mp.n && 0<=c && c<mp.m);
+}
+
+bool GameMap::canEnter(int r, int c) const
+{
+	if (isInside(r, c) == false) return false;
+	return grid[r][c]->canEnter();
+}
+
+Interactions GameMap::doInteraction(TileEntity& te)
+{
+	if (isInside(te.getR(), te.getC()) == false || canEnter(te.getR(), te.getC()) == false)
+		return Interactions::INVALID;
+
+	Interactions res = grid[te.getR()][te.getC()]->getInteractionType();
+	te.interact(grid[te.getR()][te.getC()].getRaw());
+
+	return res;
 }
 
 void GameMap::debug(std::ostream& os)

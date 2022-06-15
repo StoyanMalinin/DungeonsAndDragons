@@ -12,12 +12,14 @@ bool Treasure::canEnter() const
 
 Interactions Treasure::getInteractionType() const
 {
-	return Interactions::BASIC;
+	if(isTaken==true) return Interactions::BASIC;
+	return Interactions::TREASURE_OPENING;
 }
 
 char Treasure::getSymbol() const
 {
-	return 'T';
+	if(isTaken==false) return 'T';
+	return 't';
 }
 
 bool Treasure::getIsTaken() const

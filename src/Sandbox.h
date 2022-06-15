@@ -62,9 +62,26 @@ void itemManagementTest()
 		std::cout << p.getArmor()->getName() << '\n';
 }
 
+void levelTest(size_t seed)
+{
+	UIHandler uih(std::cin, std::cout);
+	GameMap mp(MapProperties(15, 15, 2, 2, 10, 10, 10, 5, 5, 5), seed);
+
+	Player p("stoyan", 0, 0, 4, 5, 20, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, mp), 
+		     ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+	Level level(1, mp, p);
+	LevelOutcome outcome = level.play();
+	
+	if (outcome == LevelOutcome::PLAYER_DIED)
+		std::cout << "Player died" << '\n';
+	else if (outcome == LevelOutcome::COMPLETED)
+		std::cout << "Level successfully completed" << '\n';
+}
+
 void sandbox()
 {
-	itemManagementTest();
+	levelTest(19);
 }
 
 #endif // !__SANDBOX_H

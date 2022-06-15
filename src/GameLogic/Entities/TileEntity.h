@@ -7,7 +7,9 @@ enum class Interactions
 {
 	INVALID,
 	BASIC,
-	FIGHT
+	FIGHT,
+	TREASURE_OPENING,
+	MAP_EXITING,
 };
 
 class TileEntity : public virtual GameEntity

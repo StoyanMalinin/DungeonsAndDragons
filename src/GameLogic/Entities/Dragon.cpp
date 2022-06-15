@@ -18,7 +18,8 @@ Interactions Dragon::getInteractionType() const
 
 char Dragon::getSymbol() const
 {
-	return 'D';
+	if(isAlive()==true) return 'D';
+	return 'd';
 }
 
 void Dragon::attack(FightableEntity& other) const
