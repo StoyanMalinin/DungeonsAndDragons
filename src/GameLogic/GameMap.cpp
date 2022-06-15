@@ -234,7 +234,7 @@ void GameMap::addMapComponents(RandomGenerator& rnd)
 	Vector<Pair<int, int>> freeSpots;
 	for (size_t i = 0; i < n; i++)
 		for (size_t j = 0; j < m; j++)
-			if (grid[i][j]->canEnter() == true) freeSpots.pushBack({ (int)i, (int)j });
+			if (!(i==0 && j==0) && grid[i][j]->canEnter() == true) freeSpots.pushBack({ (int)i, (int)j });
 	
 	if (freeSpots.getLen() < mp.dragonsCount + mp.treasuresCount + 1)
 		throw std::logic_error("Map could not be build!");
