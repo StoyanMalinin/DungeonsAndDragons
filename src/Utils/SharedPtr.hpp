@@ -85,7 +85,7 @@ inline bool SharedPtr<T>::isNull() const
 template<class T>
 inline T* SharedPtr<T>::getRaw()
 {
-	return ojRef;
+	return objRef;
 }
 
 template<class T>

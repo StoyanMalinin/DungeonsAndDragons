@@ -7,3 +7,9 @@ float Spell::getC() const
 {
 	return c;
 }
+
+void Spell::write(std::ostream& os) const
+{
+	GameItem::write(os);
+	os << "|magic: " << c;
+}

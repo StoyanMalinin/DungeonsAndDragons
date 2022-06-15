@@ -1,6 +1,7 @@
 #ifndef __GAMEITEM_H
 #define __GAMEITEM_H
 
+#include <ostream>
 #include "../../../Utils/String.h"
 
 class GameItem
@@ -15,6 +16,10 @@ protected:
 public:
 	const String& getName() const;
 	size_t getLevel() const;
+
+public:
+	virtual void write(std::ostream& os) const;
+	void writeln(std::ostream& os) const;
 };
 
 #endif

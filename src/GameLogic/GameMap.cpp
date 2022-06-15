@@ -251,6 +251,24 @@ void GameMap::addDragonsAndTreasures(RandomGenerator& rnd)
 	}
 }
 
+size_t GameMap::getN() const
+{
+	return mp.n;
+}
+
+size_t GameMap::getM() const
+{
+	return mp.m;
+}
+
+char GameMap::getCharAt(size_t i, size_t j) const
+{
+	if (!(0 <= i && i < mp.n && 0 <= j && j < mp.m)) throw std::logic_error("Invalid map cell requested!");
+	
+	if (grid[i][j].isNull() == true) return ' ';
+	return grid[i][j]->getSymbol();
+}
+
 void GameMap::debug(std::ostream& os)
 {
 	os << n << " " << m << '\n';

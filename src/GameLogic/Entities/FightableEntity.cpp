@@ -50,5 +50,16 @@ void FightableEntity::interactInternal(FightableEntity* other)
 	fm.flush();
 }
 
+void FightableEntity::write(std::ostream& os) const
+{
+	os << "|strength: " << strength << "|mana: " << mana << "|health: " << health;
+}
+
+void FightableEntity::writeln(std::ostream& os) const
+{
+	write(os);
+	os << '\n';
+}
+
 FightableEntity::~FightableEntity()
 {}

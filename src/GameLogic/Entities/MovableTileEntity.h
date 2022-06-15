@@ -21,7 +21,7 @@ public:
 	
 public:
 	Pair<int, int> peekNxtPosition();
-	void move();
+	virtual void move();
 
 private:
 	Pair<int, int> calcNewPos(Pair<int, int> pos, Directions dir);

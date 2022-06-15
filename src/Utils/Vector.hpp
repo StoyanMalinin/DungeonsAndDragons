@@ -33,6 +33,7 @@ public:
     void popFront();
     void popBack();
     T& operator[](size_t ind);
+    const T& operator[](size_t ind) const;
     void insert(size_t ind, const T& x);
     void erase(size_t ind);
 
@@ -144,6 +145,12 @@ inline void Vector<T>::popBack()
 
 template<class T>
 inline T& Vector<T>::operator[](size_t ind)
+{
+    return data[ind];
+}
+
+template<class T>
+inline const T& Vector<T>::operator[](size_t ind) const
 {
     return data[ind];
 }

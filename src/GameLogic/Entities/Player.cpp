@@ -26,7 +26,7 @@ char Player::getSymbol() const
 
 void Player::attack(FightableEntity& other) const
 {
-	AttackType at = fc->getAttackType();
+	AttackType at = fc->getAttackType(*this, other);
 
 	float attackPower = 0;
 	if (at == AttackType::STRENGTH_ATTACK)

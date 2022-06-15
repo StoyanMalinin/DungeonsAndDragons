@@ -23,7 +23,7 @@ char Dragon::getSymbol() const
 
 void Dragon::attack(FightableEntity& other) const
 {
-	AttackType at = fc->getAttackType();
+	AttackType at = fc->getAttackType(*this, other);
 
 	if (at == AttackType::STRENGTH_ATTACK) other.receiveDamage(getStrength());
 	else other.receiveDamage(getMana());

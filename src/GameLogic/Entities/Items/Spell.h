@@ -13,6 +13,9 @@ public:
 
 public:
 	float getC() const;
+
+public:
+	void write(std::ostream& os) const override;
 };
 
 #endif // !__SPELL_H

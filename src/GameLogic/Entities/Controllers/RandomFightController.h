@@ -6,7 +6,7 @@
 class RandomFightController : public FightController
 {
 public:
-	AttackType getAttackType() override;
+	AttackType getAttackType(const FightableEntity& you, const FightableEntity& opponent) override;
 	FightController* clone() const override;
 };
 

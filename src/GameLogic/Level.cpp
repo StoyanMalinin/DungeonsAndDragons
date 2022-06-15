@@ -1,7 +1,7 @@
 #include "Level.h"
 
-Level::Level(size_t number, size_t seed) : number(number), mp(getMapPropertiesByNumber(number), seed)
-{}
+//Level::Level(size_t number, size_t seed) : number(number), mp(getMapPropertiesByNumber(number), seed)
+//{}
 
 size_t Level::getMapRowCountByNumber(size_t number)
 {

@@ -5,6 +5,8 @@
 #include "../../Utils/SharedPtr.hpp"
 #include "GameEntity.h"
 
+#include <iostream>
+
 class FightMaster;
 
 class FightableEntity : public virtual GameEntity
@@ -36,9 +38,13 @@ public:
 	float getMana() const;
 	float getHealth() const;
 
-protected:
+public:
 	void interact(GameEntity* other) override;
 	virtual void interactInternal(FightableEntity* other);
+
+public:
+	virtual void write(std::ostream& os) const;
+	void writeln(std::ostream& os) const;
 
 public:
 	virtual ~FightableEntity();

@@ -7,12 +7,12 @@ MovableTileEntity::MovableTileEntity(int r, int c, const MoveController& mc) : T
 
 Pair<int, int> MovableTileEntity::peekNxtPosition()
 {
-	return calcNewPos(Pair<int, int>(r, c), mc->peekDirection());
+	return calcNewPos(Pair<int, int>(r, c), mc->peekDirection(*this));
 }
 
 void MovableTileEntity::move()
 {
-	Pair<int, int> newPos = calcNewPos(Pair<int, int>(r, c), mc->getDirection());
+	Pair<int, int> newPos = calcNewPos(Pair<int, int>(r, c), mc->getDirection(*this));
 
 	r = newPos.first;
 	c = newPos.second;

@@ -36,6 +36,11 @@ private:
 	void addDragonsAndTreasures(RandomGenerator& rnd);
 
 public:
+	size_t getN() const;
+	size_t getM() const;
+	char getCharAt(size_t i, size_t j) const;
+
+public:
 	void debug(std::ostream& os);
 };
 

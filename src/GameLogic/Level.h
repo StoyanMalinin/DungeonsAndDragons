@@ -11,7 +11,7 @@ private:
 	Player p;
 
 public:
-	Level(size_t number, size_t seed);
+	//Level(size_t number, size_t seed);
 
 public:
 	static size_t getMapRowCountByNumber(size_t number);

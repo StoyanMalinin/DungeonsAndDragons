@@ -7,3 +7,9 @@ float Armor::getC() const
 {
 	return c;
 }
+
+void Armor::write(std::ostream& os) const
+{
+	GameItem::write(os);
+	os << "|protection: " << c;
+}

@@ -1,7 +1,7 @@
 #include "RandomFightController.h"
 #include "../../../Utils/GlobalRandomGenerator.h"
 
-AttackType RandomFightController::getAttackType()
+AttackType RandomFightController::getAttackType(const FightableEntity& you, const FightableEntity& opponent)
 {
     int res = GlobalRandomGenerator::randIntInRange(0, 1);
 

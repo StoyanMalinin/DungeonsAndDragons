@@ -12,3 +12,14 @@ size_t GameItem::getLevel() const
 {
 	return level;
 }
+
+void GameItem::write(std::ostream& os) const
+{
+	os << "|name: " << name << "|level: " << level;
+}
+
+void GameItem::writeln(std::ostream& os) const
+{
+	write(os);
+	os << '\n';
+}

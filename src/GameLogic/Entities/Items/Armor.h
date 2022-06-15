@@ -1,8 +1,10 @@
 #ifndef __ARMOR_H
 #define __ARMOR_H
 
-#include "../../../Utils/String.h"
+#include <ostream>
+
 #include "GameItem.h"
+#include "../../../Utils/String.h"
 
 class Armor : public GameItem
 {
@@ -14,6 +16,9 @@ public:
 
 public:
 	float getC() const;
+
+public:
+	void write(std::ostream& os) const override;
 };
 
 #endif

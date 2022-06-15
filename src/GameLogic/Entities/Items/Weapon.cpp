@@ -7,3 +7,9 @@ float Weapon::getC() const
 {
 	return c;
 }
+
+void Weapon::write(std::ostream& os) const
+{
+	GameItem::write(os);
+	os << "|strength: " << c << '\n';
+}

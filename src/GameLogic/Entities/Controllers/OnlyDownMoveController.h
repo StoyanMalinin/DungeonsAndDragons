@@ -12,8 +12,8 @@ protected:
 
 public:
 	MoveController* clone() const override;
-	Directions getDirection() override;
-	Directions peekDirection() override;
+	Directions getDirection(const MovableTileEntity& entity) override;
+	Directions peekDirection(const MovableTileEntity& entity) override;
 };
 
 #endif // !__ONLYDOWNMOVECONTROLLER_H
