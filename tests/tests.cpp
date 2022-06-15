@@ -298,6 +298,21 @@ TEST_SUITE("interaction tests")
 		d1.interact(&d2);
 		CHECK(!(d1.isAlive()==true && d2.isAlive()==true));
 	}
+
+	TEST_CASE("post battle player action")
+	{
+		for (size_t iter = 0; iter < 50; iter++)
+		{
+			const float playerInitialHealth = 15;
+			Player p("stoyan", 1, 1, 20, 20, playerInitialHealth, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+			Dragon d(1, 1, 10, 10, 10, RandomFightController(), FightMaster::getGlobalInstance());
+
+			p.interact(&d);
+			CHECK(d.isAlive() == false);
+			CHECK(p.getHealth() + 0.000001f >= playerInitialHealth * 0.5);
+		}
+		
+	}
 }
 
 TEST_SUITE("controller tests")

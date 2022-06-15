@@ -9,6 +9,9 @@ FightableEntity::FightableEntity(float strength, float mana, float health, const
 	                            : strength(strength), mana(mana), health(health), fc(fc.clone()), fm(fm)
 {}
 
+void FightableEntity::postBattleAction()
+{}
+
 bool FightableEntity::isAlive() const
 {
 	return health>0.0001f;

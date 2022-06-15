@@ -26,6 +26,8 @@ private:
 	SharedPtr<ItemManagerController> imc;
 	ItemExchangeMaster &iem;
 
+	float initialHealth;
+
 public:
 	Player(const String& name, int r, int c, float strength, float mana, float health, 
 		   const FightController& fc, const ItemManagerController& imc, const MoveController& mc, 
@@ -40,6 +42,7 @@ public:
 
 	void attack(FightableEntity& other) const override;
 	void receiveDamage(float damage) override;
+	void postBattleAction() override;
 
 public:
 	bool acquireSpell(SharedPtr<Spell> s);

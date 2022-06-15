@@ -28,6 +28,7 @@ public:
 public:
 	virtual void attack(FightableEntity& other) const = 0;
 	virtual void receiveDamage(float damage) = 0;
+	virtual void postBattleAction();
 	bool isAlive() const;
 
 protected:

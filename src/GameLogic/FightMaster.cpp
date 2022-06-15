@@ -30,6 +30,9 @@ void FightMaster::doInteraction()
 		else f2->attack(*f1);
 	}
 
+	if (f1->isAlive() == true) f1->postBattleAction();
+	else f2->postBattleAction();
+
 	flush();
 }
 

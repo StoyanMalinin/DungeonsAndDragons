@@ -6,7 +6,7 @@
 Player::Player(const String& name, int r, int c, float strength, float mana, float health, 
 	           const FightController& fc, const ItemManagerController& imc, const MoveController& mc, 
 	           ItemExchangeMaster& iem, FightMaster &fm)
-	: MovableTileEntity(r, c, mc), FightableEntity(strength, mana, health, fc, fm), name(name), armor(nullptr), spell(nullptr), weapon(nullptr), imc(imc.clone()), iem(iem)
+	: MovableTileEntity(r, c, mc), FightableEntity(strength, mana, health, fc, fm), name(name), armor(nullptr), spell(nullptr), weapon(nullptr), imc(imc.clone()), iem(iem), initialHealth(health)
 {}
 
 bool Player::canEnter() const
@@ -49,6 +49,12 @@ void Player::receiveDamage(float damage)
 		damage -= damage * armor->getC();
 
 	setHealth(getHealth() - damage);
+}
+
+void Player::postBattleAction()
+{
+	if (getHealth() < initialHealth * 0.5f)
+		setHealth(initialHealth * 0.5f);
 }
 
 bool Player::acquireSpell(SharedPtr<Spell> s)
