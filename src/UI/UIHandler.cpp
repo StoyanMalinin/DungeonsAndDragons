@@ -39,6 +39,29 @@ void UIHandler::writeMessage(const String& s)
 	os << s << '\n';
 }
 
+void UIHandler::readAndParseCommand(Vector<String>& tokens)
+{
+	String cmd;
+	os << ">";
+	getline(is, cmd);
+	is.get();
+
+	String curr;
+	for (size_t i = 0; i < cmd.getLen(); i++)
+	{
+		if (cmd[i] == ' ')
+		{
+			if (curr.getLen() != 0) tokens.pushBack(curr);
+			curr = "";
+		}
+		else
+		{
+			curr += cmd[i];
+		}
+	}
+	if (curr.getLen() != 0) tokens.pushBack(curr);
+}
+
 char UIHandler::requestMoveType(const GameMap& mp, const MovableTileEntity& curr)
 {
 	for (size_t i = 0; i < mp.getN(); i++)

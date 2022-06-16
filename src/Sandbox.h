@@ -14,6 +14,8 @@
 #include "GameLogic/Entities/Controllers/OnlyDownMoveController.h"
 #include "GameLogic/Entities/Items/ArmorTreasure.h"
 
+#include "Application.h"
+
 void walkingTest()
 {
 	ItemExchangeMaster iem;
@@ -81,7 +83,8 @@ void levelTest(size_t seed)
 
 void sandbox()
 {
-	levelTest(19);
+	Application* app = new Application();
+	app->run();
 }
 
 #endif // !__SANDBOX_H

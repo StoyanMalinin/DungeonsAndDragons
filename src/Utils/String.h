@@ -73,6 +73,10 @@ public:
 	static size_t* getPrefixFunction(const char* s, size_t len);
 
 public:
+	char& operator[](size_t ind) const;
+	char operator[](size_t ind);
+
+public:
 	String& operator +=(const String& other);
 	String& operator +=(char c);
 	friend String operator +(const String& lhs, const String& rhs);

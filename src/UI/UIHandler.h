@@ -36,6 +36,7 @@ public:
 
 public:
 	void writeMessage(const String& s);
+	void readAndParseCommand(Vector<String>& tokens);
 
 private:
 	char requestCharChoice(const Vector<char>& validChoices);

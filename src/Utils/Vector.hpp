@@ -180,7 +180,7 @@ inline void Vector<T>::erase(size_t ind)
 template<class T>
 bool Vector<T>::isArrayTooLarge(size_t capacity, size_t len)
 {
-    return (capacity >= MIN_CAPACITY && 0.25 * capacity >= len);
+    return (capacity > MIN_CAPACITY && 0.25 * capacity >= len);
 }
 
 template<class T>

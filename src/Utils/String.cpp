@@ -91,6 +91,18 @@ size_t* String::getPrefixFunction(const char* s, size_t n)
 	return f;
 }
 
+char& String::operator[](size_t ind) const
+{
+	if (ind >= len) throw std::logic_error("index out of bounds!");
+	return data[ind];
+}
+
+char String::operator[](size_t ind)
+{
+	if (ind >= len) throw std::logic_error("index out of bounds!");
+	return data[ind];
+}
+
 String& String::operator+=(char c)
 {
 	char addition[2] = { c, '\0'};
