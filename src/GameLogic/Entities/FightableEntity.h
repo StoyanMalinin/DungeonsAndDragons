@@ -33,6 +33,8 @@ public:
 
 protected:
 	void setHealth(float health);
+	void setStregth(float strength);
+	void setMana(float mana);
 
 public:
 	float getStrength() const;

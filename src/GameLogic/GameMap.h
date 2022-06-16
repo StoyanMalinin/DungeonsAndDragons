@@ -2,7 +2,7 @@
 #define __GAMEMAP_H
 
 #include "Entities/Dragon.h"
-#include "Entities/Player.h"
+#include "Entities/Player/Player.h"
 #include "../Utils/Vector.hpp"
 
 #include "../Utils/Pair.hpp"

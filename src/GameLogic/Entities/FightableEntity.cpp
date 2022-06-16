@@ -23,6 +23,18 @@ void FightableEntity::setHealth(float health)
 	this->health = health;
 }
 
+void FightableEntity::setStregth(float strength)
+{
+	if (strength < 0) strength = 0;
+	this->strength = strength;
+}
+
+void FightableEntity::setMana(float mana)
+{
+	if (mana < 0) mana = 0;
+	this->mana = mana;
+}
+
 float FightableEntity::getStrength() const
 {
 	return strength;

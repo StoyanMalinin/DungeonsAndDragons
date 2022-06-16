@@ -1,7 +1,7 @@
 #ifndef __TREASURE_H
 #define __TREASURE_H
 
-#include "../Player.h"
+#include "../Player/Player.h"
 #include "../TileEntity.h"
 
 class InteractionMaster;

@@ -10,7 +10,7 @@
 #include "../GameLogic/Entities/FightableEntity.h"
 
 #include "../GameLogic/GameMap.h"
-#include "../GameLogic/Entities/Player.h"
+#include "../GameLogic/Entities/Player/Player.h"
 
 enum class UIStates
 {
@@ -33,6 +33,7 @@ public:
 	char requestMoveType(const GameMap& mp, const MovableTileEntity& p);
 	char requestAttackType(const FightableEntity &you, const FightableEntity &opponent);
 	char requestItemManagementDecision(const GameItem* oldItem, const GameItem* newItem);
+	void requestPointsDistribution(float allPoints, float& strength, float& mana, float& health);
 
 public:
 	void writeMessage(const String& s);

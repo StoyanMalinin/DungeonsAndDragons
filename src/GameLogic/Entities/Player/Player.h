@@ -1,16 +1,17 @@
 #ifndef __PLAYER_H
 #define __PLAYER_H
 
-#include "../../Utils/SharedPtr.hpp"
-#include "../../Utils/String.h"
+#include "../../../Utils/SharedPtr.hpp"
+#include "../../../Utils/String.h"
 
-#include "MovableTileEntity.h"
-#include "FightableEntity.h"
+#include "../MovableTileEntity.h"
+#include "../FightableEntity.h"
 
-#include "Items/Armor.h"
-#include "Items/Spell.h"
-#include "Items/Weapon.h"
-#include "Controllers/ItemManagerController.h"
+#include "../Items/Armor.h"
+#include "../Items/Spell.h"
+#include "../Items/Weapon.h"
+#include "../Controllers/ItemManagerController.h"
+#include "../Controllers/PointsDistributionController.h"
 
 class ItemExchangeMaster;
 class FightMaster;
@@ -24,13 +25,14 @@ private:
 	SharedPtr <Weapon> weapon;
 
 	SharedPtr<ItemManagerController> imc;
+	SharedPtr<PointsDistributionController> pdc;
 	ItemExchangeMaster &iem;
 
 	float initialHealth;
 
 public:
 	Player(const String& name, int r, int c, float strength, float mana, float health, 
-		   const FightController& fc, const ItemManagerController& imc, const MoveController& mc, 
+		   const FightController& fc, const ItemManagerController& imc, const MoveController& mc, const PointsDistributionController& pdc,
 		   ItemExchangeMaster &iem, FightMaster &fm);
 protected:
 	Player(const Player& other) = default;
@@ -43,6 +45,7 @@ public:
 	void attack(FightableEntity& other) const override;
 	void receiveDamage(float damage) override;
 	void postBattleAction() override;
+	virtual void postLevelAction();
 
 public:
 	bool acquireSpell(SharedPtr<Spell> s);
@@ -57,6 +60,9 @@ public:
 public:
 	void interact(GameEntity* other) override;
 	void interactInternal(GameEntity* other) override;
+
+public:
+	virtual ~Player() = default;
 };
 
 #endif

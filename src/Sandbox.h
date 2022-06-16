@@ -12,6 +12,8 @@
 #include "GameLogic/Entities/Controllers/UIMoveController.h"
 #include "GameLogic/Entities/Controllers/UIItemManagerController.h"
 #include "GameLogic/Entities/Controllers/OnlyDownMoveController.h"
+#include "GameLogic/Entities/Controllers/UIPointsDistributionController.h"
+#include "GameLogic/Entities/Controllers/EvenPointsDistributionController.h"
 #include "GameLogic/Entities/Items/ArmorTreasure.h"
 
 #include "Application.h"
@@ -24,7 +26,7 @@ void walkingTest()
 	UIHandler uih(std::cin, std::cout);
 
 	GameMap mp(MapProperties(20, 20, 2, 2, 10, 10, 10, 5, 5, 5), 22);
-	Player p("stoyan", 0, 0, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), UIMoveController(uih, mp), iem, fm);
+	Player p("stoyan", 0, 0, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), UIMoveController(uih, mp), EvenPointsDistributionController(), iem, fm);
 
 	while (true) p.move();
 }
@@ -36,7 +38,7 @@ void fightingTest()
 
 	UIHandler uih(std::cin, std::cout);
 
-	Player p("stoyan", 0, 0, 4, 5, 10, UIFightController(uih), OptimalItemManagerController(), OnlyDownMoveController(), iem, fm);
+	Player p("stoyan", 0, 0, 4, 5, 10, UIFightController(uih), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(), iem, fm);
 	Dragon d(1, 1, 5, 5, 5, RandomFightController(), fm);
 
 	while (p.isAlive() == true && d.isAlive() == true)
@@ -51,7 +53,7 @@ void itemManagementTest()
 	FightMaster fm;
 
 	UIHandler uih(std::cin, std::cout);
-	Player p("stoyan", 0, 0, 4, 5, 10, RandomFightController(), UIItemManagerController(uih), OnlyDownMoveController(), iem, fm);
+	Player p("stoyan", 0, 0, 4, 5, 10, RandomFightController(), UIItemManagerController(uih), OnlyDownMoveController(), EvenPointsDistributionController(), iem, fm);
 
 	Armor armor("strong armor", 1, 0.10f);
 	ArmorTreasure at(1, 1, iem, armor);
@@ -69,7 +71,7 @@ void levelTest(size_t seed)
 	UIHandler uih(std::cin, std::cout);
 	GameMap mp(MapProperties(15, 15, 2, 2, 10, 10, 10, 5, 5, 5), seed);
 
-	Player p("stoyan", 0, 0, 4, 5, 20, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, mp), 
+	Player p("stoyan", 0, 0, 4, 5, 20, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, mp), UIPointsDistributionController(uih),
 		     ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
 	Level level(1, mp, p);
@@ -83,6 +85,8 @@ void levelTest(size_t seed)
 
 void sandbox()
 {
+	//levelTest(19);
+
 	Application* app = new Application();
 	app->run();
 }

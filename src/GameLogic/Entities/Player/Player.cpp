@@ -1,13 +1,16 @@
 #include "Player.h"
 
-#include "../FightMaster.h"
-#include "../ItemExchangeMaster.h"
+#include "../../FightMaster.h"
+#include "../../ItemExchangeMaster.h"
 
-Player::Player(const String& name, int r, int c, float strength, float mana, float health, 
-	           const FightController& fc, const ItemManagerController& imc, const MoveController& mc, 
-	           ItemExchangeMaster& iem, FightMaster &fm)
-	: MovableTileEntity(r, c, mc), FightableEntity(strength, mana, health, fc, fm), name(name), armor(nullptr), spell(nullptr), weapon(nullptr), imc(imc.clone()), iem(iem), initialHealth(health)
-{}
+Player::Player(const String& name, int r, int c, float strength, float mana, float health,
+			   const FightController& fc, const ItemManagerController& imc, const MoveController& mc, const PointsDistributionController& pdc,
+			   ItemExchangeMaster& iem, FightMaster& fm)
+	          
+	: MovableTileEntity(r, c, mc), FightableEntity(strength, mana, health, fc, fm), 
+	            name(name), armor(nullptr), spell(nullptr), weapon(nullptr), 
+	            imc(imc.clone()), iem(iem), initialHealth(health), pdc(pdc.clone())
+{}	          
 
 bool Player::canEnter() const
 {
@@ -55,6 +58,18 @@ void Player::postBattleAction()
 {
 	if (getHealth() < initialHealth * 0.5f)
 		setHealth(initialHealth * 0.5f);
+}
+
+void Player::postLevelAction()
+{
+	float allPoints = 30;
+	float strengthBoost, manaBoost, healthBoost;
+
+	pdc->distributePoints(allPoints, strengthBoost, manaBoost, healthBoost);
+
+	setStregth(getStrength() + strengthBoost);
+	setMana(getMana() + manaBoost);
+	setHealth(getHealth() + healthBoost);
 }
 
 bool Player::acquireSpell(SharedPtr<Spell> s)

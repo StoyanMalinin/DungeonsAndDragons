@@ -51,6 +51,9 @@ LevelOutcome Level::play()
 			break;
 	}
 
+	if (p.isAlive() == true)
+		p.postLevelAction();
+
 	return LevelOutcome::COMPLETED;
 }
 

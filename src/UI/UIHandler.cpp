@@ -1,5 +1,7 @@
 #include "UIHandler.h"
 
+#include <cmath>
+
 UIHandler::UIHandler(std::istream& is, std::ostream& os) : is(is), os(os)
 {}
 
@@ -34,6 +36,35 @@ char UIHandler::requestItemManagementDecision(const GameItem* oldItem, const Gam
 	return requestCharChoice(choices);
 }
 
+void UIHandler::requestPointsDistribution(float allPoints, float& strength, float& mana, float& health)
+{
+	os << "Please enter a way to distribute " << allPoints << " points between strength/mana/health" << '\n';
+	while (true)
+	{
+		os << "(enter three nonnegative numbers)>";
+		float inStregth, inMana, inHealth;
+
+		is >> inStregth >> inMana >> inHealth;
+		if (inStregth < 0 || inMana < 0 || inHealth < 0)
+		{
+			os << "The numbers must be nonnegative!" << '\n';
+		}
+		else if (fabs(allPoints - (inStregth + inMana + inHealth)) > 0.000001f)
+		{
+			os << "The numbers must sum up to " << allPoints << "!" << '\n';
+		}
+		else
+		{
+			strength = inStregth;
+			mana = inMana;
+			health = inHealth;
+
+			break;
+		}
+	}
+
+}
+
 void UIHandler::writeMessage(const String& s)
 {
 	os << s << '\n';
@@ -43,8 +74,15 @@ void UIHandler::readAndParseCommand(Vector<String>& tokens)
 {
 	String cmd;
 	os << ">";
+	
+	while (is.peek() == '\n')
+	{
+		is.ignore();
+		os << ">";
+	}
+	
 	getline(is, cmd);
-	is.get();
+	is.ignore();
 
 	String curr;
 	for (size_t i = 0; i < cmd.getLen(); i++)
