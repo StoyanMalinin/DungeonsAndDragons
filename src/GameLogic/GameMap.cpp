@@ -15,13 +15,13 @@
 #include "ItemExchangeMaster.h"
 #include "FightMaster.h"
 
-GameMap::GameMap(MapProperties& mp, size_t seed) : mp(mp), n(mp.n), m(mp.m), dragonsCount(mp.dragonsCount), treasuresCount(mp.treasuresCount)
+GameMap::GameMap(MapProperties& mp, size_t seed) : mp(mp)
 {
-	this->grid = Vector<Vector<SharedPtr<TileEntity>>>(n);
-	for (size_t i = 0; i < n; i++)
+	this->grid = Vector<Vector<SharedPtr<TileEntity>>>(mp.n);
+	for (size_t i = 0; i < mp.n; i++)
 	{
-		this->grid[i] = Vector<SharedPtr<TileEntity>>(m);
-		for (size_t j = 0; j < m; j++) grid[i][j] = SharedPtr<TileEntity>(new WallTile(i, j));
+		this->grid[i] = Vector<SharedPtr<TileEntity>>(mp.m);
+		for (size_t j = 0; j < mp.m; j++) grid[i][j] = SharedPtr<TileEntity>(new WallTile(i, j));
 	}
 
 	RandomGenerator rnd(seed);
@@ -31,7 +31,7 @@ GameMap::GameMap(MapProperties& mp, size_t seed) : mp(mp), n(mp.n), m(mp.m), dra
 
 void GameMap::fillBySpacePartitioning(RandomGenerator& rnd)
 {
-	partitionSpaceRec(Rectangle(0, n - 1, 0, m - 1), rnd, false, false, 0);
+	partitionSpaceRec(Rectangle(0, mp.n - 1, 0, mp.m - 1), rnd, false, false, 0);
 	connectCellToDungeon(0, 0, rnd);
 }
 
@@ -42,9 +42,9 @@ void GameMap::connectCellToDungeon(size_t i, size_t j, RandomGenerator &rnd)
 	grid[i][j] = SharedPtr<TileEntity>(new EmptyTile(i, j));
 	Pair<int, int> p1 = Pair<int, int>(i, j), p2 = p1;
 
-	for (size_t r = 0; r < n; r++)
+	for (size_t r = 0; r < mp.n; r++)
 	{
-		for (size_t c = 0; c < m; c++)
+		for (size_t c = 0; c < mp.m; c++)
 		{
 			if (grid[i][j]->canEnter() == true)
 			{
@@ -55,7 +55,7 @@ void GameMap::connectCellToDungeon(size_t i, size_t j, RandomGenerator &rnd)
 	}
 
 	Vector<Pair<int, int>> path;
-	genRadomPathBetweenTwoPoints(p1, p2, Rectangle(0, n - 1, 0, m - 1), path, rnd);
+	genRadomPathBetweenTwoPoints(p1, p2, Rectangle(0, mp.n - 1, 0, mp.m - 1), path, rnd);
 
 	for(size_t ind = 0;ind<path.getLen();ind++)
 		grid[path[ind].first][path[ind].second] = SharedPtr<TileEntity>(new EmptyTile(path[ind].first, path[ind].second));
@@ -232,17 +232,17 @@ bool GameMap::randomDfsTo(Pair<int, int> x, Pair<int, int> destination, const Re
 void GameMap::addMapComponents(RandomGenerator& rnd)
 {
 	Vector<Pair<int, int>> freeSpots;
-	for (size_t i = 0; i < n; i++)
-		for (size_t j = 0; j < m; j++)
+	for (size_t i = 0; i < mp.n; i++)
+		for (size_t j = 0; j < mp.m; j++)
 			if (!(i==0 && j==0) && grid[i][j]->canEnter() == true) freeSpots.pushBack({ (int)i, (int)j });
 	
 	if (freeSpots.getLen() < mp.dragonsCount + mp.treasuresCount + 1)
 		throw std::logic_error("Map could not be build!");
 
 	freeSpots.randomShuffle(rnd);
-	for (size_t i = 0; i < dragonsCount; i++)
+	for (size_t i = 0; i < mp.dragonsCount; i++)
 		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(new Dragon(freeSpots[i].first, freeSpots[i].second, mp.dragonStrength, mp.dragonMana, mp.dragonMana, RandomFightController(), FightMaster::getGlobalInstance()));
-	for (size_t i = dragonsCount; i < dragonsCount + treasuresCount; i++)
+	for (size_t i = mp.dragonsCount; i < mp.dragonsCount + mp.treasuresCount; i++)
 	{
 		size_t type = rnd.randIntInRange(0, 2);
 		Treasure* t = nullptr;
@@ -254,8 +254,8 @@ void GameMap::addMapComponents(RandomGenerator& rnd)
 		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(t);
 	}
 
-	grid[freeSpots[dragonsCount + treasuresCount].first][freeSpots[dragonsCount + treasuresCount].second] = 
-	SharedPtr<TileEntity>(new ExitTile(freeSpots[dragonsCount + treasuresCount].first, freeSpots[dragonsCount + treasuresCount].second));
+	grid[freeSpots[mp.dragonsCount + mp.treasuresCount].first][freeSpots[mp.dragonsCount + mp.treasuresCount].second] =
+	SharedPtr<TileEntity>(new ExitTile(freeSpots[mp.dragonsCount + mp.treasuresCount].first, freeSpots[mp.dragonsCount + mp.treasuresCount].second));
 }
 
 size_t GameMap::getN() const
@@ -300,10 +300,10 @@ Interactions GameMap::doInteraction(TileEntity& te)
 
 void GameMap::debug(std::ostream& os)
 {
-	os << n << " " << m << '\n';
-	for (size_t i = 0; i < n; i++)
+	os << mp.n << " " << mp.m << '\n';
+	for (size_t i = 0; i < mp.n; i++)
 	{
-		for (size_t j = 0; j < m; j++) os << grid[i][j]->getSymbol();
+		for (size_t j = 0; j < mp.m; j++) os << grid[i][j]->getSymbol();
 		os << '\n';
 	}
 }

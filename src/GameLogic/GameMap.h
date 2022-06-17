@@ -17,10 +17,7 @@ class GameMap
 {
 private:
 	MapProperties mp;
-	size_t n, m;
-	size_t dragonsCount, treasuresCount;
 	Vector<Vector<SharedPtr<TileEntity>>> grid;
-	Vector<SharedPtr<Dragon>> dragons;
 
 public:
 	GameMap(MapProperties &mp, size_t seed);
