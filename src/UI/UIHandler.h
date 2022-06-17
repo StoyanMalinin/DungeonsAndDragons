@@ -39,8 +39,10 @@ public:
 	void writeMessage(const String& s);
 	void readAndParseCommand(Vector<String>& tokens);
 
-private:
+public:
 	char requestCharChoice(const Vector<char>& validChoices);
+	void requestTextLine(const String& msg, const String& shortMsg, String& txt);
+	int requestInt(const String& msg, const String& shortMsg);
 };
 
 #endif // !__UIHANDLER_H

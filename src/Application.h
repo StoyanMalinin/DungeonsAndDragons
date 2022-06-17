@@ -31,6 +31,7 @@ private:
 	void executeCommand(Vector<String>& tokens);
 	void lsCommand(Vector<String>& tokens);
 	void exitCommand(Vector<String>& tokens);
+	void generatePlayerCommand(Vector<String>& tokens);
 };
 
 #endif // !__APPLICATION_H

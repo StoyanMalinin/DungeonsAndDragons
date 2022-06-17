@@ -129,8 +129,34 @@ char UIHandler::requestCharChoice(const Vector<char>&validChoices)
 		os << ">";
 		char c;
 		is >> c;
+		is.ignore();
 
 		for (size_t i = 0; i < validChoices.getLen(); i++)
 			if (validChoices[i] == c) return c;
 	}
+}
+
+void UIHandler::requestTextLine(const String& msg, const String& shortMsg, String& txt)
+{
+	os << msg << '\n';
+	os << shortMsg << ">";
+	while (is.peek() == '\n')
+	{
+		is.ignore();
+		os << shortMsg << ">";
+	}
+	
+	getline(is, txt);
+	is.ignore();
+}
+
+int UIHandler::requestInt(const String& msg, const String& shortMsg)
+{
+	os << msg << '\n';
+	os << shortMsg << ">";
+	
+	int x;
+	is >> x;
+
+	return x;
 }

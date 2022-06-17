@@ -94,12 +94,11 @@ void playerSerializationTest()
 
 void sandbox()
 {
-	playerSerializationTest();
+	//playerSerializationTest();
 
-	//Application* app = new Application();
-	//app->run();
-
-	
+	Application* app = new Application();
+	app->run();
+	delete app;
 }
 
 #endif // !__SANDBOX_H
