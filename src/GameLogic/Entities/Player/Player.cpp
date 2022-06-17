@@ -10,7 +10,13 @@ Player::Player(const String& name, int r, int c, float strength, float mana, flo
 	: MovableTileEntity(r, c, mc), FightableEntity(strength, mana, health, fc, fm), 
 	            name(name), armor(nullptr), spell(nullptr), weapon(nullptr), 
 	            imc(imc.clone()), iem(iem), initialHealth(health), pdc(pdc.clone())
-{}	          
+{}
+
+Player::Player(const String & name, int r, int c, float strength, float mana, float health, float initialHealth, const FightController & fc, const ItemManagerController & imc, const MoveController & mc, const PointsDistributionController & pdc, ItemExchangeMaster & iem, FightMaster & fm)
+	: MovableTileEntity(r, c, mc), FightableEntity(strength, mana, health, fc, fm),
+	name(name), armor(nullptr), spell(nullptr), weapon(nullptr),
+	imc(imc.clone()), iem(iem), initialHealth(initialHealth), pdc(pdc.clone())
+{}
 
 bool Player::canEnter() const
 {
@@ -72,6 +78,45 @@ void Player::postLevelAction()
 	setHealth(getHealth() + healthBoost);
 }
 
+void Player::serialize(std::ostream& stream) const
+{
+	stream << 'p';
+	serializeRawData(stream);
+
+	if (stream.bad() == true)
+		throw std::exception("Error while serializing player, the stream got corrupted!");
+}
+
+void Player::serializeLn(std::ostream& stream) const
+{
+	serialize(stream);
+	stream << '\n';
+}
+
+void Player::serializeRawData(std::ostream& stream) const
+{
+	stream << " " << name.getLen();
+	stream << " "; stream << name;
+	stream << " "; stream << getR();
+	stream << " "; stream << getC();
+	stream << " "; stream << getStrength();
+	stream << " "; stream << getMana();
+	stream << " "; stream << getHealth();
+	stream << " "; stream << initialHealth;
+
+	stream << " ";
+	if (spell.isNull() == true) stream << "!";
+	else spell->serialize(stream);
+
+	stream << " ";
+	if (armor.isNull() == true) stream << "!";
+	else armor->serialize(stream);
+
+	stream << " ";
+	if (weapon.isNull() == true) stream << "!";
+	else weapon->serialize(stream);
+}
+
 bool Player::acquireSpell(SharedPtr<Spell> s)
 {
 	if (imc->acquireSpell(spell, s) == true)
@@ -105,6 +150,21 @@ bool Player::acquireWeapon(SharedPtr<Weapon> w)
 	return false;
 }
 
+void Player::setSpell(SharedPtr<Spell> s)
+{
+	spell = s;
+}
+
+void Player::setArmor(SharedPtr<Armor> a)
+{
+	armor = a;
+}
+
+void Player::setWeapon(SharedPtr<Weapon> w)
+{
+	weapon = w;
+}
+
 const Spell* Player::getSpell() const
 {
 	return spell.getRaw();
@@ -118,6 +178,11 @@ const Armor* Player::getArmor() const
 const Weapon* Player::getWeapon() const
 {
 	return weapon.getRaw();
+}
+
+const String& Player::getName() const
+{
+	return name;
 }
 
 void Player::interact(GameEntity* other)

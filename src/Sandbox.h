@@ -83,12 +83,23 @@ void levelTest(size_t seed)
 		std::cout << "Level successfully completed" << '\n';
 }
 
+void playerSerializationTest()
+{
+	Player p("stoyan", 0, 0, 4, 5, 10, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(), 
+		     ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+	p.setSpell(SharedPtr<Spell>(new Spell("magiq", 2, 20)));
+	p.serialize(std::cout);
+}
+
 void sandbox()
 {
-	//levelTest(19);
+	playerSerializationTest();
 
-	Application* app = new Application();
-	app->run();
+	//Application* app = new Application();
+	//app->run();
+
+	
 }
 
 #endif // !__SANDBOX_H

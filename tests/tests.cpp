@@ -7,6 +7,8 @@
 
 #include "../src/GameLogic/Entities/Dragon.h"
 #include "../src/GameLogic/Entities/Player/Player.h"
+#include "../src/GameLogic/Entities/Player/MagePlayer.h"
+#include "../src/GameLogic/Entities/Player/WarriorPlayer.h"
 #include "../src/GameLogic/Entities/Items/Treasure.h"
 #include "../src/GameLogic/Entities/Items/ArmorTreasure.h"
 #include "../src/GameLogic/Entities/Items/SpellTreasure.h"
@@ -20,6 +22,16 @@
 
 #include "../src/GameLogic/ItemExchangeMaster.h"
 #include "../src/GameLogic/FightMaster.h"
+
+#include "../src/GameLogic/FIleManagement/PlayerView.h"
+
+int cmpFloat(float a, float b)
+{
+	if (fabs(a - b) < 0.00001f) return 0;
+	
+	if (a < b) return -1;
+	return +1;
+}
 
 TEST_SUITE("string tests")
 {
@@ -326,5 +338,80 @@ TEST_SUITE("controller tests")
 		p.move();
 		CHECK(p.getR() == 2);
 		CHECK(p.getC() == 1);
+	}
+}
+
+TEST_SUITE("serialization tests")
+{
+	TEST_CASE("player serialization and deserialization")
+	{
+		std::stringstream stream;
+
+		Player p1("stoyan", 1, 1, 10, 11, 12, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		p1.serialize(stream);
+
+		PlayerView pv(stream);
+		Player* p2 = pv.getPlayer(RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(), 
+			                      ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+		CHECK(p2->getName() == "stoyan");
+		CHECK(cmpFloat(p2->getStrength(), 10) == 0);
+		CHECK(cmpFloat(p2->getMana(), 11) == 0);
+		CHECK(cmpFloat(p2->getHealth(), 12) == 0);
+		CHECK(p2->getR() == 1);
+		CHECK(p2->getC() == 1);
+
+		delete p2;
+	}
+
+	TEST_CASE("mage player serialization and deserialization")
+	{
+		std::stringstream stream;
+
+		MagePlayer p1("stoyan maga", 1, 3, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		p1.serialize(stream);
+
+		PlayerView pv(stream);
+		Player* p2 = pv.getPlayer(RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(),
+			                      ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+		CHECK(p2->getName() == "stoyan maga");
+		CHECK(cmpFloat(p2->getStrength(), 10) == 0);
+		CHECK(cmpFloat(p2->getMana(), 40) == 0);
+		CHECK(cmpFloat(p2->getHealth(), 50) == 0);
+		CHECK(p2->getR() == 1);
+		CHECK(p2->getC() == 3);
+
+		delete p2;
+	}
+
+	TEST_CASE("warrior player serialization and deserialization with items")
+	{
+		std::stringstream stream;
+
+		WarriorPlayer p1("stoyan boec", 1, 3, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		p1.acquireArmor(SharedPtr<Armor>(new Armor("bronq", 2, 15)));
+		p1.acquireWeapon(SharedPtr<Weapon>(new Weapon("qtagan", 222, 420)));
+		p1.serialize(stream);
+
+		PlayerView pv(stream);
+		Player* p2 = pv.getPlayer(RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(),
+			                      ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+		CHECK(p2->getName() == "stoyan boec");
+		CHECK(cmpFloat(p2->getStrength(), 40) == 0);
+		CHECK(cmpFloat(p2->getMana(), 10) == 0);
+		CHECK(cmpFloat(p2->getHealth(), 50) == 0);
+		CHECK(p2->getR() == 1);
+		CHECK(p2->getC() == 3);
+		CHECK(p2->getArmor() != nullptr);
+		CHECK(p2->getArmor()->getName()=="bronq");
+		CHECK(p2->getArmor()->getLevel()==2);
+		CHECK(cmpFloat(p2->getArmor()->getC(), 15)==0);
+		CHECK(p2->getWeapon()->getName() == "qtagan");
+		CHECK(p2->getWeapon()->getLevel() == 222);
+		CHECK(cmpFloat(p2->getWeapon()->getC(), 420) == 0);
+
+		delete p2;
 	}
 }
