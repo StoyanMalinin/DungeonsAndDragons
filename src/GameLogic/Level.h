@@ -31,6 +31,7 @@ public:
 
 private:
 	static size_t getNthMemberOfFibonacciLikeSequence(size_t n, size_t f1, size_t f2);
+	static float sigmoid(float x);
 };
 
 #endif // !__LEVEL_H

@@ -25,7 +25,7 @@ void walkingTest()
 
 	UIHandler uih(std::cin, std::cout);
 
-	GameMap mp(MapProperties(20, 20, 2, 2, 10, 10, 10, 5, 5, 5), 22);
+	GameMap mp(Level::getMapPropertiesByNumber(2), 22);
 	Player p("stoyan", 0, 0, 10, 10, 10, RandomFightController(), OptimalItemManagerController(), UIMoveController(uih, mp), EvenPointsDistributionController(), iem, fm);
 
 	while (true) p.move();
@@ -69,12 +69,12 @@ void itemManagementTest()
 void levelTest(size_t seed)
 {
 	UIHandler uih(std::cin, std::cout);
-	GameMap mp(MapProperties(15, 15, 2, 2, 10, 10, 10, 0.5f, 0.5f, 0.5f), seed);
+	GameMap mp(Level::getMapPropertiesByNumber(2), seed);
 
 	Player p("stoyan", 0, 0, 4, 5, 20, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, mp), UIPointsDistributionController(uih),
 		     ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
-	Level level(1, mp, p);
+	Level level(2, mp, p);
 	LevelOutcome outcome = level.play();
 	
 	if (outcome == LevelOutcome::PLAYER_DIED)

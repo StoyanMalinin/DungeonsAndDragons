@@ -28,10 +28,18 @@ size_t Level::getTreasureCountByNumber(size_t number)
 
 MapProperties Level::getMapPropertiesByNumber(size_t number)
 {
+	float adjustedLevelNumber = (float)number - 7.6f;
+	float coef = sigmoid(adjustedLevelNumber/5.0f);
+
+	float dragonStrength = ((number == 1) ? 25.0f : coef * 125.0f);
+	float dragonMana = ((number == 1) ? 25.0f : coef * 125.0f);
+	float dragonHealth = ((number == 1) ? 50.0f : coef * 250.0f);
+
 	return MapProperties(getMapRowCountByNumber(number), getMapColCountByNumber(number),
 		                 getDragonCountByNumber(number), getTreasureCountByNumber(number),
-						 25, 25, 50,
-		                 5, 5, 10);
+						 dragonStrength, dragonHealth, dragonMana,
+		                 coef*0.9f, coef, coef*0.9f,
+						 number);
 }
 
 LevelOutcome Level::play()
@@ -70,4 +78,9 @@ size_t Level::getNthMemberOfFibonacciLikeSequence(size_t n, size_t f1, size_t f2
 	}
 
 	return f2;
+}
+
+float Level::sigmoid(float x)
+{
+	return 1.0f/(1.0f+exp(-x));
 }

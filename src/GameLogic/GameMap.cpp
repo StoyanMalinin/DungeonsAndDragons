@@ -247,9 +247,9 @@ void GameMap::addMapComponents(RandomGenerator& rnd)
 		size_t type = rnd.randIntInRange(0, 2);
 		Treasure* t = nullptr;
 
-		if (type == 0) t = new ArmorTreasure(freeSpots[i].first, freeSpots[i].second, ItemExchangeMaster::getGlobalInstance(), Armor("armor from treasure", 1, mp.treasureArmor));
-		else if (type == 1) t = new SpellTreasure(freeSpots[i].first, freeSpots[i].second, ItemExchangeMaster::getGlobalInstance(), Spell("spell from treasure", 1, mp.treasureSpell));
-		else t = new WeaponTreasure(freeSpots[i].first, freeSpots[i].second, ItemExchangeMaster::getGlobalInstance(), Weapon("weapon from treasure", 1, mp.treasureWeapon));
+		if (type == 0) t = new ArmorTreasure(freeSpots[i].first, freeSpots[i].second, ItemExchangeMaster::getGlobalInstance(), Armor("armor from treasure", mp.itemLevel, mp.treasureArmor));
+		else if (type == 1) t = new SpellTreasure(freeSpots[i].first, freeSpots[i].second, ItemExchangeMaster::getGlobalInstance(), Spell("spell from treasure", mp.itemLevel, mp.treasureSpell));
+		else t = new WeaponTreasure(freeSpots[i].first, freeSpots[i].second, ItemExchangeMaster::getGlobalInstance(), Weapon("weapon from treasure", mp.itemLevel, mp.treasureWeapon));
 
 		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(t);
 	}
