@@ -87,12 +87,6 @@ void Player::serialize(std::ostream& stream) const
 		throw std::exception("Error while serializing player, the stream got corrupted!");
 }
 
-void Player::serializeLn(std::ostream& stream) const
-{
-	serialize(stream);
-	stream << '\n';
-}
-
 void Player::serializeRawData(std::ostream& stream) const
 {
 	stream << " " << name.getLen();

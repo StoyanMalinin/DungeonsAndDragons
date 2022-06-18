@@ -18,6 +18,17 @@ int TileEntity::getC() const noexcept
 	return c;
 }
 
+void TileEntity::serialize(std::ostream& stream) const
+{
+	stream << r << " " << c;
+}
+
+void TileEntity::serializeLn(std::ostream &stream) const
+{
+	serialize(stream);
+	stream << '\n';
+}
+
 void TileEntity::interact(GameEntity* other)
 {
 	if (other == nullptr) throw std::logic_error("cannot interact with nullptr");

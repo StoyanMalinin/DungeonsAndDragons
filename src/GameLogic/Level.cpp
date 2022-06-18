@@ -1,9 +1,9 @@
 #include "Level.h"
 
-//Level::Level(size_t number, size_t seed) : number(number), mp(getMapPropertiesByNumber(number), seed)
-//{}
+Level::Level(size_t number, size_t seed) : number(number), mp(GameMap(Level::getMapPropertiesByNumber(number), seed))
+{}
 
-Level::Level(size_t number, GameMap& mp, Player& p) : number(number), mp(mp), p(p)
+Level::Level(size_t number, GameMap& mp) : number(number), mp(mp)
 {}
 
 size_t Level::getMapRowCountByNumber(size_t number)
@@ -42,7 +42,7 @@ MapProperties Level::getMapPropertiesByNumber(size_t number)
 						 number);
 }
 
-LevelOutcome Level::play()
+LevelOutcome Level::play(Player &p)
 {
 	if (p.isAlive() == false)
 		return LevelOutcome::PLAYER_DIED;

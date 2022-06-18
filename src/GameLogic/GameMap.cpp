@@ -276,6 +276,27 @@ char GameMap::getCharAt(size_t i, size_t j) const
 	return grid[i][j]->getSymbol();
 }
 
+void GameMap::serialize(std::ostream& stream) const
+{
+	if (mp.n == 0 && mp.m == 0) mp.serialize(stream);
+	else mp.serializeLn(stream);
+
+	for (size_t i = 0; i < mp.n; i++)
+	{
+		for (size_t j = 0; j < mp.m; j++)
+		{
+			if (!(i == mp.n - 1 && j == mp.m - 1)) grid[i][j]->serializeLn(stream);
+			else grid[i][j]->serialize(stream);
+		}
+	}
+}
+
+void GameMap::serializeLn(std::ostream& stream) const
+{
+	serialize(stream);
+	stream << '\n';
+}
+
 int GameMap::isInside(int r, int c) const
 {
 	return (0<=r && r<mp.n && 0<=c && c<mp.m);

@@ -9,6 +9,7 @@
 #include "../src/GameLogic/Entities/Player/Player.h"
 #include "../src/GameLogic/Entities/Player/MagePlayer.h"
 #include "../src/GameLogic/Entities/Player/WarriorPlayer.h"
+#include "../src/GameLogic/Entities/Player/HumanPlayer.h"
 #include "../src/GameLogic/Entities/Items/Treasure.h"
 #include "../src/GameLogic/Entities/Items/ArmorTreasure.h"
 #include "../src/GameLogic/Entities/Items/SpellTreasure.h"
@@ -24,6 +25,7 @@
 #include "../src/GameLogic/FightMaster.h"
 
 #include "../src/GameLogic/FIleManagement/PlayerView.h"
+#include "../src/GameLogic/FIleManagement/GameLogicFileManager.h"
 
 int cmpFloat(float a, float b)
 {
@@ -343,6 +345,20 @@ TEST_SUITE("controller tests")
 
 TEST_SUITE("serialization tests")
 {
+	TEST_CASE("weapon serialization and deserialization")
+	{
+		std::stringstream stream;
+
+		Weapon w1("mech", 2, 0.12f);
+		w1.serialize(stream);
+
+		Weapon w2(stream);
+
+		CHECK(w2.getName() == "mech");
+		CHECK(w2.getLevel() == 2);
+		CHECK(cmpFloat(w2.getC(), 0.12f)==0);
+	}
+
 	TEST_CASE("player serialization and deserialization")
 	{
 		std::stringstream stream;
@@ -354,6 +370,7 @@ TEST_SUITE("serialization tests")
 		Player* p2 = pv.getPlayer(RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(), 
 			                      ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
+		CHECK(p2 != nullptr);
 		CHECK(p2->getName() == "stoyan");
 		CHECK(cmpFloat(p2->getStrength(), 10) == 0);
 		CHECK(cmpFloat(p2->getMana(), 11) == 0);
@@ -375,6 +392,7 @@ TEST_SUITE("serialization tests")
 		Player* p2 = pv.getPlayer(RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(),
 			                      ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
+		CHECK(p2 != nullptr);
 		CHECK(p2->getName() == "stoyan maga");
 		CHECK(cmpFloat(p2->getStrength(), 10) == 0);
 		CHECK(cmpFloat(p2->getMana(), 40) == 0);
@@ -398,6 +416,7 @@ TEST_SUITE("serialization tests")
 		Player* p2 = pv.getPlayer(RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(),
 			                      ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
+		CHECK(p2 != nullptr);
 		CHECK(p2->getName() == "stoyan boec");
 		CHECK(cmpFloat(p2->getStrength(), 40) == 0);
 		CHECK(cmpFloat(p2->getMana(), 10) == 0);
@@ -413,5 +432,97 @@ TEST_SUITE("serialization tests")
 		CHECK(cmpFloat(p2->getWeapon()->getC(), 420) == 0);
 
 		delete p2;
+	}
+
+	TEST_CASE("human player serialization and deserialization with items")
+	{
+		std::stringstream stream;
+
+		HumanPlayer p1("stoyan chovek", 1, 3, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(), 
+			           ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		p1.acquireArmor(SharedPtr<Armor>(new Armor("bronq", 2, 15)));
+		p1.acquireWeapon(SharedPtr<Weapon>(new Weapon("qtagan", 222, 420)));
+		p1.serialize(stream);
+
+		Player* p2 = GameLogicFileManager::deserializePlayer(stream, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), 
+			                                                 EvenPointsDistributionController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+		CHECK(p2 != nullptr);
+		CHECK(p2->getName() == "stoyan chovek");
+		CHECK(cmpFloat(p2->getStrength(), 30) == 0);
+		CHECK(cmpFloat(p2->getMana(), 20) == 0);
+		CHECK(cmpFloat(p2->getHealth(), 50) == 0);
+		CHECK(p2->getR() == 1);
+		CHECK(p2->getC() == 3);
+		CHECK(p2->getArmor() != nullptr);
+		CHECK(p2->getArmor()->getName() == "bronq");
+		CHECK(p2->getArmor()->getLevel() == 2);
+		CHECK(cmpFloat(p2->getArmor()->getC(), 15) == 0);
+		CHECK(p2->getWeapon()->getName() == "qtagan");
+		CHECK(p2->getWeapon()->getLevel() == 222);
+		CHECK(cmpFloat(p2->getWeapon()->getC(), 420) == 0);
+
+		delete p2;
+	}
+
+	TEST_CASE("wall tile serialization and deserialization")
+	{
+		std::stringstream stream;
+
+		WallTile wt1(19, 11);
+		wt1.serialize(stream);
+		WallTile* wt2 = GameLogicFileManager::deserializeWallTile(stream);
+
+		CHECK(wt2 != nullptr);
+		CHECK(wt2->getR() == 19);
+		CHECK(wt2->getC() == 11);
+	}
+
+	TEST_CASE("WeaponTreasure serialization and deserialization 1")
+	{
+		std::stringstream stream;
+		
+		Weapon w("mech", 2, 0.12f);
+		WeaponTreasure wt1(2, 3, ItemExchangeMaster::getGlobalInstance(), w);
+		wt1.serialize(stream);
+		
+		WeaponTreasure* wt2 = GameLogicFileManager::deserializeWeaponTreasure(stream, ItemExchangeMaster::getGlobalInstance());
+		
+		CHECK(wt2 != nullptr);
+		CHECK(wt2->getR() == 2);
+		CHECK(wt2->getC() == 3);
+		
+		HumanPlayer p("stoyan chovek", 1, 3, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(),
+			ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		p.interact(wt2);
+
+		CHECK(p.getWeapon() != nullptr);
+		CHECK(p.getWeapon()->getName() == "mech");
+		CHECK(p.getWeapon()->getLevel() == 2);
+		CHECK(cmpFloat(p.getWeapon()->getC(), 0.12f)==0);
+	}
+
+	TEST_CASE("WeaponTreasure serialization and deserialization 2")
+	{
+		std::stringstream stream;
+
+		Weapon w("mech", 2, 0.12f);
+		WeaponTreasure wt1(2, 3, ItemExchangeMaster::getGlobalInstance(), w);
+		wt1.serialize(stream);
+
+		Treasure* wt2 = GameLogicFileManager::deserializeTreasure(stream, ItemExchangeMaster::getGlobalInstance());
+
+		CHECK(wt2 != nullptr);
+		CHECK(wt2->getR() == 2);
+		CHECK(wt2->getC() == 3);
+
+		HumanPlayer p("stoyan chovek", 1, 3, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(),
+			          ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		p.interact(wt2);
+
+		CHECK(p.getWeapon() != nullptr);
+		CHECK(p.getWeapon()->getName() == "mech");
+		CHECK(p.getWeapon()->getLevel() == 2);
+		CHECK(cmpFloat(p.getWeapon()->getC(), 0.12f) == 0);
 	}
 }

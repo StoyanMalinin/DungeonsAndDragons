@@ -14,6 +14,7 @@ protected:
 
 public:
 	Treasure(int r, int c, ItemExchangeMaster& iem);
+	Treasure(int r, int c, bool isTaken, ItemExchangeMaster& iem);
 protected:
 	Treasure(const Treasure& other) = default;
 public:
@@ -31,6 +32,10 @@ public:
 public:
 	void interact(GameEntity* other) override;
 	void interactInternal(GameEntity* other) override;
+
+public:
+	virtual void serialize(std::ostream& stream) const = 0;
+	void serializeLn(std::ostream& stream) const;
 
 public:
 	virtual ~Treasure() = default;

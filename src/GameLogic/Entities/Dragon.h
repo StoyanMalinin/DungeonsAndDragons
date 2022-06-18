@@ -30,6 +30,9 @@ public:
 public:
 	void interact(GameEntity* other) override;
 	void interactInternal(GameEntity* other) override;
+
+public:
+	void serialize(std::ostream& stream) const override;
 };
 
 #endif

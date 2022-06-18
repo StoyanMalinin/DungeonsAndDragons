@@ -3,6 +3,8 @@
 
 #include "GameEntity.h"
 
+#include <iostream>
+
 enum class Interactions
 {
 	INVALID,
@@ -32,6 +34,10 @@ public:
 public:
 	int getR() const noexcept;
 	int getC() const noexcept;
+
+public:
+	virtual void serialize(std::ostream& stream) const;
+	void serializeLn(std::ostream &stream) const;
 
 public:
 	void interact(GameEntity* other) override;

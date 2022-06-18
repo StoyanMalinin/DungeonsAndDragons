@@ -17,3 +17,9 @@ char EmptyTile::getSymbol() const
 {
     return '.';
 }
+
+void EmptyTile::serialize(std::ostream& stream) const
+{
+    stream << "EmptyTile" << " ";
+    TileEntity::serialize(stream);
+}

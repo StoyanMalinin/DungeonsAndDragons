@@ -1,6 +1,6 @@
 #include "ItemExchangeMaster.h"
 
-#include "Entities/Player.h"
+#include "Entities/Player/Player.h"
 #include "Entities/Items/Treasure.h"
 
 ItemExchangeMaster::ItemExchangeMaster() : receiver(nullptr), giver(nullptr)

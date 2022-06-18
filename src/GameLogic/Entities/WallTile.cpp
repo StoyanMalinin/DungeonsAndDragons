@@ -17,3 +17,9 @@ char WallTile::getSymbol() const
 {
     return '#';
 }
+
+void WallTile::serialize(std::ostream& stream) const
+{
+    stream << "WallTile" << " ";
+    TileEntity::serialize(stream);
+}

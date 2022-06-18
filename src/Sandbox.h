@@ -74,8 +74,8 @@ void levelTest(size_t seed)
 	Player p("stoyan", 0, 0, 4, 5, 20, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, mp), UIPointsDistributionController(uih),
 		     ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
-	Level level(2, mp, p);
-	LevelOutcome outcome = level.play();
+	Level level(2, mp);
+	LevelOutcome outcome = level.play(p);
 	
 	if (outcome == LevelOutcome::PLAYER_DIED)
 		std::cout << "Player died" << '\n';
@@ -92,9 +92,24 @@ void playerSerializationTest()
 	p.serialize(std::cout);
 }
 
+void mapSerializationTest()
+{
+	GameMap mp(Level::getMapPropertiesByNumber(2), 22);
+	
+	std::cout << "debug" << '\n';
+	mp.debug(std::cout);
+
+	std::cout << "\n";
+	std::cout << "\n";
+	std::cout << "\n";
+
+	std::cout << "serialize" << '\n';
+	mp.serialize(std::cout);
+}
+
 void sandbox()
 {
-	levelTest(1984);
+	mapSerializationTest();
 
 	//Application* app = new Application();
 	//app->run();

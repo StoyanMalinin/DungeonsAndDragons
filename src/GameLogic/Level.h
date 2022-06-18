@@ -14,10 +14,10 @@ class Level
 private:
 	size_t number;
 	GameMap &mp;
-	Player &p;
 
 public:
-	Level(size_t number, GameMap &mp, Player &p);
+	Level(size_t number, size_t seed);
+	Level(size_t number, GameMap &mp);
 
 public:
 	static size_t getMapRowCountByNumber(size_t number);
@@ -27,7 +27,7 @@ public:
 	static MapProperties getMapPropertiesByNumber(size_t number);
 
 public:
-	LevelOutcome play();
+	LevelOutcome play(Player &p);
 
 private:
 	static size_t getNthMemberOfFibonacciLikeSequence(size_t n, size_t f1, size_t f2);

@@ -38,6 +38,10 @@ public:
 	char getCharAt(size_t i, size_t j) const;
 
 public:
+	void serialize(std::ostream& stream) const;
+	void serializeLn(std::ostream& stream) const;
+
+public:
 	int isInside(int r, int c) const;
 	bool canEnter(int r, int c) const;
 

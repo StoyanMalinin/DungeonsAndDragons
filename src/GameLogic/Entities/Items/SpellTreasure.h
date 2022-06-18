@@ -11,7 +11,11 @@ private:
 
 public:
 	SpellTreasure(int r, int c, ItemExchangeMaster& iem, const Spell& spell);
+	SpellTreasure(int r, int c, bool isTaken, ItemExchangeMaster& iem, const Spell& spell);
 	Treasure* clone() const override;
+
+public:
+	void serialize(std::ostream& stream) const override;
 
 public:
 	bool giveToPlayer(Player& p) override;

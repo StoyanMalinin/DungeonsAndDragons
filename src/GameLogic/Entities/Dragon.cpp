@@ -50,3 +50,10 @@ void Dragon::interactInternal(GameEntity* other)
 	fm.setFighter(this);
 	fm.flush();
 }
+
+void Dragon::serialize(std::ostream& stream) const
+{
+	stream << "Dragon" << " ";
+	TileEntity::serialize(stream); stream << " ";
+	stream << getStrength() << " " << getMana() << " " << getHealth();
+}

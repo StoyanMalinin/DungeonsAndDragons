@@ -51,9 +51,9 @@ public:
 	void receiveDamage(float damage) override;
 	void postBattleAction() override;
 	virtual void postLevelAction();
-	virtual void serialize(std::ostream &stream) const;
-	void serializeLn(std::ostream& stream) const;
 
+public:
+    void serialize(std::ostream &stream) const override;
 protected:
 	virtual void serializeRawData(std::ostream& stream) const;
 

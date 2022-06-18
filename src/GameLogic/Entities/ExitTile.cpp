@@ -21,3 +21,9 @@ char ExitTile::getSymbol() const
 	return 'E';
 }
 
+void ExitTile::serialize(std::ostream& stream) const
+{
+	stream << "ExitTile" << " ";
+	TileEntity::serialize(stream);
+}
+

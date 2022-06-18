@@ -5,6 +5,9 @@
 Treasure::Treasure(int r, int c, ItemExchangeMaster& iem) : TileEntity(r, c), isTaken(false), iem(iem)
 {}
 
+Treasure::Treasure(int r, int c, bool isTaken, ItemExchangeMaster & iem) : TileEntity(r, c), isTaken(isTaken), iem(iem)
+{}
+
 bool Treasure::canEnter() const
 {
 	return true;
@@ -40,4 +43,10 @@ void Treasure::interactInternal(GameEntity* other)
 {
 	iem.setGiver(this);
 	iem.flush();
+}
+
+void Treasure::serializeLn(std::ostream& stream) const
+{
+	serialize(stream);
+	stream << '\n';
 }

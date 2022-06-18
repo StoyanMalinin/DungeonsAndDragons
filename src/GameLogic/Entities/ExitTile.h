@@ -13,6 +13,9 @@ public:
 	bool canEnter() const override;
 	Interactions getInteractionType() const override;
 	char getSymbol() const override;
+
+public:
+	void serialize(std::ostream& stream) const override;
 };
 
 #endif // !__EXITTILE_H

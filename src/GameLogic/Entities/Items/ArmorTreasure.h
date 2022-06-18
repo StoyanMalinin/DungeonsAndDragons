@@ -11,8 +11,12 @@ private:
 
 public:
 	ArmorTreasure(int r, int c, ItemExchangeMaster& iem, const Armor& armor);
+	ArmorTreasure(int r, int c, bool isTaken, ItemExchangeMaster& iem, const Armor& armor);
 	Treasure* clone() const override;
 	
+public:
+	void serialize(std::ostream& stream) const override;
+
 public:
 	bool giveToPlayer(Player& p) override;
 };
