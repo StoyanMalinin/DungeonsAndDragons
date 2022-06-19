@@ -145,6 +145,7 @@ Level* GameLogicFileManager::deserializeLevel(std::iostream& stream)
 
 	size_t number;
 	stream >> number;
+	if(number==0) throw std::logic_error("Error while deserializing Level! Invalid stream format!");
 
 	GameMap mp(stream);
 

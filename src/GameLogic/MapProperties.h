@@ -21,6 +21,8 @@ struct MapProperties
 
 	void serialize(std::ostream &stream) const;
 	void serializeLn(std::ostream& stream) const;
+
+	bool checkValid() const;
 };
 
 bool operator ==(const MapProperties& lhs, const MapProperties& rhs);

@@ -20,6 +20,12 @@ void MovableTileEntity::move()
 	c = newPos.second;
 }
 
+void MovableTileEntity::setPosition(int r, int c)
+{
+	this->r = r;
+	this->c = c;
+}
+
 Pair<int, int> MovableTileEntity::calcNewPos(Pair<int, int> pos, Directions dir)
 {
 	if (dir == Directions::UP) pos.first--;

@@ -45,6 +45,20 @@ void MapProperties::serializeLn(std::ostream& stream) const
 	stream << '\n';
 }
 
+bool MapProperties::checkValid() const
+{
+	const float eps = 0.001f;
+
+	if (dragonStrength < -eps || dragonMana < -eps || dragonHealth < -eps) return false;
+	if (treasureArmor < -eps || treasureSpell < -eps || treasureWeapon < -eps) return false;
+	if (n > 1e6) return false;
+	if (m > 1e6) return false;
+	if (n * m > 1e7) return false;
+	if (itemLevel > 1e4) return false;
+
+	return true;
+}
+
 bool operator==(const MapProperties& lhs, const MapProperties& rhs)
 {
 	const float eps = 0.001f;

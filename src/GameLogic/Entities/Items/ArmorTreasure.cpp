@@ -15,7 +15,7 @@ Treasure* ArmorTreasure::clone() const
 
 void ArmorTreasure::serialize(std::ostream& stream) const
 {
-	std::cout << "ArmorTreasure" << " " << r << " " << c << " " << isTaken << " ";
+	stream << "ArmorTreasure" << " " << r << " " << c << " " << isTaken << " ";
 	armor.serialize(stream);
 }
 

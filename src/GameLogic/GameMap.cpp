@@ -300,7 +300,9 @@ void GameMap::deserialize(std::iostream& stream)
 	checkStream(stream);
 
 	mp = MapProperties(stream);
-	
+	if(mp.checkValid()==false) 
+		throw std::logic_error("Error while deserializing GameMap! Invalid stream format!");
+
 	grid = Vector<Vector<SharedPtr<TileEntity>>>(mp.n);
 	for (size_t i = 0; i < mp.n; i++)
 	{

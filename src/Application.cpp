@@ -107,7 +107,7 @@ void Application::generateLevelCommand(Vector<String>& tokens)
 		throw std::logic_error("Cannot open the file!");
 
 	int number = uih.requestInt("Please enter the level number (positive integer)", "(level number)");
-	while (number <= 0)
+	while (!(1<=number && number<=10))
 		number = uih.requestInt("Please enter the level number (positive integer)", "(level number)");
 
 	int seed = uih.requestInt("Please enter level seed", "(seed)");
@@ -124,6 +124,10 @@ void Application::generatePlayerCommand(Vector<String>& tokens)
 {
 	if (tokens.getLen() - 1 != 1)
 		throw std::logic_error("Invalid command!");
+
+	std::ofstream f(tokens[1].getData());
+	if (f.is_open() == false)
+		throw std::logic_error("Could not open the file!");
 
 	String playerName;
 	uih.requestTextLine("Please enter the name of your player", "(player name)", playerName);
@@ -148,13 +152,6 @@ void Application::generatePlayerCommand(Vector<String>& tokens)
 	p->setWeapon(SharedPtr<Weapon>(new Weapon("Ordinary sword", 1, 0.2f)));
 	p->setSpell(SharedPtr<Spell>(new Spell("Fire ball", 1, 0.2f)));
 
-	//String filename;
-	//uih.requestTextLine("Please enter the name of the file, where you want to save your player", "(filename)", filename);
-
-	std::ofstream f(tokens[1].getData());
-	if (f.is_open() == false)
-		throw std::logic_error("Could not open the file!");
-
 	p->serialize(f);
 	f.close();
 }
@@ -172,9 +169,21 @@ void Application::dndCommand(Vector<String>& tokens)
 
 	Level* level = GameLogicFileManager::deserializeLevel(fLevel);
 	Player* player = GameLogicFileManager::deserializePlayer(fPlayer, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, level->getMap()), UIPointsDistributionController(uih),
-														ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+														     ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
 	level->play(*player);
+
+	fPlayer.close();
+	fLevel.close();
+	if (fLevel.bad() == true || fPlayer.bad() == true)
+		throw std::logic_error("Error while closing files!");
+
+	fPlayer.open(tokens[1].getData(), std::ios::out | std::ios::trunc);
+	if (player->isAlive() == true)
+	{
+		player->setPosition(0, 0);
+		player->serialize(fPlayer);
+	}
 
 	delete level;
 	delete player;

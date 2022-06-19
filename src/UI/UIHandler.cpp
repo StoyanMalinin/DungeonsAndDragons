@@ -63,7 +63,7 @@ void UIHandler::requestPointsDistribution(float allPoints, float& strength, floa
 			break;
 		}
 	}
-
+	is.ignore();
 }
 
 void UIHandler::writeMessage(const String& s)
@@ -158,6 +158,7 @@ int UIHandler::requestInt(const String& msg, const String& shortMsg)
 	
 	int x;
 	is >> x;
+	is.ignore();
 
 	return x;
 }
