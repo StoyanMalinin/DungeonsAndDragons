@@ -1,0 +1,18 @@
+<map id="GameEntity" name="GameEntity">
+<area shape="rect" id="node1" title=" " alt="" coords="161,5,251,32"/>
+<area shape="rect" id="node2" href="$class_fightable_entity.html" title=" " alt="" coords="55,80,165,107"/>
+<area shape="rect" id="node8" href="$class_tile_entity.html" title=" " alt="" coords="265,80,341,107"/>
+<area shape="rect" id="node3" href="$class_dragon.html" title=" " alt="" coords="79,155,141,181"/>
+<area shape="rect" id="node4" href="$class_player.html" title=" " alt="" coords="146,229,205,256"/>
+<area shape="rect" id="node5" href="$class_human_player.html" title=" " alt="" coords="5,304,105,331"/>
+<area shape="rect" id="node6" href="$class_mage_player.html" title=" " alt="" coords="130,304,221,331"/>
+<area shape="rect" id="node7" href="$class_warrior_player.html" title=" " alt="" coords="245,304,346,331"/>
+<area shape="rect" id="node9" href="$class_empty_tile.html" title=" " alt="" coords="166,155,246,181"/>
+<area shape="rect" id="node10" href="$class_exit_tile.html" title=" " alt="" coords="271,155,336,181"/>
+<area shape="rect" id="node11" href="$class_movable_tile_entity.html" title=" " alt="" coords="361,155,483,181"/>
+<area shape="rect" id="node12" href="$class_treasure.html" title=" " alt="" coords="507,155,579,181"/>
+<area shape="rect" id="node16" href="$class_wall_tile.html" title=" " alt="" coords="604,155,672,181"/>
+<area shape="rect" id="node13" href="$class_armor_treasure.html" title=" " alt="" coords="362,229,469,256"/>
+<area shape="rect" id="node14" href="$class_spell_treasure.html" title=" " alt="" coords="493,229,594,256"/>
+<area shape="rect" id="node15" href="$class_weapon_treasure.html" title=" " alt="" coords="618,229,738,256"/>
+</map>

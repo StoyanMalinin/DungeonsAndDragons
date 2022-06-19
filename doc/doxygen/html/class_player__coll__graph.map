@@ -1,0 +1,10 @@
+<map id="Player" name="Player">
+<area shape="rect" id="node1" title=" " alt="" coords="117,247,175,273"/>
+<area shape="rect" id="node2" href="$class_movable_tile_entity.html" title=" " alt="" coords="15,171,138,197"/>
+<area shape="rect" id="node3" href="$class_tile_entity.html" title=" " alt="" coords="5,81,81,108"/>
+<area shape="rect" id="node4" href="$class_game_entity.html" title=" " alt="" coords="47,5,138,32"/>
+<area shape="rect" id="node5" href="$class_fightable_entity.html" title=" " alt="" coords="185,171,294,197"/>
+<area shape="rect" id="node6" href="$class_shared_ptr.html" title=" " alt="" coords="157,81,345,108"/>
+<area shape="rect" id="node7" href="$class_fight_master.html" title=" " alt="" coords="370,81,461,108"/>
+<area shape="rect" id="node8" href="$class_interaction_master.html" title=" " alt="" coords="354,5,477,32"/>
+</map>

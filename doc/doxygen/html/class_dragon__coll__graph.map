@@ -1,0 +1,9 @@
+<map id="Dragon" name="Dragon">
+<area shape="rect" id="node1" title=" " alt="" coords="106,247,169,273"/>
+<area shape="rect" id="node2" href="$class_tile_entity.html" title=" " alt="" coords="42,171,118,197"/>
+<area shape="rect" id="node3" href="$class_game_entity.html" title=" " alt="" coords="5,81,96,108"/>
+<area shape="rect" id="node4" href="$class_fightable_entity.html" title=" " alt="" coords="155,171,264,197"/>
+<area shape="rect" id="node5" href="$class_shared_ptr.html" title=" " alt="" coords="121,81,309,108"/>
+<area shape="rect" id="node6" href="$class_fight_master.html" title=" " alt="" coords="333,81,424,108"/>
+<area shape="rect" id="node7" href="$class_interaction_master.html" title=" " alt="" coords="317,5,440,32"/>
+</map>

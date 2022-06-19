@@ -1,0 +1,8 @@
+<map id="SpellTreasure" name="SpellTreasure">
+<area shape="rect" id="node1" title=" " alt="" coords="67,247,168,273"/>
+<area shape="rect" id="node2" href="$class_treasure.html" title=" " alt="" coords="81,171,153,197"/>
+<area shape="rect" id="node3" href="$class_tile_entity.html" title=" " alt="" coords="13,81,89,108"/>
+<area shape="rect" id="node4" href="$class_game_entity.html" title=" " alt="" coords="5,5,96,32"/>
+<area shape="rect" id="node5" href="$class_item_exchange_master.html" title=" " alt="" coords="113,81,258,108"/>
+<area shape="rect" id="node6" href="$class_interaction_master.html" title=" " alt="" coords="124,5,247,32"/>
+</map>
