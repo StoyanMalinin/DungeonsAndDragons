@@ -4,6 +4,8 @@
 #include "MapProperties.h"
 #include "Entities/Player/Player.h"
 
+#include <fstream>
+
 Level::Level(size_t number, size_t seed) : number(number), mp(Level::getMapPropertiesByNumber(number), seed)
 {}
 
@@ -53,21 +55,39 @@ const GameMap& Level::getMap() const
 	return mp;
 }
 
-LevelOutcome Level::play(Player &p)
+LevelOutcome Level::play(Player &p, String *s)
 {
 	if (p.isAlive() == false)
 		return LevelOutcome::PLAYER_DIED;
 
 	while (true)
 	{
+		std::fstream f;
+
 		p.move();
 		Interactions res = mp.doInteraction(p);
-		
+
+		if (s != nullptr)
+		{
+			f.open(s->getData(), std::ios::out | std::ios::trunc);
+			if (f.is_open() == false) throw std::logic_error("Cannot open backup file!");
+		}
+
 		if (p.isAlive() == false)
 			return LevelOutcome::PLAYER_DIED;
 
 		if (res == Interactions::MAP_EXITING)
 			break;
+
+		if (f.is_open() == true)
+		{
+			serializeLn(f);
+			p.serializeLn(f);
+
+			f.close();
+			if (f.bad() == true)
+				throw std::exception("Error while closing file after backup!");
+		}
 	}
 
 	if (p.isAlive() == true)

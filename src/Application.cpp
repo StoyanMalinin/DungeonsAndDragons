@@ -25,7 +25,7 @@
 Application::Application() : Application(std::cin, std::cout)
 {}
 
-Application::Application(std::istream& is, std::ostream& os) : uih(is, os), state(ApplicationState::OK)
+Application::Application(std::istream& is, std::ostream& os) : uih(is, os), state(ApplicationState::OK), backupFile("backup.txt")
 {}
 
 void Application::run()
@@ -75,6 +75,8 @@ void Application::executeCommand(Vector<String>& tokens)
 	else if (tokens[0] == "generateLevel") generateLevelCommand(tokens);
 	else if (tokens[0] == "generateLevel") generateLevelCommand(tokens);
 	else if (tokens[0] == "dnd") dndCommand(tokens);
+	else if (tokens[0] == "recover") recoverCommand(tokens);
+	else if (tokens[0] == "changeBackupFile") changeBackupFileCommand(tokens);
 	else throw std::logic_error("Invalid command!");
 }
 
@@ -171,7 +173,7 @@ void Application::dndCommand(Vector<String>& tokens)
 	Player* player = GameLogicFileManager::deserializePlayer(fPlayer, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, level->getMap()), UIPointsDistributionController(uih),
 														     ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
-	level->play(*player);
+	level->play(*player, &backupFile);
 
 	fPlayer.close();
 	fLevel.close();
@@ -187,4 +189,48 @@ void Application::dndCommand(Vector<String>& tokens)
 
 	delete level;
 	delete player;
+}
+
+void Application::changeBackupFileCommand(Vector<String>& tokens)
+{
+	if (tokens.getLen() - 1 != 1)
+		throw std::logic_error("Invalid command!");
+
+	backupFile = tokens[1];
+}
+
+void Application::recoverCommand(Vector<String>& tokens)
+{
+	if (tokens.getLen() - 1 != 3)
+		throw std::logic_error("Invalid command!");
+
+	String& backup = tokens[1];
+	String& playerFile = tokens[2], & levelFile = tokens[3];
+
+	std::fstream f(backup.getData(), std::ios::in);
+	if (f.is_open() == false)
+		throw std::logic_error("Could not open the backup file");
+
+	Level *level = GameLogicFileManager::deserializeLevel(f);
+	Player* p = GameLogicFileManager::deserializePlayer(f, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, level->getMap()), UIPointsDistributionController(uih),
+														ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+	std::ofstream fPlayer(playerFile.getData());
+	if(fPlayer.is_open()==false)
+		throw std::logic_error("Could not open the new player file");
+	p->serialize(fPlayer);
+
+	std::ofstream fLevel(levelFile.getData());
+	if (fLevel.is_open() == false)
+		throw std::logic_error("Could not open the new level file");
+	level->serialize(fLevel);
+
+	f.close();
+	fLevel.close();
+	fPlayer.close();
+	if (f.bad() == true || fLevel.bad() == true || fPlayer.bad() == true)
+		throw std::exception("Error while closing files!");
+
+	delete p;
+	delete level;
 }

@@ -1,9 +1,9 @@
 #ifndef __LEVEL_H
 #define __LEVEL_H
 
+#include "../Utils/String.h"
 #include "MapProperties.h"
 #include "GameMap.h"
-
 class Player;
 
 #include <iostream>
@@ -35,7 +35,7 @@ public:
 	const GameMap& getMap() const;
 
 public:
-	LevelOutcome play(Player &p);
+	LevelOutcome play(Player &p, String *s = nullptr);
 
 public:
 	void serialize(std::ostream& stream) const;

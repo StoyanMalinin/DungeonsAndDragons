@@ -17,6 +17,7 @@ class Application
 private:
 	UIHandler uih;
 	ApplicationState state;
+	String backupFile;
 
 public:
 	Application();
@@ -34,6 +35,8 @@ private:
 	void generateLevelCommand(Vector<String>& tokens);
 	void generatePlayerCommand(Vector<String>& tokens);
 	void dndCommand(Vector<String>& tokens);
+	void changeBackupFileCommand(Vector<String>& tokens);
+	void recoverCommand(Vector<String>& tokens);
 };
 
 #endif // !__APPLICATION_H

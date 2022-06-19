@@ -1,1 +1,0 @@
-m 14 Stoyan Malinin 0 0 30 70 69.7434 50 9 Fire ball 1 0.2 19 armor from treasure 1 0.189736 20 weapon from treasure 1 0.210818
