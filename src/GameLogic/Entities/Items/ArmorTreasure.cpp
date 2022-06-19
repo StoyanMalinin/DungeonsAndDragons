@@ -1,4 +1,6 @@
 #include "ArmorTreasure.h"
+#include "../../../Utils/SharedPtr.hpp"
+#include "../Player/Player.h"
 
 ArmorTreasure::ArmorTreasure(int r, int c, ItemExchangeMaster& iem, const Armor& armor) : Treasure(r, c, iem), armor(armor)
 {}

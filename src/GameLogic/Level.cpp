@@ -1,10 +1,16 @@
 #include "Level.h"
 
-Level::Level(size_t number, size_t seed) : number(number), mp(GameMap(Level::getMapPropertiesByNumber(number), seed))
+#include "GameMap.h"
+#include "MapProperties.h"
+#include "Entities/Player/Player.h"
+
+Level::Level(size_t number, size_t seed) : number(number), mp(Level::getMapPropertiesByNumber(number), seed)
 {}
 
-Level::Level(size_t number, GameMap& mp) : number(number), mp(mp)
-{}
+Level::Level(size_t number, const GameMap& mp) : number(number), mp(mp)
+{
+
+}
 
 size_t Level::getMapRowCountByNumber(size_t number)
 {
@@ -42,6 +48,11 @@ MapProperties Level::getMapPropertiesByNumber(size_t number)
 						 number);
 }
 
+const GameMap& Level::getMap() const
+{
+	return mp;
+}
+
 LevelOutcome Level::play(Player &p)
 {
 	if (p.isAlive() == false)
@@ -63,6 +74,18 @@ LevelOutcome Level::play(Player &p)
 		p.postLevelAction();
 
 	return LevelOutcome::COMPLETED;
+}
+
+void Level::serialize(std::ostream& stream) const
+{
+	stream << number << " ";
+	mp.serialize(stream);
+}
+
+void Level::serializeLn(std::ostream& stream) const
+{
+	serialize(stream);
+	stream << '\n';
 }
 
 size_t Level::getNthMemberOfFibonacciLikeSequence(size_t n, size_t f1, size_t f2)

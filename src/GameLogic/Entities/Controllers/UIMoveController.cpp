@@ -1,6 +1,11 @@
 #include "UIMoveController.h"
 
-UIMoveController::UIMoveController(UIHandler& uih, GameMap& mp) : uih(uih), mp(mp), isCached(false)
+#include "../../GameMap.h"
+#include "../../../UI/UIHandler.h"
+
+#include "MoveController.h"
+
+UIMoveController::UIMoveController(UIHandler& uih, const GameMap& mp) : uih(uih), mp(mp), isCached(false)
 {}
 
 Directions UIMoveController::getDirection(const MovableTileEntity& entity)

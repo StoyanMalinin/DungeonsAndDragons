@@ -1,6 +1,7 @@
 #include "UIHandler.h"
 
 #include <cmath>
+#include "../GameLogic/GameMap.h"
 
 UIHandler::UIHandler(std::istream& is, std::ostream& os) : is(is), os(os)
 {}

@@ -1,13 +1,13 @@
 #ifndef __FIGHTABLEENTITY_H
 #define __FIGHTABLEENTITY_H
 
-#include "Controllers/FightController.h"
 #include "../../Utils/SharedPtr.hpp"
 #include "GameEntity.h"
 
 #include <iostream>
 
 class FightMaster;
+class FightController;
 
 class FightableEntity : public virtual GameEntity
 {

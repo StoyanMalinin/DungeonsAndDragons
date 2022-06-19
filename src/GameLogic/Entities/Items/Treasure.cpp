@@ -1,5 +1,8 @@
 #include "Treasure.h"
 
+#include "../Player/Player.h"
+#include "../TileEntity.h"
+
 #include "../../ItemExchangeMaster.h"
 
 Treasure::Treasure(int r, int c, ItemExchangeMaster& iem) : TileEntity(r, c), isTaken(false), iem(iem)

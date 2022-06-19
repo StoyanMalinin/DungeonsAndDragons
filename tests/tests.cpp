@@ -5,6 +5,8 @@
 #include "../src/Utils/Pair.hpp"
 #include "../src/Utils/Vector.hpp"
 
+#include "../src/Utils/Rectangle.h"
+
 #include "../src/GameLogic/Entities/Dragon.h"
 #include "../src/GameLogic/Entities/Player/Player.h"
 #include "../src/GameLogic/Entities/Player/MagePlayer.h"
@@ -524,5 +526,25 @@ TEST_SUITE("serialization tests")
 		CHECK(p.getWeapon()->getName() == "mech");
 		CHECK(p.getWeapon()->getLevel() == 2);
 		CHECK(cmpFloat(p.getWeapon()->getC(), 0.12f) == 0);
+	}
+
+	TEST_CASE("GameMap serialization and deserialization")
+	{
+		//for (size_t level = 1; level <= 4; level++)
+		//{
+		//	for (size_t seed = 1; seed < 5; seed++)
+		//	{
+		//		std::stringstream stream;
+		//		GameMap mp1(Level::getMapPropertiesByNumber(level), level);
+		//		mp1.serialize(stream);
+		//
+		//		GameMap mp2(stream);
+		//
+		//		CHECK(mp1.getMapProperties() == mp2.getMapProperties());
+		//		for (size_t i = 0; i < mp1.getN(); i++)
+		//			for (size_t j = 0; j < mp1.getM(); j++)
+		//				CHECK(mp1.getCharAt(i, j) == mp2.getCharAt(i, j));
+		//	}
+		//}
 	}
 }

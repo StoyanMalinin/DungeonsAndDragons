@@ -6,6 +6,8 @@
 #include "../Entities/Player/HumanPlayer.h"
 #include "../Entities/Player/WarriorPlayer.h"
 
+//#include "../Level.h"
+#include "../Entities/Dragon.h"
 #include "../Entities/WallTile.h"
 #include "../Entities/ExitTile.h"
 #include "../Entities/EmptyTile.h"
@@ -14,6 +16,8 @@
 #include "../Entities/Items/WeaponTreasure.h"
 
 #include <iostream>
+
+class Level;
 
 class GameLogicFileManager
 {
@@ -31,6 +35,8 @@ public:
 	static ArmorTreasure* deserializeArmorTreasure(std::iostream& stream, ItemExchangeMaster& iem);
 	static WeaponTreasure* deserializeWeaponTreasure(std::iostream& stream, ItemExchangeMaster& iem);
 	static Treasure* deserializeTreasure(std::iostream& stream, ItemExchangeMaster& iem);
+	static Dragon* deserializeDragon(std::iostream& stream, const FightController& fc, FightMaster& fm);
+	static Level* deserializeLevel(std::iostream& stream);
 
 private:
 	static void checkForBadStream(std::iostream& stream);

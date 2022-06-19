@@ -27,6 +27,7 @@ void PlayerView::deserialize(std::iostream& stream)
 		stream.get(c);
 		name += c;
 	}
+	stream.ignore();
 
 	stream >> r;
 	checkForError(stream);
@@ -42,18 +43,20 @@ void PlayerView::deserialize(std::iostream& stream)
 
 	stream >> initialHealth;
 	checkForError(stream);
-	stream.ignore();
 	
-	char c = stream.peek();
-	if (c != '!') spell = SharedPtr<Spell>(new Spell(stream));
-	else { stream.ignore(); stream.ignore(); }
+	stream.ignore();
+	char ch = stream.peek();
+	if (ch != '!') spell = SharedPtr<Spell>(new Spell(stream));
+	else { stream.ignore(); }
 
-	c = stream.peek();
-	if (c != '!') armor = SharedPtr<Armor>(new Armor(stream));
-	else { stream.ignore(); stream.ignore(); }
+	stream.ignore();
+	ch = stream.peek();
+	if (ch != '!') armor = SharedPtr<Armor>(new Armor(stream));
+	else { stream.ignore(); }
 
-	c = stream.peek();
-	if (c != '!') weapon = SharedPtr<Weapon>(new Weapon(stream));
+	stream.ignore();
+	ch = stream.peek();
+	if (ch != '!') weapon = SharedPtr<Weapon>(new Weapon(stream));
 	else { stream.ignore(); stream.ignore(); }
 }
 

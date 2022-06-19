@@ -1,11 +1,16 @@
 #ifndef __SANDBOX_H
+#define __SANDBOX_H
 
 #include "GameLogic/Level.h"
 #include "GameLogic/GameMap.h"
 
+#include "GameLogic/FIleManagement/GameLogicFileManager.h"
+
 #include "GameLogic/FightMaster.h"
 #include "GameLogic/ItemExchangeMaster.h"
 
+#include "GameLogic/Entities/Dragon.h"
+#include "GameLogic/Entities/Player/Player.h"
 #include "GameLogic/Entities/Controllers/OptimalItemManagerController.h"
 #include "GameLogic/Entities/Controllers/RandomFightController.h"
 #include "GameLogic/Entities/Controllers/UIFightController.h"
@@ -17,6 +22,9 @@
 #include "GameLogic/Entities/Items/ArmorTreasure.h"
 
 #include "Application.h"
+
+#include <iostream>
+#include <sstream>
 
 void walkingTest()
 {
@@ -105,15 +113,32 @@ void mapSerializationTest()
 
 	std::cout << "serialize" << '\n';
 	mp.serialize(std::cout);
+
+	std::stringstream stream;
+	mp.serialize(stream);
+
+	GameMap mp1(stream);
+	mp1.debug(std::cout);
+
+	std::cout << (mp.getMapProperties() == mp1.getMapProperties()) << '\n';
+}
+
+void levelSerializationTest()
+{
+	std::stringstream stream;
+
+	Level l(2, 22);
+	l.serialize(stream);
 }
 
 void sandbox()
 {
-	mapSerializationTest();
+	//mapSerializationTest();
+	//levelSerializationTest();
 
-	//Application* app = new Application();
-	//app->run();
-	//delete app;
+	Application* app = new Application();
+	app->run();
+	delete app;
 }
 
 #endif // !__SANDBOX_H

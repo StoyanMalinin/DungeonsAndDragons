@@ -75,6 +75,7 @@ public:
 public:
 	void interact(GameEntity* other) override;
 	void interactInternal(GameEntity* other) override;
+	TileEntity* clone() const override;
 
 public:
 	virtual ~Player() = default;

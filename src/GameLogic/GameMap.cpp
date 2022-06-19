@@ -1,19 +1,46 @@
 #include "GameMap.h"
 
+#include "Entities/Dragon.h"
 #include "Entities/WallTile.h"
 #include "Entities/ExitTile.h"
 #include "Entities/EmptyTile.h"
 #include "../Utils/RandomGenerator.h"
+#include "../Utils/SharedPtr.hpp"
 
 #include "Entities/Controllers/RandomFightController.h"
 
+
 #include "Entities/Items/Treasure.h"
+#include "Entities/Items/Spell.h"
+#include "Entities/Items/Armor.h"
+#include "Entities/Items/Weapon.h"
 #include "Entities/Items/ArmorTreasure.h"
 #include "Entities/Items/WeaponTreasure.h"
 #include "Entities/Items/SpellTreasure.h"
 
 #include "ItemExchangeMaster.h"
 #include "FightMaster.h"
+
+#include "FIleManagement/GameLogicFileManager.h"
+
+#include "../Utils/Rectangle.h"
+#include "../Utils/RandomGenerator.h"
+
+#include "MapProperties.h"
+#include "Entities/TileEntity.h"
+
+void GameMap::deepCopyFromOther(const GameMap& other)
+{
+	mp = other.mp;
+
+	grid = Vector<Vector<SharedPtr<TileEntity>>>(mp.n);
+	for (size_t i = 0; i < mp.n; i++)
+	{
+		grid[i] = Vector<SharedPtr<TileEntity>>(mp.m);
+		for (size_t j = 0; j < mp.m; j++) 
+			grid[i][j] = SharedPtr<TileEntity>(other.grid[i][j]->clone());
+	}
+}
 
 GameMap::GameMap(MapProperties& mp, size_t seed) : mp(mp)
 {
@@ -27,6 +54,16 @@ GameMap::GameMap(MapProperties& mp, size_t seed) : mp(mp)
 	RandomGenerator rnd(seed);
 	this->fillBySpacePartitioning(rnd);
 	this->addMapComponents(rnd);
+}
+
+GameMap::GameMap(std::iostream& stream)
+{
+	this->deserialize(stream);
+}
+
+GameMap::GameMap(const GameMap& other)
+{
+	this->deepCopyFromOther(other);
 }
 
 void GameMap::fillBySpacePartitioning(RandomGenerator& rnd)
@@ -258,6 +295,54 @@ void GameMap::addMapComponents(RandomGenerator& rnd)
 	SharedPtr<TileEntity>(new ExitTile(freeSpots[mp.dragonsCount + mp.treasuresCount].first, freeSpots[mp.dragonsCount + mp.treasuresCount].second));
 }
 
+void GameMap::deserialize(std::iostream& stream)
+{
+	checkStream(stream);
+
+	mp = MapProperties(stream);
+	
+	grid = Vector<Vector<SharedPtr<TileEntity>>>(mp.n);
+	for (size_t i = 0; i < mp.n; i++)
+	{
+		grid[i] = Vector<SharedPtr<TileEntity>>(mp.m);
+		for (size_t j = 0; j < mp.m; j++)
+		{
+			checkStream(stream);
+
+			String type;
+			size_t streamPos = stream.tellg();
+			stream >> type;
+			stream.seekg(streamPos);
+
+			if (type == "ArmorTreasure" || type == "SpellTreasure" || type == "WeaponTreasure")
+				grid[i][j] = SharedPtr<TileEntity>(GameLogicFileManager::deserializeTreasure(stream, ItemExchangeMaster::getGlobalInstance()));
+			else if (type == "Dragon")
+				grid[i][j] = SharedPtr<TileEntity>(GameLogicFileManager::deserializeDragon(stream, RandomFightController(), FightMaster::getGlobalInstance()));
+			else
+			{
+				if (type == "WallTile")
+					grid[i][j] = SharedPtr<TileEntity>(GameLogicFileManager::deserializeWallTile(stream));
+				else if (type == "ExitTile")
+					grid[i][j] = SharedPtr<TileEntity>(GameLogicFileManager::deserializeExitTile(stream));
+				else if (type == "EmptyTile")
+					grid[i][j] = SharedPtr<TileEntity>(GameLogicFileManager::deserializeEmptyTile(stream));
+				else
+				{
+					throw std::logic_error("Error while deserializing GameMap! Invalid stream format!");
+				}
+			}
+		}
+	}
+
+	checkStream(stream);
+}
+
+void GameMap::checkStream(std::iostream& stream)
+{
+	if (stream.bad() == true)
+		throw std::logic_error("Error while deserializing GameMap! The stream is corrupt or in invalid format!");
+}
+
 size_t GameMap::getN() const
 {
 	return mp.n;
@@ -274,6 +359,11 @@ char GameMap::getCharAt(size_t i, size_t j) const
 	
 	if (grid[i][j].isNull() == true) return ' ';
 	return grid[i][j]->getSymbol();
+}
+
+const MapProperties& GameMap::getMapProperties() const
+{
+	return mp;
 }
 
 void GameMap::serialize(std::ostream& stream) const

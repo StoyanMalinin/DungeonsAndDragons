@@ -35,5 +35,4 @@ void TileEntity::interact(GameEntity* other)
 	other->interactInternal(this);
 }
 
-TileEntity::~TileEntity()
-{}
+

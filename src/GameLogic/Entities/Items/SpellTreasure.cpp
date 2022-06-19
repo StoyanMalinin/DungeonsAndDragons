@@ -1,4 +1,6 @@
 #include "SpellTreasure.h"
+#include "../../../Utils/SharedPtr.hpp"
+#include "../Player/Player.h"
 
 SpellTreasure::SpellTreasure(int r, int c, ItemExchangeMaster& iem, const Spell& spell) : Treasure(r, c, iem), spell(spell)
 {}

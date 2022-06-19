@@ -1,4 +1,5 @@
 #include "UIPointsDistributionController.h"
+#include "../../../UI/UIHandler.h"
 
 UIPointsDistributionController::UIPointsDistributionController(UIHandler& uih) : uih(uih)
 {}

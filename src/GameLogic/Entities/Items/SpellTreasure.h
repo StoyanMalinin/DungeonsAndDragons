@@ -1,7 +1,7 @@
 #ifndef __SPELLTREASURE_H
 #define __SPELLTREASURE_H
 
-#include "Armor.h"
+#include "Spell.h"
 #include "Treasure.h"
 
 class SpellTreasure : public Treasure

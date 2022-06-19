@@ -1,4 +1,5 @@
 #include "UIFightController.h"
+#include "../../../UI/UIHandler.h"
 
 UIFightController::UIFightController(UIHandler& uih) : uih(uih)
 {}

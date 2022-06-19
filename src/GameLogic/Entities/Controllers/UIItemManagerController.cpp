@@ -1,4 +1,5 @@
 #include "UIItemManagerController.h"
+#include "../../../UI/UIHandler.h"
 
 UIItemManagerController::UIItemManagerController(UIHandler& uih) :uih(uih)
 {}

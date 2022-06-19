@@ -41,9 +41,10 @@ public:
 
 public:
 	void interact(GameEntity* other) override;
+	virtual TileEntity* clone() const = 0;
 
 public:
-	virtual ~TileEntity();
+	virtual ~TileEntity() = default;
 };
 
 #endif

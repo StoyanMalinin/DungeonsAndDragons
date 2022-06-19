@@ -4,13 +4,19 @@
 #include <iostream>
 #include "../../Utils/String.h"
 
+class Player;
 #include "../Entities/Player/Player.h"
-#include "../Entities/Controllers/MoveController.h"
-#include "../Entities/Controllers/FightController.h"
-#include "../Entities/Controllers/ItemManagerController.h"
+//#include "../Entities/Controllers/MoveController.h"
+//#include "../Entities/Controllers/FightController.h"
+//#include "../Entities/Controllers/ItemManagerController.h"
+class ItemManagerController;
+class PointsDistributionController;
+class ItemExchangeMaster;
+class FightMaster;
 
 struct PlayerView
 {
+public:
 	char type;
 	String name;
 	int r, c;

@@ -16,3 +16,8 @@ void MagePlayer::serialize(std::ostream& stream) const
     if (stream.bad() == true)
         throw std::exception("Error while serializing mage player, the stream got corrupted!");
 }
+
+TileEntity* MagePlayer::clone() const
+{
+    return new MagePlayer(*this);
+}

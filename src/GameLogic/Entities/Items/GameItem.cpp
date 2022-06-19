@@ -19,6 +19,7 @@ GameItem::GameItem(std::iostream & stream)
 
 		this->name += c;
 	}
+	stream.ignore();
 	checkForError(stream);
 	
 	stream >> level;

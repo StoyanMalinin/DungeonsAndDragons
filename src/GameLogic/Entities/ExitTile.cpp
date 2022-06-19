@@ -27,3 +27,8 @@ void ExitTile::serialize(std::ostream& stream) const
 	TileEntity::serialize(stream);
 }
 
+TileEntity* ExitTile::clone() const
+{
+	return new ExitTile(*this);
+}
+

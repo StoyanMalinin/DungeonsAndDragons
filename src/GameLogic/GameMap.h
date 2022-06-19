@@ -1,17 +1,20 @@
 #ifndef __GAMEMAP_H
 #define __GAMEMAP_H
 
-#include "Entities/Dragon.h"
-#include "Entities/Player/Player.h"
 #include "../Utils/Vector.hpp"
+#include "../Utils/SharedPtr.hpp"
 
+class TileEntity;
+
+struct Rectangle;
+class RandomGenerator;
 #include "../Utils/Pair.hpp"
-#include "../Utils/Rectangle.h"
-#include "../Utils/RandomGenerator.h"
-
 #include "MapProperties.h"
 
 #include <iostream>
+
+struct MapProperties;
+enum class Interactions;
 
 class GameMap
 {
@@ -19,9 +22,13 @@ private:
 	MapProperties mp;
 	Vector<Vector<SharedPtr<TileEntity>>> grid;
 
+private:
+	void deepCopyFromOther(const GameMap& other);
+
 public:
 	GameMap(MapProperties &mp, size_t seed);
-	GameMap(const GameMap& other) = delete;
+	GameMap(std::iostream& stream);
+	GameMap(const GameMap& other);
 	GameMap& operator =(const GameMap& other) = delete;
 
 private:
@@ -32,10 +39,15 @@ private:
 	bool randomDfsTo(Pair<int, int> x, Pair<int, int> destination, const Rectangle& boundingBox, Vector<Vector<bool>>& used, RandomGenerator& rnd, Vector <Pair<int, int>> &currPath, Vector<Pair<int, int>> &ansPath);
 	void addMapComponents(RandomGenerator& rnd);
 
+private:
+	void deserialize(std::iostream& stream);
+	void checkStream(std::iostream& stream);
+
 public:
 	size_t getN() const;
 	size_t getM() const;
 	char getCharAt(size_t i, size_t j) const;
+	const MapProperties& getMapProperties() const;
 
 public:
 	void serialize(std::ostream& stream) const;

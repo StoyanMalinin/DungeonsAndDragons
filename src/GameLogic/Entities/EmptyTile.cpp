@@ -23,3 +23,8 @@ void EmptyTile::serialize(std::ostream& stream) const
     stream << "EmptyTile" << " ";
     TileEntity::serialize(stream);
 }
+
+TileEntity* EmptyTile::clone() const
+{
+    return new EmptyTile(*this);
+}

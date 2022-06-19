@@ -47,7 +47,7 @@ void MapProperties::serializeLn(std::ostream& stream) const
 
 bool operator==(const MapProperties& lhs, const MapProperties& rhs)
 {
-	const float eps = 0.000001f;
+	const float eps = 0.001f;
 
 	if (lhs.n != rhs.n) return false;
 	if (lhs.m != rhs.m) return false;

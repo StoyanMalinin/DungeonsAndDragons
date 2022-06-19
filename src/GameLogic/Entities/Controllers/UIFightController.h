@@ -2,7 +2,8 @@
 #define __UIFIGHTCONTROLLER_H
 
 #include "FightController.h"
-#include "../../../UI/UIHandler.h"
+//#include "../../../UI/UIHandler.h"
+class UIHandler;
 
 class UIFightController : public FightController
 {

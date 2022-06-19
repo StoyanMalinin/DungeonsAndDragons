@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <fstream>
 
+#include "GameLogic/FIleManagement/GameLogicFileManager.h"
+
 #include "GameLogic/Entities/Player/WarriorPlayer.h"
 #include "GameLogic/Entities/Player/HumanPlayer.h"
 #include "GameLogic/Entities/Player/MagePlayer.h"
@@ -16,6 +18,9 @@
 
 #include "GameLogic/FightMaster.h"
 #include "GameLogic/ItemExchangeMaster.h"
+
+#include "GameLogic/Level.h"
+#include "GameLogic/GameMap.h"
 
 Application::Application() : Application(std::cin, std::cout)
 {}
@@ -67,6 +72,9 @@ void Application::executeCommand(Vector<String>& tokens)
 	if (tokens[0] == "ls") lsCommand(tokens);
 	else if (tokens[0] == "exit") exitCommand(tokens);
 	else if (tokens[0] == "generatePlayer") generatePlayerCommand(tokens);
+	else if (tokens[0] == "generateLevel") generateLevelCommand(tokens);
+	else if (tokens[0] == "generateLevel") generateLevelCommand(tokens);
+	else if (tokens[0] == "dnd") dndCommand(tokens);
 	else throw std::logic_error("Invalid command!");
 }
 
@@ -89,9 +97,32 @@ void Application::exitCommand(Vector<String>& tokens)
 	state = ApplicationState::QUIT;
 }
 
+void Application::generateLevelCommand(Vector<String>& tokens)
+{
+	if (tokens.getLen() - 1 != 1)
+		throw std::logic_error("Invalid command!");
+
+	std::ofstream f(tokens[1].getData());
+	if (f.is_open() == false)
+		throw std::logic_error("Cannot open the file!");
+
+	int number = uih.requestInt("Please enter the level number (positive integer)", "(level number)");
+	while (number <= 0)
+		number = uih.requestInt("Please enter the level number (positive integer)", "(level number)");
+
+	int seed = uih.requestInt("Please enter level seed", "(seed)");
+
+	Level l(number, seed);
+	l.serialize(f);
+
+	f.close();
+	if (f.is_open() == true) throw std::exception("Could not close the file!");
+	if (f.bad() == true) throw std::exception("Could not close the file!");
+}
+
 void Application::generatePlayerCommand(Vector<String>& tokens)
 {
-	if (tokens.getLen() - 1 != 0)
+	if (tokens.getLen() - 1 != 1)
 		throw std::logic_error("Invalid command!");
 
 	String playerName;
@@ -117,13 +148,34 @@ void Application::generatePlayerCommand(Vector<String>& tokens)
 	p->setWeapon(SharedPtr<Weapon>(new Weapon("Ordinary sword", 1, 0.2f)));
 	p->setSpell(SharedPtr<Spell>(new Spell("Fire ball", 1, 0.2f)));
 
-	String filename;
-	uih.requestTextLine("Please enter the name of the file, where you want to save your player", "(filename)", filename);
+	//String filename;
+	//uih.requestTextLine("Please enter the name of the file, where you want to save your player", "(filename)", filename);
 
-	std::ofstream f(filename.getData());
+	std::ofstream f(tokens[1].getData());
 	if (f.is_open() == false)
 		throw std::logic_error("Could not open the file!");
 
 	p->serialize(f);
 	f.close();
+}
+
+void Application::dndCommand(Vector<String>& tokens)
+{
+	if (tokens.getLen() - 1 != 2)
+		throw std::logic_error("Invalid command");
+
+	std::fstream fPlayer(tokens[1].getData(), std::ios::in);
+	std::fstream fLevel(tokens[2].getData(), std::ios::in);
+
+	if (fPlayer.is_open() == false || fLevel.is_open() == false)
+		throw std::logic_error("Could not open the file!");
+
+	Level* level = GameLogicFileManager::deserializeLevel(fLevel);
+	Player* player = GameLogicFileManager::deserializePlayer(fPlayer, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, level->getMap()), UIPointsDistributionController(uih),
+														ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+	level->play(*player);
+
+	delete level;
+	delete player;
 }

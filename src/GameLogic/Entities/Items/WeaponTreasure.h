@@ -1,7 +1,7 @@
 #ifndef __WEAPONTREASURE_H
 #define __WEAPONTREASURE_H
 
-#include "Armor.h"
+#include "Weapon.h"
 #include "Treasure.h"
 
 class WeaponTreasure : public Treasure

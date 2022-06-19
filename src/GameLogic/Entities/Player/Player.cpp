@@ -2,6 +2,7 @@
 
 #include "../../FightMaster.h"
 #include "../../ItemExchangeMaster.h"
+#include "../Controllers/FightController.h"
 
 Player::Player(const String& name, int r, int c, float strength, float mana, float health,
 			   const FightController& fc, const ItemManagerController& imc, const MoveController& mc, const PointsDistributionController& pdc,
@@ -199,4 +200,9 @@ void Player::interactInternal(GameEntity* other)
 	//fight
 	fm.setFighter(this);
 	fm.flush();
+}
+
+TileEntity* Player::clone() const
+{
+	return new Player(*this);
 }

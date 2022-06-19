@@ -33,6 +33,7 @@ public:
 
 public:
 	void serialize(std::ostream& stream) const override;
+	TileEntity* clone() const override;
 };
 
 #endif

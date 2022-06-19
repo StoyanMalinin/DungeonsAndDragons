@@ -1,5 +1,6 @@
 #include "GameLogicFileManager.h"
 #include "PlayerView.h"
+#include "../Level.h"
 
 Player* GameLogicFileManager::deserializePlayer(std::iostream& stream, const FightController& fc, const ItemManagerController& imc, const MoveController& mc, const PointsDistributionController& pdc, ItemExchangeMaster& iem, FightMaster& fm)
 {
@@ -119,6 +120,35 @@ Treasure* GameLogicFileManager::deserializeTreasure(std::iostream& stream, ItemE
 	if (type == "ArmorTreasure") return deserializeArmorTreasure(stream, iem);
 
 	throw std::logic_error("Error while deserializing treasure! Invalid stream format!");
+}
+
+Dragon* GameLogicFileManager::deserializeDragon(std::iostream& stream, const FightController &fc, FightMaster& fm)
+{
+	checkForBadStream(stream);
+
+	String type;
+	stream >> type;
+	if (type != "Dragon") throw std::logic_error("Error while deserializing Dragon! The stream format is not correct!");
+
+	int r, c;
+	stream >> r >> c;
+
+	float strength, mana, health;
+	stream >> strength >> mana >> health;
+
+	return new Dragon(r, c, strength, mana, health, fc, fm);
+}
+
+Level* GameLogicFileManager::deserializeLevel(std::iostream& stream)
+{
+	checkForBadStream(stream);
+
+	size_t number;
+	stream >> number;
+
+	GameMap mp(stream);
+
+	return new Level(number, mp);
 }
 
 void GameLogicFileManager::checkForBadStream(std::iostream& stream)

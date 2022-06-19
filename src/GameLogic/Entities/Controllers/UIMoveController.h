@@ -1,22 +1,21 @@
 #ifndef __UIMOVECONTROLLER_H
 #define __UIMOVECONTROLLER_H
 
-#include "../../../UI/UIHandler.h"
+class GameMap;
+class UIHandler;
 #include "MoveController.h"
-
-#include "../../GameMap.h"
 
 class UIMoveController : public MoveController
 {
 private:
-	GameMap& mp;
+	const GameMap& mp;
 	UIHandler& uih;
 private:
 	bool isCached;
 	Directions cachedDirection;
 
 public:
-	UIMoveController(UIHandler& uih, GameMap& mp);
+	UIMoveController(UIHandler& uih, const GameMap& mp);
 
 public:
 	Directions getDirection(const MovableTileEntity& entity) override;

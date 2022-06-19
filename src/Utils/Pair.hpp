@@ -9,9 +9,6 @@ struct Pair
 
 	Pair();
 	Pair(const T1& first, const T2& second);
-
-	//template <class T1, class T2>
-	//friend bool operator==(const Pair<T1, T2>& lhs, const Pair<T1, T2>& rhs);
 };
 
 template <class T1, class T2>

@@ -1,7 +1,7 @@
 #ifndef __UIITEMMANAGERCONTROLLER_H
 #define __UIITEMMANAGERCONTROLLER_H
 
-#include "../../../UI/UIHandler.h"
+class UIHandler;
 #include "ItemManagerController.h"
 
 class UIItemManagerController : public ItemManagerController

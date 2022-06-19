@@ -5,7 +5,9 @@
 #include "../../Utils/Pair.hpp"
 
 #include "TileEntity.h"
-#include "Controllers/MoveController.h"
+//#include "Controllers/MoveController.h"
+class MoveController;
+enum class Directions;
 
 class MovableTileEntity : public TileEntity
 {

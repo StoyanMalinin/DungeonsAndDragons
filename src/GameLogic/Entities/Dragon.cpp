@@ -57,3 +57,8 @@ void Dragon::serialize(std::ostream& stream) const
 	TileEntity::serialize(stream); stream << " ";
 	stream << getStrength() << " " << getMana() << " " << getHealth();
 }
+
+TileEntity* Dragon::clone() const
+{
+	return new Dragon(*this);
+}

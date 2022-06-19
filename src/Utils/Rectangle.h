@@ -1,8 +1,8 @@
-#ifndef __ALABALA_H
-#define __ALABALA_H
+#ifndef __RECTANGLE_H
+#define __RECTANGLE_H
 
 #include <iostream>
-#include "RandomGenerator.h"
+class RandomGenerator;
 
 struct Rectangle
 {

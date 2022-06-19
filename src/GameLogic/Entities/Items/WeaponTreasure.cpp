@@ -1,4 +1,6 @@
 #include "WeaponTreasure.h"
+#include "../../../Utils/SharedPtr.hpp"
+#include "../Player/Player.h"
 
 WeaponTreasure::WeaponTreasure(int r, int c, ItemExchangeMaster& iem, const Weapon& weapon) : Treasure(r, c, iem), weapon(weapon)
 {}

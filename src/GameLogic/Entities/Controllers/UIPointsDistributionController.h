@@ -1,7 +1,7 @@
 #ifndef __UIPOINTSDISTRIBUTIONCONTROLLER_H
 #define __UIPOINTSDISTRIBUTIONCONTROLLER_H
 
-#include "../../../UI/UIHandler.h"
+class UIHandler;
 #include "PointsDistributionController.h"
 
 class UIPointsDistributionController : public PointsDistributionController

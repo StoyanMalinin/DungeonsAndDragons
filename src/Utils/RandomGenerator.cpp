@@ -1,5 +1,4 @@
 #include "RandomGenerator.h"
-#include "Rectangle.h"
 
 #include <random>
 #include <chrono>

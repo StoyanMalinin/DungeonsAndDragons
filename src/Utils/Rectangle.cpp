@@ -1,5 +1,7 @@
 #include "Rectangle.h"
 
+#include "RandomGenerator.h"
+
 Rectangle::Rectangle(int minRow, int maxRow, int minCol, int maxCol) : minRow(minRow), maxRow(maxRow), minCol(minCol), maxCol(maxCol)
 {}
 

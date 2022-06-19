@@ -23,3 +23,8 @@ void WallTile::serialize(std::ostream& stream) const
     stream << "WallTile" << " ";
     TileEntity::serialize(stream);
 }
+
+TileEntity* WallTile::clone() const
+{
+    return new WallTile(*this);
+}

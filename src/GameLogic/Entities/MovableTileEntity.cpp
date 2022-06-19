@@ -1,5 +1,7 @@
 #include "MovableTileEntity.h"
 
+#include "Controllers/MoveController.h"
+
 MovableTileEntity::MovableTileEntity(int r, int c, const MoveController& mc) : TileEntity(r, c), mc(mc.clone())
 {
 

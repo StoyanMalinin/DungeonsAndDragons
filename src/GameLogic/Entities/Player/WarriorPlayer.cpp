@@ -16,3 +16,8 @@ void WarriorPlayer::serialize(std::ostream & stream) const
     if (stream.bad() == true)
         throw std::exception("Error while serializing warrior player, the stream got corrupted!");
 }
+
+TileEntity* WarriorPlayer::clone() const
+{
+    return new WarriorPlayer(*this);
+}

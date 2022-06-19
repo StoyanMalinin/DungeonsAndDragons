@@ -9,7 +9,7 @@
 #include "../GameLogic/Entities/Items/GameItem.h"
 #include "../GameLogic/Entities/FightableEntity.h"
 
-#include "../GameLogic/GameMap.h"
+class GameMap;
 #include "../GameLogic/Entities/Player/Player.h"
 
 enum class UIStates

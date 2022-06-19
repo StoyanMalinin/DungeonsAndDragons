@@ -17,7 +17,7 @@ struct MapProperties
 		          float treasureArmor, float treasureWeapon, float treasureSpell,
 		          size_t itemLevel);
 	MapProperties(std::iostream& stream);
-
+	MapProperties() = default;
 
 	void serialize(std::ostream &stream) const;
 	void serializeLn(std::ostream& stream) const;
