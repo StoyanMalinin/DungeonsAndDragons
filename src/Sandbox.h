@@ -133,9 +133,6 @@ void levelSerializationTest()
 
 void sandbox()
 {
-	//mapSerializationTest();
-	//levelSerializationTest();
-
 	Application* app = new Application();
 	app->run();
 	delete app;
