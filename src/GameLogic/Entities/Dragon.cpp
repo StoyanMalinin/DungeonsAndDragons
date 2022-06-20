@@ -51,6 +51,12 @@ void Dragon::interactInternal(GameEntity* other)
 	fm.flush();
 }
 
+void Dragon::write(std::ostream& os) const
+{
+	FightableEntity::write(os);
+	os << " $Armor: "; armor.write(os);
+}
+
 void Dragon::serialize(std::ostream& stream) const
 {
 	stream << "Dragon" << " ";

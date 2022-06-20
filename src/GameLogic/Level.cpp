@@ -45,7 +45,7 @@ MapProperties Level::getMapPropertiesByNumber(size_t number)
 
 	return MapProperties(getMapRowCountByNumber(number), getMapColCountByNumber(number),
 		                 getDragonCountByNumber(number), getTreasureCountByNumber(number),
-						 dragonStrength, dragonHealth, dragonMana,
+						 dragonStrength, dragonMana, dragonHealth,
 		                 coef*0.9f, coef, coef*0.9f,
 						 number);
 }

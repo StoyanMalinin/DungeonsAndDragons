@@ -88,6 +88,14 @@ void Player::serialize(std::ostream& stream) const
 		throw std::exception("Error while serializing player, the stream got corrupted!");
 }
 
+void Player::write(std::ostream& os) const
+{
+	FightableEntity::write(os);
+	if (armor.isNull() == false) { os << " $Armor: "; armor->write(os); }
+	if (spell.isNull() == false) { os << " $Spell: "; spell->write(os); }
+	if (weapon.isNull() == false) { os << " $Weapon: "; weapon->write(os); }
+}
+
 void Player::serializeRawData(std::ostream& stream) const
 {
 	stream << " " << name.getLen();

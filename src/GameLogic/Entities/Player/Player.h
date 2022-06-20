@@ -54,6 +54,7 @@ public:
 
 public:
     void serialize(std::ostream &stream) const override;
+	void write(std::ostream& os) const override;
 protected:
 	virtual void serializeRawData(std::ostream& stream) const;
 

@@ -172,7 +172,10 @@ void Application::dndCommand(Vector<String>& tokens)
 	Player* player = GameLogicFileManager::deserializePlayer(fPlayer, UIFightController(uih), UIItemManagerController(uih), UIMoveController(uih, level->getMap()), UIPointsDistributionController(uih),
 														     ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
 
-	level->play(*player, &backupFile);
+	LevelOutcome outcome = level->play(*player, &backupFile);
+	
+	if (outcome == LevelOutcome::PLAYER_DIED) uih.writeMessage("Player died");
+	else uih.writeMessage("Level successfully completed");
 
 	fPlayer.close();
 	fLevel.close();

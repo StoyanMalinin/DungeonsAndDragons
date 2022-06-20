@@ -32,6 +32,9 @@ public:
 	void interactInternal(GameEntity* other) override;
 
 public:
+	void write(std::ostream& os) const override;
+
+public:
 	void serialize(std::ostream& stream) const override;
 	TileEntity* clone() const override;
 };
