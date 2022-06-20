@@ -101,9 +101,10 @@ Pair<int, int>  GameMap::partitionSpaceRec(utils::Rectangle scope, RandomGenerat
 	const size_t minPartition = 5;
 
 	size_t nxtStep;
-	Vector<size_t> nxtStepOptions;
+	Vector<uint8_t> nxtStepOptions;
 	
-	for (size_t i = 0; i < 1; i++)  nxtStepOptions.pushBack(1);
+	for (size_t i = 0; i < 1; i++)  
+		nxtStepOptions.pushBack(1);
 	if (depth>=2)
 	{
 		for(size_t i = 0;i<10;i++) nxtStepOptions.pushBack(0);
@@ -114,12 +115,9 @@ Pair<int, int>  GameMap::partitionSpaceRec(utils::Rectangle scope, RandomGenerat
 	}
 	nxtStep = nxtStepOptions[rnd.randIntInRange(0, nxtStepOptions.getLen() - 1)];
 
-	//std::cout << scope << " -> " << nxtStep << " " << nxtStepOptions.getLen() << '\n';
-
 	if (nxtStep == 0) //fill
 	{
 		utils::Rectangle r = scope.randomSubrectangle(rnd);
-		//std::cout << "fill: " << r << '\n';
 
 		for (int i = r.minRow; i <= r.maxRow; i++)
 			for (int j = r.minCol; j <= r.maxCol; j++)
