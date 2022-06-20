@@ -4,6 +4,7 @@
 #include "../../../UI/UIHandler.h"
 
 #include "MoveController.h"
+#include "../MovableTileEntity.h"
 
 UIMoveController::UIMoveController(UIHandler& uih, const GameMap& mp) : uih(uih), mp(mp), isCached(false)
 {}

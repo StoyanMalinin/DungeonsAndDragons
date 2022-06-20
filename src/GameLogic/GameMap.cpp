@@ -9,7 +9,6 @@
 
 #include "Entities/Controllers/RandomFightController.h"
 
-
 #include "Entities/Items/Treasure.h"
 #include "Entities/Items/Spell.h"
 #include "Entities/Items/Armor.h"
@@ -23,7 +22,6 @@
 
 #include "FIleManagement/GameLogicFileManager.h"
 
-#include "../Utils/Rectangle.h"
 #include "../Utils/RandomGenerator.h"
 
 #include "MapProperties.h"
@@ -68,7 +66,7 @@ GameMap::GameMap(const GameMap& other)
 
 void GameMap::fillBySpacePartitioning(RandomGenerator& rnd)
 {
-	partitionSpaceRec(Rectangle(0, mp.n - 1, 0, mp.m - 1), rnd, false, false, 0);
+	partitionSpaceRec(utils::Rectangle(0, mp.n - 1, 0, mp.m - 1), rnd, false, false, 0);
 	connectCellToDungeon(0, 0, rnd);
 }
 
@@ -92,13 +90,13 @@ void GameMap::connectCellToDungeon(size_t i, size_t j, RandomGenerator &rnd)
 	}
 
 	Vector<Pair<int, int>> path;
-	genRadomPathBetweenTwoPoints(p1, p2, Rectangle(0, mp.n - 1, 0, mp.m - 1), path, rnd);
+	genRadomPathBetweenTwoPoints(p1, p2, utils::Rectangle(0, mp.n - 1, 0, mp.m - 1), path, rnd);
 
 	for(size_t ind = 0;ind<path.getLen();ind++)
 		grid[path[ind].first][path[ind].second] = SharedPtr<TileEntity>(new EmptyTile(path[ind].first, path[ind].second));
 }
 
-Pair<int, int>  GameMap::partitionSpaceRec(Rectangle scope, RandomGenerator& rnd, bool sideSplit, bool dimensionSplit, size_t depth)
+Pair<int, int>  GameMap::partitionSpaceRec(utils::Rectangle scope, RandomGenerator& rnd, bool sideSplit, bool dimensionSplit, size_t depth)
 {
 	const size_t minPartition = 5;
 
@@ -120,7 +118,7 @@ Pair<int, int>  GameMap::partitionSpaceRec(Rectangle scope, RandomGenerator& rnd
 
 	if (nxtStep == 0) //fill
 	{
-		Rectangle r = scope.randomSubrectangle(rnd);
+		utils::Rectangle r = scope.randomSubrectangle(rnd);
 		//std::cout << "fill: " << r << '\n';
 
 		for (int i = r.minRow; i <= r.maxRow; i++)
@@ -147,23 +145,23 @@ Pair<int, int>  GameMap::partitionSpaceRec(Rectangle scope, RandomGenerator& rnd
 		bool dimension = dimensionSplit ^ 1;//rnd.randBool();
 
 		Pair <int, int> p1, p2;
-		Rectangle corridorBoundingBox;
+		utils::Rectangle corridorBoundingBox;
 
 		if (dimension == false)
 		{
 			int mid = rnd.randIntInRange(scope.minCol+1, scope.maxCol-1);
 
-			p1 = partitionSpaceRec(Rectangle(scope.minRow, scope.maxRow, scope.minCol, mid - 1), rnd, false, dimension, depth+1);
-			p2 = partitionSpaceRec(Rectangle(scope.minRow, scope.maxRow, mid + 1, scope.maxCol), rnd, true, dimension, depth+1);
-			corridorBoundingBox = Rectangle(scope.minRow, scope.maxRow, p1.second, p2.second);
+			p1 = partitionSpaceRec(utils::Rectangle(scope.minRow, scope.maxRow, scope.minCol, mid - 1), rnd, false, dimension, depth+1);
+			p2 = partitionSpaceRec(utils::Rectangle(scope.minRow, scope.maxRow, mid + 1, scope.maxCol), rnd, true, dimension, depth+1);
+			corridorBoundingBox = utils::Rectangle(scope.minRow, scope.maxRow, p1.second, p2.second);
 		}
 		else if (dimension == true)
 		{
 			int mid = rnd.randIntInRange(scope.minRow + 1, scope.maxRow - 1);
 
-			p1 = partitionSpaceRec(Rectangle(scope.minRow, mid - 1, scope.minCol, scope.maxCol), rnd, false, dimension, depth+1);
-			p2 = partitionSpaceRec(Rectangle(mid + 1, scope.maxRow, scope.minCol, scope.maxCol), rnd, true, dimension, depth+1);	
-			corridorBoundingBox = Rectangle(p1.first, p2.first, scope.minCol, scope.maxCol);
+			p1 = partitionSpaceRec(utils::Rectangle(scope.minRow, mid - 1, scope.minCol, scope.maxCol), rnd, false, dimension, depth+1);
+			p2 = partitionSpaceRec(utils::Rectangle(mid + 1, scope.maxRow, scope.minCol, scope.maxCol), rnd, true, dimension, depth+1);
+			corridorBoundingBox = utils::Rectangle(p1.first, p2.first, scope.minCol, scope.maxCol);
 		}
 
 		if (grid[p1.first][p1.second]->canEnter() == false && grid[p2.first][p2.second]->canEnter() == false) 
@@ -216,10 +214,8 @@ Pair<int, int>  GameMap::partitionSpaceRec(Rectangle scope, RandomGenerator& rnd
 	return { scope.maxRow, scope.maxRow };
 }
 
-void GameMap::genRadomPathBetweenTwoPoints(Pair<int, int> p1, Pair<int, int> p2, const Rectangle& boundingBox, Vector<Pair<int, int>>& path, RandomGenerator& rnd)
+void GameMap::genRadomPathBetweenTwoPoints(Pair<int, int> p1, Pair<int, int> p2, const utils::Rectangle& boundingBox, Vector<Pair<int, int>>& path, RandomGenerator& rnd)
 {
-	//std::cout << "bounding box: " << boundingBox << '\n';
-
 	Vector<Vector<bool>> used(boundingBox.maxRow - boundingBox.minRow + 1);
 	for (size_t i = 0; i < used.getLen(); i++)
 	{
@@ -231,7 +227,7 @@ void GameMap::genRadomPathBetweenTwoPoints(Pair<int, int> p1, Pair<int, int> p2,
 	randomDfsTo(p1, p2, boundingBox, used, rnd, currPath, path);
 }
 
-bool GameMap::randomDfsTo(Pair<int, int> x, Pair<int, int> destination, const Rectangle& boundingBox, Vector<Vector<bool>>& used, RandomGenerator& rnd, Vector<Pair<int, int>>& currPath, Vector<Pair<int, int>>& ansPath)
+bool GameMap::randomDfsTo(Pair<int, int> x, Pair<int, int> destination, const utils::Rectangle& boundingBox, Vector<Vector<bool>>& used, RandomGenerator& rnd, Vector<Pair<int, int>>& currPath, Vector<Pair<int, int>>& ansPath)
 {
 	if (boundingBox.isInside(x.first, x.second) == false) return false;
 	used[x.first - boundingBox.minRow][x.second - boundingBox.minCol] = true;

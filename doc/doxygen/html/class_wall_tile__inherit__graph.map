@@ -1,5 +1,5 @@
 <map id="WallTile" name="WallTile">
-<area shape="rect" id="node1" title=" " alt="" coords="17,155,85,181"/>
-<area shape="rect" id="node2" href="$class_tile_entity.html" title=" " alt="" coords="13,80,89,107"/>
-<area shape="rect" id="node3" href="$class_game_entity.html" title=" " alt="" coords="5,5,96,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,476,153,627"/>
+<area shape="rect" id="node2" href="$class_tile_entity.html" title=" " alt="" coords="5,160,153,428"/>
+<area shape="rect" id="node3" href="$class_game_entity.html" title=" " alt="" coords="16,5,143,112"/>
 </map>

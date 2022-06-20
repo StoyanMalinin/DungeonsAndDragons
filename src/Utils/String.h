@@ -82,7 +82,7 @@ public:
 	friend String operator +(const String& lhs, const String& rhs);
 	friend String operator +(char c, const String& s);
 	friend String operator +(const String& s, char c);
-	
+
 	friend void getline(std::istream& is, String& s);
 	friend std::istream& operator >>(std::istream& is, String& s);
 	friend std::ostream& operator <<(std::ostream& os, const String& s);
@@ -93,7 +93,7 @@ public:
 	friend bool operator >=(const String& lhs, const String& rhs);
 	friend bool operator ==(const String& lhs, const String& rhs);
 	friend bool operator !=(const String& lhs, const String& rhs);
-	
+
 	void swap(String& other);
 	static String toString(size_t num);
 	/// <summary>
@@ -106,5 +106,6 @@ public:
 	/// <returns></returns>
 	static String format(String s, size_t len, char c, bool pos);
 };
+
 
 #endif // !__STRING_H

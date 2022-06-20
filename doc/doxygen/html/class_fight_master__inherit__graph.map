@@ -1,4 +1,4 @@
 <map id="FightMaster" name="FightMaster">
-<area shape="rect" id="node1" title=" " alt="" coords="21,80,112,107"/>
-<area shape="rect" id="node2" href="$class_interaction_master.html" title=" " alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,189,152,311"/>
+<area shape="rect" id="node2" href="$class_interaction_master.html" title=" " alt="" coords="7,5,150,141"/>
 </map>

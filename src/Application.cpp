@@ -73,7 +73,6 @@ void Application::executeCommand(Vector<String>& tokens)
 	else if (tokens[0] == "exit") exitCommand(tokens);
 	else if (tokens[0] == "generatePlayer") generatePlayerCommand(tokens);
 	else if (tokens[0] == "generateLevel") generateLevelCommand(tokens);
-	else if (tokens[0] == "generateLevel") generateLevelCommand(tokens);
 	else if (tokens[0] == "dnd") dndCommand(tokens);
 	else if (tokens[0] == "recover") recoverCommand(tokens);
 	else if (tokens[0] == "changeBackupFile") changeBackupFileCommand(tokens);

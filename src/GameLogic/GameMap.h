@@ -1,19 +1,16 @@
 #ifndef __GAMEMAP_H
 #define __GAMEMAP_H
 
+#include <iostream>
+#include "MapProperties.h"
+
+#include "../Utils/Pair.hpp"
 #include "../Utils/Vector.hpp"
+#include "../Utils/Rectangle.h"
 #include "../Utils/SharedPtr.hpp"
 
 class TileEntity;
-
-struct Rectangle;
 class RandomGenerator;
-#include "../Utils/Pair.hpp"
-#include "MapProperties.h"
-
-#include <iostream>
-
-struct MapProperties;
 enum class Interactions;
 
 class GameMap
@@ -34,9 +31,9 @@ public:
 private:
 	void fillBySpacePartitioning(RandomGenerator &rnd);
 	void connectCellToDungeon(size_t i, size_t j, RandomGenerator& rnd);
-	Pair<int,int> partitionSpaceRec(Rectangle scope, RandomGenerator& rnd, bool sideSplit, bool dimensionSplit, size_t depth);
-	void genRadomPathBetweenTwoPoints(Pair<int, int> p1, Pair<int, int> p2, const Rectangle& boundingBox, Vector<Pair<int, int>>& path, RandomGenerator &rnd);
-	bool randomDfsTo(Pair<int, int> x, Pair<int, int> destination, const Rectangle& boundingBox, Vector<Vector<bool>>& used, RandomGenerator& rnd, Vector <Pair<int, int>> &currPath, Vector<Pair<int, int>> &ansPath);
+	Pair<int,int> partitionSpaceRec(utils::Rectangle scope, RandomGenerator& rnd, bool sideSplit, bool dimensionSplit, size_t depth);
+	void genRadomPathBetweenTwoPoints(Pair<int, int> p1, Pair<int, int> p2, const utils::Rectangle& boundingBox, Vector<Pair<int, int>>& path, RandomGenerator &rnd);
+	bool randomDfsTo(Pair<int, int> x, Pair<int, int> destination, const utils::Rectangle& boundingBox, Vector<Vector<bool>>& used, RandomGenerator& rnd, Vector <Pair<int, int>> &currPath, Vector<Pair<int, int>> &ansPath);
 	void addMapComponents(RandomGenerator& rnd);
 
 private:

@@ -1,7 +1,13 @@
 #include "UIHandler.h"
 
 #include <cmath>
+#include <iostream>
 #include "../GameLogic/GameMap.h"
+#include "../GameLogic/Entities/Player/Player.h"
+#include "../GameLogic/Entities/MovableTileEntity.h"
+
+#include "../GameLogic/Entities/Items/GameItem.h"
+#include "../GameLogic/Entities/FightableEntity.h"
 
 UIHandler::UIHandler(std::istream& is, std::ostream& os) : is(is), os(os)
 {}

@@ -4,18 +4,21 @@
 #include <iostream>
 class RandomGenerator;
 
-struct Rectangle
+namespace utils
 {
-	int minRow, maxRow;
-	int minCol, maxCol;
+	struct Rectangle
+	{
+		int minRow, maxRow;
+		int minCol, maxCol;
 
-	Rectangle() = default;
-	Rectangle(int minRow, int maxRow, int minCol, int maxCol);
+		Rectangle() = default;
+		Rectangle(int minRow, int maxRow, int minCol, int maxCol);
 
-	bool isInside(int r, int c) const;
-	friend std::ostream& operator <<(std::ostream& os, const Rectangle& r);
+		bool isInside(int r, int c) const;
+		friend std::ostream& operator <<(std::ostream& os, const Rectangle& r);
 
-	Rectangle randomSubrectangle(RandomGenerator& rnd);
-};
+		Rectangle randomSubrectangle(RandomGenerator& rnd);
+	};
+}
 
 #endif // !__RECTANGLE_H

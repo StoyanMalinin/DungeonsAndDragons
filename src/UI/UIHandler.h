@@ -6,11 +6,12 @@
 #include "../Utils/Vector.hpp"
 #include "../Utils/SharedPtr.hpp"
 
-#include "../GameLogic/Entities/Items/GameItem.h"
-#include "../GameLogic/Entities/FightableEntity.h"
+class GameItem;
+class FightableEntity;
 
+class MovableTileEntity;
 class GameMap;
-#include "../GameLogic/Entities/Player/Player.h"
+class Player;
 
 enum class UIStates
 {

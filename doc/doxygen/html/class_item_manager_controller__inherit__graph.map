@@ -1,5 +1,5 @@
 <map id="ItemManagerController" name="ItemManagerController">
-<area shape="rect" id="node1" title=" " alt="" coords="131,5,283,32"/>
-<area shape="rect" id="node2" href="$class_optimal_item_manager_controller.html" title=" " alt="" coords="5,80,203,107"/>
-<area shape="rect" id="node3" href="$class_u_i_item_manager_controller.html" title=" " alt="" coords="227,80,391,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="136,5,316,185"/>
+<area shape="rect" id="node2" href="$class_optimal_item_manager_controller.html" title=" " alt="" coords="5,233,223,399"/>
+<area shape="rect" id="node3" href="$class_u_i_item_manager_controller.html" title=" " alt="" coords="247,248,431,384"/>
 </map>

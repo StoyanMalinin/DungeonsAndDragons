@@ -1,5 +1,5 @@
 <map id="MovableTileEntity" name="MovableTileEntity">
-<area shape="rect" id="node1" title=" " alt="" coords="5,155,128,181"/>
-<area shape="rect" id="node2" href="$class_tile_entity.html" title=" " alt="" coords="29,80,105,107"/>
-<area shape="rect" id="node3" href="$class_game_entity.html" title=" " alt="" coords="21,5,112,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="8,476,151,627"/>
+<area shape="rect" id="node2" href="$class_tile_entity.html" title=" " alt="" coords="5,160,153,428"/>
+<area shape="rect" id="node3" href="$class_game_entity.html" title=" " alt="" coords="16,5,143,112"/>
 </map>

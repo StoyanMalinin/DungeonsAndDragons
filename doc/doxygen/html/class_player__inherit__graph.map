@@ -1,10 +1,10 @@
 <map id="Player" name="Player">
-<area shape="rect" id="node1" title=" " alt="" coords="146,229,205,256"/>
-<area shape="rect" id="node6" href="$class_human_player.html" title=" " alt="" coords="5,304,105,331"/>
-<area shape="rect" id="node7" href="$class_mage_player.html" title=" " alt="" coords="130,304,221,331"/>
-<area shape="rect" id="node8" href="$class_warrior_player.html" title=" " alt="" coords="245,304,346,331"/>
-<area shape="rect" id="node2" href="$class_movable_tile_entity.html" title=" " alt="" coords="45,155,167,181"/>
-<area shape="rect" id="node3" href="$class_tile_entity.html" title=" " alt="" coords="100,80,176,107"/>
-<area shape="rect" id="node4" href="$class_game_entity.html" title=" " alt="" coords="130,5,221,32"/>
-<area shape="rect" id="node5" href="$class_fightable_entity.html" title=" " alt="" coords="191,155,301,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="131,865,279,1119"/>
+<area shape="rect" id="node6" href="$class_human_player.html" title=" " alt="" coords="5,1167,125,1288"/>
+<area shape="rect" id="node7" href="$class_mage_player.html" title=" " alt="" coords="150,1167,261,1288"/>
+<area shape="rect" id="node8" href="$class_warrior_player.html" title=" " alt="" coords="285,1167,406,1288"/>
+<area shape="rect" id="node2" href="$class_movable_tile_entity.html" title=" " alt="" coords="51,571,194,722"/>
+<area shape="rect" id="node3" href="$class_tile_entity.html" title=" " alt="" coords="75,160,223,428"/>
+<area shape="rect" id="node4" href="$class_game_entity.html" title=" " alt="" coords="142,5,269,112"/>
+<area shape="rect" id="node5" href="$class_fightable_entity.html" title=" " alt="" coords="219,476,357,817"/>
 </map>
