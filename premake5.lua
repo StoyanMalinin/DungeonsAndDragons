@@ -11,7 +11,7 @@ project "DungeonsAndDragons"
         defines { "DEBUG", "_CRT_SECURE_NO_WARNINGS" }
         symbols "On"
         targetdir "bin/Debug"
-
+		
     filter { "configurations:Release" }
         defines { "NDEBUG", "_CRT_SECURE_NO_WARNINGS" }
         optimize "On"
