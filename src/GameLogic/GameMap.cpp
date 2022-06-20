@@ -140,7 +140,7 @@ Pair<int, int>  GameMap::partitionSpaceRec(utils::Rectangle scope, RandomGenerat
 	}
 	else if (nxtStep == 2) //partition
 	{
-		bool dimension = dimensionSplit ^ 1;//rnd.randBool();
+		bool dimension = dimensionSplit ^ 1;
 
 		Pair <int, int> p1, p2;
 		utils::Rectangle corridorBoundingBox;
@@ -166,14 +166,9 @@ Pair<int, int>  GameMap::partitionSpaceRec(utils::Rectangle scope, RandomGenerat
 			return { scope.maxRow, scope.maxCol };
 		if (grid[p1.first][p1.second]->canEnter() == true && grid[p2.first][p2.second]->canEnter() == true)
 		{
-			//std::cout << "scope: " << scope << '\n';
-			//std::cout << "generating path || " << "dimension: " << dimension << " || " << p1.first << " " << p1.second << " <> " << p2.first << " " << p2.second << '\n';
-
 			Vector <Pair<int, int>> path;
 			genRadomPathBetweenTwoPoints(p1, p2, corridorBoundingBox, path, rnd);
 	
-			//std::cout << "path is generated" << '\n';
-
 			for (size_t i = 0; i < path.getLen(); i++)
 				grid[path[i].first][path[i].second] = SharedPtr<TileEntity>(new EmptyTile(path[i].first, path[i].second));
 		}

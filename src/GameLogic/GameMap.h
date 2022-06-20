@@ -2,8 +2,8 @@
 #define __GAMEMAP_H
 
 #include <iostream>
-#include "MapProperties.h"
 
+#include "MapProperties.h"
 #include "../Utils/Pair.hpp"
 #include "../Utils/Vector.hpp"
 #include "../Utils/Rectangle.h"

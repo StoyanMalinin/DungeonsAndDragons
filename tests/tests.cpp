@@ -437,7 +437,7 @@ TEST_SUITE("serialization tests")
 		delete p2;
 	}
 
-	TEST_CASE("human player serialization and deserialization with items")
+	TEST_CASE("human player serialization and deserialization with items 1")
 	{
 		std::stringstream stream;
 
@@ -464,6 +464,37 @@ TEST_SUITE("serialization tests")
 		CHECK(p2->getWeapon()->getName() == "qtagan");
 		CHECK(p2->getWeapon()->getLevel() == 222);
 		CHECK(cmpFloat(p2->getWeapon()->getC(), 420) == 0);
+
+		delete p2;
+	}
+
+	TEST_CASE("human player serialization and deserialization with items")
+	{
+		std::stringstream stream;
+
+		HumanPlayer p1("stoyan chovek", 1, 3, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(), EvenPointsDistributionController(),
+			ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+		
+		p1.acquireSpell(SharedPtr<Spell>(new Spell("Fire ball", 1, 0.2f)));
+		p1.acquireWeapon(SharedPtr<Weapon>(new Weapon("Sword", 1, 0.2f)));
+		p1.serialize(stream);
+
+		Player* p2 = GameLogicFileManager::deserializePlayer(stream, RandomFightController(), OptimalItemManagerController(), OnlyDownMoveController(),
+			EvenPointsDistributionController(), ItemExchangeMaster::getGlobalInstance(), FightMaster::getGlobalInstance());
+
+		CHECK(p2 != nullptr);
+		CHECK(p2->getName() == "stoyan chovek");
+		CHECK(cmpFloat(p2->getStrength(), 30) == 0);
+		CHECK(cmpFloat(p2->getMana(), 20) == 0);
+		CHECK(cmpFloat(p2->getHealth(), 50) == 0);
+		CHECK(p2->getR() == 1);
+		CHECK(p2->getC() == 3);
+		CHECK(p2->getWeapon()->getName() == "Sword");
+		CHECK(p2->getWeapon()->getLevel() == 1);
+		CHECK(cmpFloat(p2->getWeapon()->getC(), 0.2f) == 0);
+		CHECK(p2->getSpell()->getName() == "Fire ball");
+		CHECK(p2->getSpell()->getLevel() == 1);
+		CHECK(cmpFloat(p2->getSpell()->getC(), 0.2f) == 0);
 
 		delete p2;
 	}
