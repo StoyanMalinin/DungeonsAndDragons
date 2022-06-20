@@ -267,7 +267,7 @@ void GameMap::addMapComponents(RandomGenerator& rnd)
 
 	freeSpots.randomShuffle(rnd);
 	for (size_t i = 0; i < mp.dragonsCount; i++)
-		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(new Dragon(freeSpots[i].first, freeSpots[i].second, mp.dragonStrength, mp.dragonMana, mp.dragonMana, RandomFightController(), FightMaster::getGlobalInstance()));
+		grid[freeSpots[i].first][freeSpots[i].second] = SharedPtr<TileEntity>(new Dragon(freeSpots[i].first, freeSpots[i].second, mp.dragonStrength, mp.dragonMana, mp.dragonHealth, RandomFightController(), FightMaster::getGlobalInstance()));
 	for (size_t i = mp.dragonsCount; i < mp.dragonsCount + mp.treasuresCount; i++)
 	{
 		size_t type = rnd.randIntInRange(0, 2);
